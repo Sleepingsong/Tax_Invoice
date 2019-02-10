@@ -38,6 +38,9 @@ class StartPage( tk.Frame ): #Calculate Price
 		frame = ttk.LabelFrame( self,text = 'สินค้าทั้งหมด' )
 		frame.grid( row = 0,column = 0,sticky = NW )
 
+		style = ttk.Style(self)
+		style.configure("TButton", font=('wasy10', 14))
+
 		Label( frame,text = "ชื่อสินค้า" ).grid( row = 1,sticky = W )
 		self.product_name = Entry( frame,width = 40,justify='right'   )
 		self.product_name.grid( row = 2,column = 0 )
@@ -136,13 +139,13 @@ class StartPage( tk.Frame ): #Calculate Price
 		button1.grid(row = 0)
 
 		button2 = ttk.Button(frame3, text = 'ล้างข้อมูล')
-		button2.grid(row = 0, column = 1)
+		button2.grid(row = 1, column = 0)
 
 		button3 = ttk.Button(frame3, text = 'หน้าข้อมูลสินค้า', command = lambda: controller.show_frame( PageOne ))
-		button3.grid(row = 1, column =0)
+		button3.grid(row = 2, column =0)
 
 		button4 = ttk.Button(frame3, text = 'หน้าข้อมูลลูกค้า', command = lambda: controller.show_frame( PageTwo ))
-		button4.grid(row = 1, column = 1)
+		button4.grid(row = 3, column = 0)
 
 	def CalProduct(self):
 		self.product1 = int(self.product_number.get()) * int(self.product_price.get())
@@ -194,13 +197,13 @@ class PageOne( tk.Frame ):  # Product Page
 		self.message.grid( row = 4,column = 0 )
 
 		self.tree = ttk.Treeview( self,height = 15,column = ("2","3") )
-		self.tree.grid( row = 2,column = 0)
+		self.tree.grid( row = 1,column = 0)
 		self.tree.heading( '#0',text = 'ชื่อสินค้า',anchor = W )
 		self.tree.heading( 0,text = 'ประเภทสินค้า',anchor = W )
 		self.tree.heading( 1,text = 'ราคา',anchor = W )
 
 		frame2 = LabelFrame(self, text = 'ชุดคำสั่ง')
-		frame2.grid(row = 1, column = 0,sticky = W)
+		frame2.grid(row = 0, column = 0,sticky = E)
 
 		button1 = ttk.Button( frame2,text = 'ลบข้อมูล',command = self.deleting )
 		button1.grid( row = 0,column = 0 )
@@ -336,7 +339,7 @@ class PageTwo( tk.Frame ):  # Customer Page
 		self.Customer_address = Entry( frame2 ,justify='right' )
 		self.Customer_address.grid( row = 2,column = 5 )
 
-		ttk.Button( frame2,text = 'Add record',command = self.adding2 ).grid( row = 3,column = 7,columnspan = 2 )
+		ttk.Button( frame2,text = 'เพิ่มข้อมูล',command = self.adding2 ).grid( row = 3,column = 7,columnspan = 2 )
 		self.message2 = Label( text = '',fg = 'red' )
 		self.message2.grid( row = 3,column = 0 )
 
