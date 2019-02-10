@@ -49,11 +49,14 @@ class StartPage( tk.Frame ): #Calculate Price
 		frame4 = ttk.LabelFrame( self, text = 'สินค้า 4' )
 		frame4.grid( row = 1,column = 0, sticky =W)
 		frame5 = ttk.LabelFrame( self, text = 'สินค้า 5' )
-		frame5.grid( row = 1,column = 1, sticky =W)
+		frame5.grid( row = 1,column = 1, sticky =EW)
 		frame6 = ttk.LabelFrame( self, text = 'สินค้า 6' )
 		frame6.grid( row = 1,column = 2, sticky =W)
 		frame7 = ttk.LabelFrame( self, text = 'ราคาน้ำมัน ณ ปัจจุบัน')
-		frame7.grid( row = 2, columnspan = 4 , sticky = "nsew")
+		frame7.grid( row = 2, columnspan = 4 , sticky = "nsw")
+		frame8 = ttk.LabelFrame( self, text = 'ชุดคำสั่ง')
+		frame8.grid( row = 0,column = 3)
+
 
 
 
@@ -152,12 +155,12 @@ class StartPage( tk.Frame ): #Calculate Price
 
 
 
-		# button3 = ttk.Button( self,text = "หน้าข้อมูลลูกค้า",command = lambda: controller.show_frame( PageTwo ) )
-		# button3.grid( row = 1,column = 1,)
-		# button3 = ttk.Button( self,text = "หน้าคำนวณสินค้า",command = lambda: controller.show_frame( PageOne ) )
-		# button3.grid( row = 1,column = 2,)
-		# button3 = ttk.Button( self,text = "คำนวณสินค้าเพิ่มเติม",command = lambda: controller.show_frame( PageThree ) )
-		# button3.grid( row = 1,column = 3,)
+		button3 = ttk.Button( frame8,text = "หน้าข้อมูลลูกค้า",command = lambda: controller.show_frame( PageTwo ) )
+		button3.grid( row = 0,column = 0,)
+		button3 = ttk.Button( frame8,text = "หน้าข้อมูลสินค้า",command = lambda: controller.show_frame( PageOne ) )
+		button3.grid( row = 1,column = 0,)
+		button3 = ttk.Button( frame8,text = "คำนวณสินค้าเพิ่มเติม",command = lambda: controller.show_frame( PageThree ) )
+		button3.grid( row = 2,column = 0,)
 
 
 
@@ -515,18 +518,21 @@ class PageThree (tk.Frame): #CalPrice
 		self.product_grand_total.grid(row = 3, column = 1)
 
 		frame3 = ttk.LabelFrame(self, text = "ปุ่มคำสั่งต่างๆ")
-		frame3.grid(row = 0 ,column = 1, sticky = NW)
+		frame3.grid(row = 4 ,column = 0, sticky = W)
 		button1 = ttk.Button(frame3, text = 'คำนวณสินค้าทั้งหมด', command = self.CalProduct)
 		button1.grid(row = 0)
 
 		button2 = ttk.Button(frame3, text = 'ล้างข้อมูล')
-		button2.grid(row = 1, column = 0)
+		button2.grid(row = 0, column = 1)
 
 		button3 = ttk.Button(frame3, text = 'หน้าข้อมูลสินค้า', command = lambda: controller.show_frame( PageOne ))
-		button3.grid(row = 2, column =0)
+		button3.grid(row = 1, column =0)
 
 		button4 = ttk.Button(frame3, text = 'หน้าข้อมูลลูกค้า', command = lambda: controller.show_frame( PageTwo ))
-		button4.grid(row = 3, column = 0)
+		button4.grid(row = 1, column = 1)
+
+		button5 = ttk.Button(frame3, text = "กลับหน้าคำนวณราคาน้ำมัน", command = lambda: controller.show_frame( StartPage ))
+		button5.grid(row = 1, column = 2)
 
 	def CalProduct(self):
 		self.product1 = int(self.product_number.get()) * int(self.product_price.get())
