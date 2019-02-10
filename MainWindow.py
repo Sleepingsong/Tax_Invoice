@@ -34,6 +34,8 @@ class Invoice( tk.Tk ):
 
 class StartPage( tk.Frame ): #Calculate Price
 
+
+
 	def __init__(self,parent,controller):
 		tk.Frame.__init__( self,parent )
 
@@ -42,23 +44,21 @@ class StartPage( tk.Frame ): #Calculate Price
 
 		frame = ttk.LabelFrame( self, text = 'สินค้า 1')
 		frame.grid( row = 0,column = 0, sticky =W)
-		frame2 = ttk.LabelFrame( self, text = 'สินค้า 2' )
-		frame2.grid( row = 0,column = 1, sticky =W)
-		frame3 = ttk.LabelFrame( self, text = 'สินค้า 3' )
-		frame3.grid( row = 0,column = 2, sticky =W)
-		frame4 = ttk.LabelFrame( self, text = 'สินค้า 4' )
-		frame4.grid( row = 1,column = 0, sticky =W)
-		frame5 = ttk.LabelFrame( self, text = 'สินค้า 5' )
-		frame5.grid( row = 1,column = 1, sticky =EW)
-		frame6 = ttk.LabelFrame( self, text = 'สินค้า 6' )
-		frame6.grid( row = 1,column = 2, sticky =W)
 		frame7 = ttk.LabelFrame( self, text = 'ราคาน้ำมัน ณ ปัจจุบัน')
 		frame7.grid( row = 2, columnspan = 4 , sticky = "nsw")
 		frame8 = ttk.LabelFrame( self, text = 'ชุดคำสั่ง')
 		frame8.grid( row = 0,column = 3)
+		frame9 = ttk.LabelFrame(self, text = "คำนวณเงิน")
+		frame9.grid(row = 2, column = 0, columnspan = 2, sticky = NE)
 
 
 
+		self.chk1 = BooleanVar()
+		self.chk2 = BooleanVar()
+		self.chk3 = BooleanVar()
+		self.chk4 = BooleanVar()
+		self.chk5 = BooleanVar()
+		self.chk6 = BooleanVar()
 
 
 		load1 = Image.open("Gasohol95.jpg")
@@ -67,92 +67,102 @@ class StartPage( tk.Frame ): #Calculate Price
 		img1 = Label(frame, image=render)
 		img1.image = render
 		img1.grid(row = 0)
-		Product1 = Checkbutton(frame, text = "Supreme Gasohol 95", font = AFont)
+		Product1 = Checkbutton(frame, text = "Supreme Gasohol 95", font = AFont, variable = self.chk1)
 		Product1.grid(row = 1 , column = 0)
 
 
 		load2 = Image.open("Gasohol95_Plus.jpg")
 		load2 = load2.resize((150,60), Image.ANTIALIAS)
 		render = ImageTk.PhotoImage(load2)
-		img2 = Label(frame2, image=render)
+		img2 = Label(frame, image=render)
 		img2.image = render
-		img2.grid(row = 0)
-		Product2 = Checkbutton(frame2, text = "Supreme Plus Gasohol 95", font = AFont)
-		Product2.grid(row = 1 , column = 0)
+		img2.grid(row = 0, column = 1)
+		Product2 = Checkbutton(frame, text = "Supreme Plus Gasohol 95", font = AFont, variable = self.chk2)
+		Product2.grid(row = 1 , column = 1)
 
 		load3 = Image.open("Gasohol_E20.jpg")
 		load3 = load3.resize((150,60), Image.ANTIALIAS)
 		render = ImageTk.PhotoImage(load3)
-		img3 = Label(frame3, image=render)
+		img3 = Label(frame, image=render)
 		img3.image = render
-		img3.grid(row = 0)
-		Product3 = Checkbutton(frame3, text = "Supreme E20", font = AFont)
-		Product3.grid(row = 1 , column = 0)
+		img3.grid(row = 0, column = 2)
+		Product3 = Checkbutton(frame, text = "Supreme E20", font = AFont, variable = self.chk3)
+		Product3.grid(row = 1 , column = 2)
 
 		load4 = Image.open("Gasohol_91.jpg")
 		load4 = load4.resize((150,60), Image.ANTIALIAS)
 		render = ImageTk.PhotoImage(load4)
-		img4 = Label(frame4, image=render)
+		img4 = Label(frame, image=render)
 		img4.image = render
-		img4.grid(row = 0)
-		Product4 = Checkbutton(frame4, text = "Supreme Gasohol 91", font = AFont)
-		Product4.grid(row = 1 , column = 0)
+		img4.grid(row = 2,column = 0)
+		Product4 = Checkbutton(frame, text = "Supreme Gasohol 91", font = AFont, variable = self.chk4)
+		Product4.grid(row = 3 , column = 0)
 
 		load5 = Image.open("Diesel_Plus.jpg")
 		load5 = load5.resize((150,60), Image.ANTIALIAS)
 		render = ImageTk.PhotoImage(load5)
-		img5 = Label(frame5, image=render)
+		img5 = Label(frame, image=render)
 		img5.image = render
-		img5.grid(row = 0)
-		Product5 = Checkbutton(frame5, text = "Supreme Plus Diesel", font = AFont)
-		Product5.grid(row = 1 , column = 0)
+		img5.grid(row = 2, column = 1)
+		Product5 = Checkbutton(frame, text = "Supreme Plus Diesel", font = AFont, variable = self.chk5)
+		Product5.grid(row = 3, column = 1)
 
 		load6 = Image.open("Diesel.jpg")
 		load6 = load6.resize((150,60), Image.ANTIALIAS)
 		render = ImageTk.PhotoImage(load6)
-		img6 = Label(frame6, image=render)
+		img6 = Label(frame, image=render)
 		img6.image = render
-		img6.grid(row = 0)
-		Product6 = Checkbutton(frame6, text = "Supreme Diesel", font = AFont)
-		Product6.grid(row = 1 , column = 0)
+		img6.grid(row = 2, column = 2)
+		Product6 = Checkbutton(frame, text = "Supreme Diesel", font = AFont, variable = self.chk5)
+		Product6.grid(row = 3 , column = 2)
 
 
 		Label( frame7,text = 'Supreme Gasohol 95 :' , font = BFont).grid( row = 0,column = 0, sticky = E)
 		Label( frame7,text = 'บาท (ต่อลิตร)' , font = BFont).grid( row = 0,column = 2)
-		G95 = StringVar(self, value = '26.75')
-		self.G95_price = Entry(frame7, textvariable = G95 ,width = 8, justify = 'right')
+		self.G95_price = Entry(frame7,width = 8, justify = 'right')
 		self.G95_price.grid(row = 0, column = 1)
 
 		Label( frame7,text = 'Supreme Plus Gasohol 95 :' , font = BFont).grid( row = 1,column = 0, sticky = E)
 		Label( frame7,text = 'บาท (ต่อลิตร)' , font = BFont).grid( row = 1,column = 2)
-		GP95 = StringVar(self, value = '26.75')
-		self.GP95_price = Entry(frame7, textvariable = GP95 ,width = 8, justify = 'right')
+		self.GP95_price = Entry(frame7 ,width = 8, justify = 'right')
 		self.GP95_price.grid(row = 1, column = 1)
+
+
 
 		Label( frame7,text = 'Supreme E20 :' , font = BFont).grid( row = 2,column = 0, sticky = E)
 		Label( frame7,text = 'บาท (ต่อลิตร)' , font = BFont).grid( row = 2,column = 2)
-		E20 = StringVar(self, value = '26.75')
-		self.E20_price = Entry(frame7, textvariable = E20 ,width = 8, justify = 'right')
+		self.E20_price = Entry(frame7 ,width = 8, justify = 'right')
 		self.E20_price.grid(row = 2, column = 1)
 
 		Label( frame7,text = 'Supreme Gasohol 91 :' , font = BFont).grid( row = 3,column = 0, sticky = E)
 		Label( frame7,text = 'บาท (ต่อลิตร)' , font = BFont).grid( row = 3,column = 2)
-		G91 = StringVar(self, value = '26.75')
-		self.G91_price = Entry(frame7, textvariable = G91 ,width = 8, justify = 'right')
+
+		self.G91_price = Entry(frame7 ,width = 8, justify = 'right')
 		self.G91_price.grid(row = 3, column = 1)
 
 		Label( frame7,text = 'Supreme Diesel :' , font = BFont).grid( row = 4,column = 0, sticky = E)
 		Label( frame7,text = 'บาท (ต่อลิตร)' , font = BFont).grid( row = 4,column = 2)
-		DS = StringVar(self, value = '26.75')
-		self.DS_price = Entry(frame7, textvariable = DS ,width = 8, justify = 'right')
+		self.DS_price = Entry(frame7 ,width = 8, justify = 'right')
 		self.DS_price.grid(row = 4, column = 1)
 
 		Label( frame7,text = 'Supreme Plus Diesel :' , font = BFont).grid( row = 5,column = 0, sticky = E)
 		Label( frame7,text = 'บาท (ต่อลิตร)' , font = BFont).grid( row = 5,column = 2)
-		DSP = StringVar(self, value = '26.75')
-		self.DSP_price = Entry(frame7, textvariable = DS ,width = 8, justify = 'right')
+		self.DSP_price = Entry(frame7,width = 8, justify = 'right')
 		self.DSP_price.grid(row = 5, column = 1)
 
+		Label( frame9,text = 'จำนวนลิตร' , font = BFont).grid( row = 0,column = 0)
+		Label( frame9,text = 'ลิตร' , font = BFont).grid( row = 0,column = 2)
+		self.product_price = Entry( frame9 ,justify='right' )
+		self.product_price.grid( row = 0,column = 1 )
+		Label( frame9,text = 'ยอดทั้งหมด' , font = BFont).grid( row = 1,column = 0)
+		Label( frame9,text = 'บาท' , font = BFont).grid( row = 1,column = 2)
+		self.total_price = Entry( frame9 ,justify='right' )
+		self.total_price.grid( row = 1,column = 1 )
+
+		button4 = ttk.Button(frame9, text = "คำนวณราคา", command = self.CalPrice)
+		button4.grid(row = 2, columnspan = 3)
+		button4 = ttk.Button(frame9, text = "ยกเลิก", command = self.Clear)
+		button4.grid(row = 3, columnspan = 3)
 
 
 		button3 = ttk.Button( frame8,text = "หน้าข้อมูลลูกค้า",command = lambda: controller.show_frame( PageTwo ) )
@@ -162,7 +172,74 @@ class StartPage( tk.Frame ): #Calculate Price
 		button3 = ttk.Button( frame8,text = "คำนวณสินค้าเพิ่มเติม",command = lambda: controller.show_frame( PageThree ) )
 		button3.grid( row = 2,column = 0,)
 
+		self.ShowG95()
+		self.ShowGP95()
+		self.ShowDS()
+		self.ShowDSP()
+		self.ShowE20()
+		self.ShowG91()
 
+	def ShowG95(self):
+		con = sqlite3.connect('MyDatabase.db')
+		cur = con.cursor()
+		cur.execute('SELECT Product_Price FROM Product WHERE Product_ID = 1')
+		self.G95_price.insert(END,cur.fetchall())
+
+
+
+	def ShowGP95(self):
+		con = sqlite3.connect('MyDatabase.db')
+		cur = con.cursor()
+		cur.execute('SELECT Product_Price FROM Product WHERE Product_ID = 26')
+		self.GP95_price.insert(END,cur.fetchall())
+
+	def ShowE20(self):
+		con = sqlite3.connect('MyDatabase.db')
+		cur = con.cursor()
+		cur.execute('SELECT Product_Price FROM Product WHERE Product_ID = 27')
+		self.E20_price.insert(END,cur.fetchall())
+
+	def ShowG91(self):
+		con = sqlite3.connect('MyDatabase.db')
+		cur = con.cursor()
+		cur.execute('SELECT Product_Price FROM Product WHERE Product_ID = 28')
+		self.G91_price.insert(END,cur.fetchall())
+
+	def ShowDS(self):
+		con = sqlite3.connect('MyDatabase.db')
+		cur = con.cursor()
+		cur.execute('SELECT Product_Price FROM Product WHERE Product_ID = 29')
+		self.DS_price.insert(END,cur.fetchall())
+
+	def ShowDSP(self):
+		con = sqlite3.connect('MyDatabase.db')
+		cur = con.cursor()
+		cur.execute('SELECT Product_Price FROM Product WHERE Product_ID = 30')
+		self.DSP_price.insert(END,cur.fetchall())
+
+	def CalPrice(self):
+		if self.chk1.get() == True:
+			price = float(self.product_price.get()) * float(self.G95_price.get())
+			self.total_price.insert(END,round(price,2))
+		if self.chk2.get() == True:
+			price = int(self.product_price.get()) * float(self.GP95_price.get())
+			self.total_price.insert(END,round(price,2))
+		if self.chk3.get() == True:
+			price = float(self.product_price.get()) * float(self.E20_price.get())
+			self.total_price.insert(END,round(price,2))
+		if self.chk4.get() == True:
+			price = float(self.product_price.get()) * float(self.G91_price.get())
+			self.total_price.insert(END,round(price,2))
+		if self.chk5.get() == True:
+			price = float(self.product_price.get()) * float(self.DS_price.get())
+			self.total_price.insert(END,round(price,2))
+		if self.chk6.get() == True:
+			price = float(self.product_price.get()) * float(self.DSP_price.get())
+			self.total_price.insert(END,round(price,2))
+
+	def Clear(self):
+		self.product_price.delete(0, END)
+		self.total_price.delete(0, END)
 
 class PageOne( tk.Frame ):  # Product Page
 
