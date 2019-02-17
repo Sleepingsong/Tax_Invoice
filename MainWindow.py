@@ -503,17 +503,23 @@ class PageThree (tk.Frame): #CalPrice
 
 
 		Label( frame,text = "ชื่อสินค้า" ).grid( row = 1,sticky = W )
-		self.product_name = Entry( frame,width = 40,justify='right'   )
+		self.product_name = ttk.Combobox( frame,width = 40,justify='right'   )
+		self.product_name['values'] = self.combo_input()
 		self.product_name.grid( row = 2,column = 0 )
-		self.product_name2 = Entry( frame,width = 40,justify='right'  )
+		self.product_name2 = ttk.Combobox( frame,width = 40,justify='right'  )
+		self.product_name2['values'] = self.combo_input()
 		self.product_name2.grid( row = 3,column = 0 )
-		self.product_name3 = Entry( frame,width = 40,justify='right'  )
+		self.product_name3 = ttk.Combobox( frame,width = 40,justify='right'  )
+		self.product_name3['values'] = self.combo_input()
 		self.product_name3.grid( row = 4,column = 0 )
-		self.product_name4 = Entry( frame,width = 40,justify='right'  )
+		self.product_name4 = ttk.Combobox( frame,width = 40,justify='right'  )
+		self.product_name4['values'] = self.combo_input()
 		self.product_name4.grid( row = 5,column = 0 )
-		self.product_name5 = Entry( frame,width = 40,justify='right'  )
+		self.product_name5 = ttk.Combobox( frame,width = 40,justify='right'  )
+		self.product_name5['values'] = self.combo_input()
 		self.product_name5.grid( row = 6,column = 0 )
-		self.product_name6 = Entry( frame,width = 40,justify='right'  )
+		self.product_name6 = ttk.Combobox( frame,width = 40,justify='right'  )
+		self.product_name6['values'] = self.combo_input()
 		self.product_name6.grid( row = 7,column = 0 )
 
 		Label( frame,text = "ประเภทสินค้า" ).grid( row = 1,column = 1,sticky = W )
@@ -631,6 +637,16 @@ class PageThree (tk.Frame): #CalPrice
 		self.productVat = self.productTotal * 0.7 + self.productTotal
 		self.product_grand_total.insert(END, self.productVat)
 
+	def combo_input(self):
+		db = sqlite3.connect('MyDatabase.db')
+		cursor = db.execute('SELECT Product_Name FROM Product')
+
+		data = []
+
+		for row in cursor.fetchall():
+			data.append(row[0])
+
+		return data
 
 app = Invoice()
 app.geometry( "800x480" )
