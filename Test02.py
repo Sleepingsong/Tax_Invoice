@@ -1,22 +1,30 @@
-from tkinter import *
+from requests import Session
+import zeep
+from zeep import Client
+from zeep.transports import Transport
 
-def on_click():
-    print(chk1.get(), chk2.get(), chk3.get(), chk4.get(), chk5.get(), chk6.get())
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-root = Tk()
-root.option_add("*Font", "impact 30")
-chk1 = BooleanVar()
-chk2 = BooleanVar()
-chk3 = BooleanVar()
-chk4 = BooleanVar()
-chk5 = BooleanVar()
-chk6 = BooleanVar()
-Label(root, text="Your interests", bg="gold").pack()
-Checkbutton(root, text="Music", variable=chk1).pack(anchor=W) # W = West
-Checkbutton(root, text="Book", variable=chk2).pack(anchor=W)
-Checkbutton(root, text="Movie", variable=chk3).pack(anchor=W)
-# Checkbutton(root, text="Photography", variable=chk4).pack(anchor=W)
-# Checkbutton(root, text="Game", variable=chk5).pack(anchor=W)
-# Checkbutton(root, text="Travel", variable=chk6).pack(anchor=W)
-Button(root, text="submit", command=on_click).pack()
-root.mainloop()
+session = Session()
+session.verify = False
+transport = Transport(session=session)
+
+client = Client('https://rdws.rd.go.th/serviceRD3/vatserviceRD3.asmx?wsdl',
+                transport=transport)
+result = client.service.Service(
+    username='anonymous',
+    password='anonymous',
+    TIN='0105548115897',
+    ProvinceCode=0,
+    BranchNumber=0,
+    AmphurCode=9
+)
+# Convert Zeep Response object (in this case Service) to Python dict.
+result = zeep.helpers.serialize_object(result)
+# print(result)
+for k in result.keys():
+    # print(k, result[k])
+    if result[k] is not None:
+        v = result[k].get('anyType', None)[0]
+print(k, v)

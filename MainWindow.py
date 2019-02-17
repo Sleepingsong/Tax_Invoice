@@ -47,7 +47,7 @@ class StartPage( tk.Frame ): #Calculate Price
 		frame7 = ttk.LabelFrame( self, text = 'ราคาน้ำมัน ณ ปัจจุบัน')
 		frame7.grid( row = 2, columnspan = 4 , sticky = "nsw")
 		frame8 = ttk.LabelFrame( self, text = 'ชุดคำสั่ง')
-		frame8.grid( row = 0,column = 3)
+		frame8.grid( row = 0,column = 3, sticky = N)
 		frame9 = ttk.LabelFrame(self, text = "คำนวณเงิน")
 		frame9.grid(row = 2, column = 0, columnspan = 2, sticky = NE)
 
@@ -166,11 +166,11 @@ class StartPage( tk.Frame ): #Calculate Price
 
 
 		button3 = ttk.Button( frame8,text = "หน้าข้อมูลลูกค้า",command = lambda: controller.show_frame( PageTwo ) )
-		button3.grid( row = 0,column = 0,)
+		button3.grid( row = 2,column = 0,)
 		button3 = ttk.Button( frame8,text = "หน้าข้อมูลสินค้า",command = lambda: controller.show_frame( PageOne ) )
 		button3.grid( row = 1,column = 0,)
 		button3 = ttk.Button( frame8,text = "คำนวณสินค้าเพิ่มเติม",command = lambda: controller.show_frame( PageThree ) )
-		button3.grid( row = 2,column = 0,)
+		button3.grid( row = 0,column = 0,)
 
 		self.ShowG95()
 		self.ShowGP95()
@@ -266,9 +266,11 @@ class PageOne( tk.Frame ):  # Product Page
 		self.price = Entry( frame,justify='right'  )
 		self.price.grid( row = 3,column = 1 )
 
-		ttk.Button( frame,text = 'เพิ่มข้อมูล',command = self.adding ).grid( row = 4,column = 0,columnspan = 2 )
-		self.message = Label( text = '',fg = 'red' )
-		self.message.grid( row = 4,column = 0 )
+		ttk.Button( frame,text = 'เพิ่มข้อมูล',command = self.adding ).grid( row = 4,column = 0)
+		button1 = ttk.Button( frame,text = 'ลบข้อมูล',command = self.deleting )
+		button1.grid( row = 4,column = 1 )
+		button2 = ttk.Button( frame,text = 'แก้ไขข้อมูล',command = self.editing )
+		button2.grid( row = 4,column = 2 )
 
 		self.tree = ttk.Treeview( self,height = 15,column = ("2","3") )
 		self.tree.grid( row = 1,column = 0)
@@ -279,14 +281,11 @@ class PageOne( tk.Frame ):  # Product Page
 		frame2 = LabelFrame(self, text = 'ชุดคำสั่ง')
 		frame2.grid(row = 0, column = 0,sticky = E)
 
-		button1 = ttk.Button( frame2,text = 'ลบข้อมูล',command = self.deleting )
-		button1.grid( row = 0,column = 0 )
-		button2 = ttk.Button( frame2,text = 'แก้ไขข้อมูล',command = self.editing )
-		button2.grid( row = 1,column = 0 )
+
 		button3 = ttk.Button( frame2,text = "หน้าข้อมูลลูกค้า",command = lambda: controller.show_frame( PageTwo ) )
-		button3.grid( row = 0,column = 1,)
+		button3.grid( row = 1,column = 0,)
 		button3 = ttk.Button( frame2,text = "หน้าคำนวณสินค้า",command = lambda: controller.show_frame( StartPage ) )
-		button3.grid( row = 0,column = 2,)
+		button3.grid( row = 0,column = 0,)
 
 		self.viewing_record()
 
@@ -401,9 +400,9 @@ class PageTwo( tk.Frame ):  # Customer Page
 		self.Car_plate = Entry( frame2,justify='right'  )
 		self.Car_plate.grid( row = 1,column = 5 )
 
-		Label( frame2,text = 'ชื่อบริษัท' ).grid( row = 1,column = 6 )
+		Label( frame2,text = 'ชื่อบริษัท' ).grid( row = 3,column = 2 )
 		self.Company_name = Entry( frame2,justify='right'  )
-		self.Company_name.grid( row = 1,column = 7 )
+		self.Company_name.grid( row = 3,column = 3 )
 
 		Label( frame2,text = 'เบอร์โทรศัพท์' ).grid( row = 2,column = 2 )
 		self.Phone_number = Entry( frame2,justify='right'  )
@@ -413,9 +412,11 @@ class PageTwo( tk.Frame ):  # Customer Page
 		self.Customer_address = Entry( frame2 ,justify='right' )
 		self.Customer_address.grid( row = 2,column = 5 )
 
-		ttk.Button( frame2,text = 'เพิ่มข้อมูล',command = self.adding2 ).grid( row = 3,column = 7,columnspan = 2 )
-		self.message2 = Label( text = '',fg = 'red' )
-		self.message2.grid( row = 3,column = 0 )
+		ttk.Button( frame2,text = 'เพิ่มข้อมูล',command = self.adding2 ).grid( row = 4,column = 2 )
+		button1 = ttk.Button( frame2,text = 'ลบข้อมูล',command = self.deleting2 )
+		button1.grid( row = 4,column = 3 )
+		button2 = ttk.Button( frame2,text = 'แก้ไขข้อมูล' )
+		button2.grid( row = 4,column = 4 )
 
 		self.tree2 = ttk.Treeview( self,height = 15,column = ("1","2","3") )
 		self.tree2.grid( row = 2,column = 0)
@@ -425,16 +426,13 @@ class PageTwo( tk.Frame ):  # Customer Page
 		self.tree2.heading( 3,text = 'เบอร์โทรศัพท์',anchor = W )
 
 		frame2 = LabelFrame(self, text = 'ชุดคำสั่ง')
-		frame2.grid(row = 1, column = 0, sticky = W)
+		frame2.grid(row = 0, column = 0, sticky = E)
 
-		button1 = ttk.Button( frame2,text = 'ลบข้อมูล',command = self.deleting2 )
-		button1.grid( row = 0,column = 0 )
-		# button2 = ttk.Button( frame2,text = 'แก้ไขข้อมูล',command = self.editing )
-		# button2.grid( row = 1,column = 0 )
+
 		button3 = ttk.Button( frame2,text = "หน้าข้อมูลสินค้า",command = lambda: controller.show_frame( PageOne ) )
-		button3.grid( row = 0,column = 1,)
+		button3.grid( row = 1,column = 0,)
 		button3 = ttk.Button( frame2,text = "หน้าคำนวณสินค้า",command = lambda: controller.show_frame( StartPage ) )
-		button3.grid( row = 0,column = 2,)
+		button3.grid( row = 0,column = 0,)
 
 
 		self.viewing_record2()
