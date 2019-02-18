@@ -34,7 +34,7 @@ class Invoice( tk.Tk ):
 
 class StartPage( tk.Frame ): #Calculate Price
 
-
+	db_name = 'MyDatabase.db'
 
 	def __init__(self,parent,controller):
 		tk.Frame.__init__( self,parent )
@@ -42,14 +42,16 @@ class StartPage( tk.Frame ): #Calculate Price
 		AFont = font.Font(family='Helvetica', size=12, weight='bold')
 		BFont = font.Font(family='Helvetica', size=11,)
 
-		frame = ttk.LabelFrame( self, text = 'สินค้า 1')
-		frame.grid( row = 0,column = 0, sticky =W)
+		frame = ttk.LabelFrame( self, text = 'สินค้า')
+		frame.grid( row = 1,column = 0, sticky =W)
 		frame7 = ttk.LabelFrame( self, text = 'ราคาน้ำมัน ณ ปัจจุบัน')
-		frame7.grid( row = 2, columnspan = 4 , sticky = "nsw")
+		frame7.grid( row = 3, columnspan = 4 , sticky = "nsw")
 		frame8 = ttk.LabelFrame( self, text = 'ชุดคำสั่ง')
 		frame8.grid( row = 0,column = 3, sticky = N)
 		frame9 = ttk.LabelFrame(self, text = "คำนวณเงิน")
-		frame9.grid(row = 2, column = 0, columnspan = 2, sticky = NE)
+		frame9.grid(row = 3, column = 0, columnspan = 2, sticky = NE)
+		frame10 = ttk.LabelFrame(self, text = "ผู้ซื้อ")
+		frame10.grid(row = 0, column = 0, sticky = W)
 
 
 
@@ -159,17 +161,34 @@ class StartPage( tk.Frame ): #Calculate Price
 		self.total_price = Entry( frame9 ,justify='right' )
 		self.total_price.grid( row = 1,column = 1 )
 
+		Label(frame10, text = "ชื่อผู้ซื้อ :", font = BFont).grid(row =0)
+		self.product_name = ttk.Combobox(frame10, width=20, justify='right' , state = 'readonly')
+		self.product_name['values'] = self.combo_customer()
+		self.product_name.grid(row = 0 , column =1)
+		button1 = ttk.Button(frame10, text = "ดูข้อมูลเพิ่มเติม",width = 15, command = lambda : self.show_cus_name())
+		button1.grid(row = 0 ,column = 2)
+		Label(frame10, text = "รหัสประจำตัว", font = BFont).grid(row =1)
+		Label(frame10, text = "ทะเบียนรถ", font = BFont).grid(row=2)
+		self.invoice_id = ttk.Entry(frame10).grid(row = 1 , column=1, sticky = W)
+		self.car_plate = ttk.Entry(frame10).grid(row=2, column=1, sticky=W)
+		Label(frame10, text = "ชื่อ", font = BFont).grid(row =1,column =2,sticky = W)
+		self.c_name = ttk.Entry(frame10).grid(row = 1 , column =2, sticky = E)
+		Label(frame10, text = "เบอร์โทรศัพท์", font = BFont).grid(row = 1,column = 3)
+		self.phone_num = ttk.Entry(frame10).grid(row = 1 ,column = 4)
+		Label(frame10, text = "ที่อยู่", font = BFont).grid(row =2 , column = 2, sticky = W)
+		self.c_address = ttk.Entry(frame10, width = 55).grid(row = 2 ,column = 2, columnspan = 3,sticky = E )
+
 		button4 = ttk.Button(frame9, text = "คำนวณราคา", command = self.CalPrice)
 		button4.grid(row = 2, columnspan = 3)
 		button4 = ttk.Button(frame9, text = "ยกเลิก", command = self.Clear)
 		button4.grid(row = 3, columnspan = 3)
 
 
-		button3 = ttk.Button( frame8,text = "หน้าข้อมูลลูกค้า",command = lambda: controller.show_frame( PageTwo ) )
+		button3 = ttk.Button( frame8,text = "หน้าข้อมูลลูกค้า",command = lambda: controller.show_frame( PageTwo ) ,width=15)
 		button3.grid( row = 2,column = 0,)
-		button3 = ttk.Button( frame8,text = "หน้าข้อมูลสินค้า",command = lambda: controller.show_frame( PageOne ) )
+		button3 = ttk.Button( frame8,text = "หน้าข้อมูลสินค้า",command = lambda: controller.show_frame( PageOne ) ,width=15)
 		button3.grid( row = 1,column = 0,)
-		button3 = ttk.Button( frame8,text = "คำนวณสินค้าเพิ่มเติม",command = lambda: controller.show_frame( PageThree ) )
+		button3 = ttk.Button( frame8,text = "คำนวณสินค้าเพิ่มเติม",command = lambda: controller.show_frame( PageThree ) ,width=15 )
 		button3.grid( row = 0,column = 0,)
 
 		self.ShowG95()
@@ -178,6 +197,28 @@ class StartPage( tk.Frame ): #Calculate Price
 		self.ShowDSP()
 		self.ShowE20()
 		self.ShowG91()
+
+		self.G95_price.config(state='readonly')
+		self.GP95_price.config(state='readonly')
+		self.E20_price.config(state='readonly')
+		self.G91_price.config(state='readonly')
+		self.DS_price.config(state='readonly')
+		self.DSP_price.config(state='readonly')
+
+
+	def show_cus_name(self):
+
+		con = sqlite3.connect('MyDatabase.db')
+		cur = con.cursor()
+		cur.execute('SELECT Customer_Name FROM Customer WHERE Customer_Name = ?', self.product_name.get())
+		# self.c_name.insert(END,cur.fetchall())
+		print(cur.fetchall())
+
+
+
+
+
+
 
 	def ShowG95(self):
 		con = sqlite3.connect('MyDatabase.db')
@@ -240,6 +281,17 @@ class StartPage( tk.Frame ): #Calculate Price
 	def Clear(self):
 		self.product_price.delete(0, END)
 		self.total_price.delete(0, END)
+
+	def combo_customer(self):
+		db = sqlite3.connect('MyDatabase.db')
+		cursor = db.execute('SELECT Customer_Name FROM Customer')
+
+		data = []
+
+		for row in cursor.fetchall():
+			data.append(row[0])
+
+		return data
 
 class PageOne( tk.Frame ):  # Product Page
 
@@ -502,89 +554,89 @@ class PageThree (tk.Frame): #CalPrice
 
 		Label( frame,text = "ชื่อสินค้า" ).grid( row = 1,sticky = W )
 		self.product_name = ttk.Combobox( frame,width = 40,justify='right'   )
-		self.product_name['values'] = self.combo_input()
+		self.product_name['values'] = self.combo_product()
 		self.product_name.grid( row = 2,column = 0 )
 		self.product_name2 = ttk.Combobox( frame,width = 40,justify='right'  )
-		self.product_name2['values'] = self.combo_input()
+		self.product_name2['values'] = self.combo_product()
 		self.product_name2.grid( row = 3,column = 0 )
 		self.product_name3 = ttk.Combobox( frame,width = 40,justify='right'  )
-		self.product_name3['values'] = self.combo_input()
+		self.product_name3['values'] = self.combo_product()
 		self.product_name3.grid( row = 4,column = 0 )
 		self.product_name4 = ttk.Combobox( frame,width = 40,justify='right'  )
-		self.product_name4['values'] = self.combo_input()
+		self.product_name4['values'] = self.combo_product()
 		self.product_name4.grid( row = 5,column = 0 )
 		self.product_name5 = ttk.Combobox( frame,width = 40,justify='right'  )
-		self.product_name5['values'] = self.combo_input()
+		self.product_name5['values'] = self.combo_product()
 		self.product_name5.grid( row = 6,column = 0 )
 		self.product_name6 = ttk.Combobox( frame,width = 40,justify='right'  )
-		self.product_name6['values'] = self.combo_input()
+		self.product_name6['values'] = self.combo_product()
 		self.product_name6.grid( row = 7,column = 0 )
 
-		Label( frame,text = "ประเภทสินค้า" ).grid( row = 1,column = 1,sticky = W )
-		self.product_type = ttk.Combobox(frame, width = 20, state='readonly')
-		self.product_type['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
-		self.product_type.grid( row = 2,column = 1 )
-		self.product_type2 = ttk.Combobox(frame, width = 20, state='readonly')
-		self.product_type2['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
-		self.product_type2.grid( row = 3,column = 1 )
-		self.product_type3 = ttk.Combobox(frame, width = 20, state='readonly')
-		self.product_type3['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
-		self.product_type3.grid( row = 4,column = 1 )
-		self.product_type4 = ttk.Combobox(frame, width = 20, state='readonly')
-		self.product_type4['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
-		self.product_type4.grid( row = 5,column = 1 )
-		self.product_type5 = ttk.Combobox(frame, width = 20, state='readonly')
-		self.product_type5['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
-		self.product_type5.grid( row = 6,column = 1 )
-		self.product_type6 = ttk.Combobox(frame, width = 20, state='readonly')
-		self.product_type6['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
-		self.product_type6.grid( row = 7,column = 1 )
+		# Label( frame,text = "ประเภทสินค้า" ).grid( row = 1,column = 1,sticky = W )
+		# self.product_type = ttk.Combobox(frame, width = 20, state='readonly')
+		# self.product_type['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
+		# self.product_type.grid( row = 2,column = 1 )
+		# self.product_type2 = ttk.Combobox(frame, width = 20, state='readonly')
+		# self.product_type2['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
+		# self.product_type2.grid( row = 3,column = 1 )
+		# self.product_type3 = ttk.Combobox(frame, width = 20, state='readonly')
+		# self.product_type3['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
+		# self.product_type3.grid( row = 4,column = 1 )
+		# self.product_type4 = ttk.Combobox(frame, width = 20, state='readonly')
+		# self.product_type4['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
+		# self.product_type4.grid( row = 5,column = 1 )
+		# self.product_type5 = ttk.Combobox(frame, width = 20, state='readonly')
+		# self.product_type5['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
+		# self.product_type5.grid( row = 6,column = 1 )
+		# self.product_type6 = ttk.Combobox(frame, width = 20, state='readonly')
+		# self.product_type6['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
+		# self.product_type6.grid( row = 7,column = 1 )
 
 
-		Label( frame,text = "ราคา(บาท)" ).grid( row = 1,column = 2,sticky = W )
+		Label( frame,text = "ราคา(บาท)" ).grid( row = 1,column = 1,sticky = W )
 		self.product_price = Entry(frame, width = 10,justify='right' )
-		self.product_price.grid(row = 2, column = 2)
+		self.product_price.grid(row = 2, column = 1)
 		self.product_price2 = Entry(frame, width = 10,justify='right' )
-		self.product_price2.grid(row = 3, column = 2)
+		self.product_price2.grid(row = 3, column = 1)
 		self.product_price3 = Entry(frame, width = 10,justify='right' )
-		self.product_price3.grid(row = 4, column = 2)
+		self.product_price3.grid(row = 4, column = 1)
 		self.product_price4 = Entry(frame, width = 10,justify='right' )
-		self.product_price4.grid(row = 5, column = 2)
+		self.product_price4.grid(row = 5, column = 1)
 		self.product_price5 = Entry(frame, width = 10,justify='right' )
-		self.product_price5.grid(row = 6, column = 2)
+		self.product_price5.grid(row = 6, column = 1)
 		self.product_price6 = Entry(frame, width = 10,justify='right' )
-		self.product_price6.grid(row = 7, column = 2)
+		self.product_price6.grid(row = 7, column = 1)
 
-		Label(frame,text = "จำนวน").grid(row = 1, column = 3, sticky = W)
+		Label(frame,text = "จำนวน").grid(row = 1, column = 2, sticky = W)
 		self.product_number  = Entry(frame, width = 10,justify='right' )
-		self.product_number.grid(row =2, column = 3)
+		self.product_number.grid(row =2, column = 2)
 		self.product_number2  = Entry(frame, width = 10,justify='right' )
-		self.product_number2.grid(row =3, column = 3)
+		self.product_number2.grid(row =3, column = 2)
 		self.product_number3  = Entry(frame, width = 10,justify='right' )
-		self.product_number3.grid(row =4, column = 3)
+		self.product_number3.grid(row =4, column = 2)
 		self.product_number4  = Entry(frame, width = 10,justify='right' )
-		self.product_number4.grid(row =5, column = 3)
+		self.product_number4.grid(row =5, column = 2)
 		self.product_number5  = Entry(frame, width = 10,justify='right' )
-		self.product_number5.grid(row =6, column = 3)
+		self.product_number5.grid(row =6, column = 2)
 		self.product_number6  = Entry(frame, width = 10,justify='right' )
-		self.product_number6.grid(row =7, column = 3)
+		self.product_number6.grid(row =7, column = 2)
 
-		Label(frame, text = "ราคาทั้งหมด(บาท)").grid(row = 1, column = 4, sticky = W)
+		Label(frame, text = "ราคาทั้งหมด(บาท)").grid(row = 1, column = 3, sticky = W)
 		self.product_total = Text(frame, height =1 , width= 10 )
-		self.product_total.grid(row = 2, column = 4)
+		self.product_total.grid(row = 2, column = 3)
 		self.product_total2 = Text(frame, height =1 , width= 10, )
-		self.product_total2.grid(row = 3, column = 4)
+		self.product_total2.grid(row = 3, column = 3)
 		self.product_total3 = Text(frame, height =1 , width= 10, )
-		self.product_total3.grid(row = 4, column = 4)
+		self.product_total3.grid(row = 4, column = 3)
 		self.product_total4 = Text(frame, height =1 , width= 10, )
-		self.product_total4.grid(row = 5, column = 4)
+		self.product_total4.grid(row = 5, column = 3)
 		self.product_total5 = Text(frame, height =1 , width= 10, )
-		self.product_total5.grid(row = 6, column = 4)
+		self.product_total5.grid(row = 6, column = 3)
 		self.product_total6 = Text(frame, height =1 , width= 10, )
-		self.product_total6.grid(row = 7, column = 4)
+		self.product_total6.grid(row = 7, column = 3)
 
 		frame2 = ttk.LabelFrame( self,text = 'คำนวณราคา' )
-		frame2.grid( row = 1,column = 0, sticky = E)
+		frame2.grid( row = 1,column = 0, sticky = W)
 		Label(frame2, text = "ราคาสินค้าทั้งหมด(ไม่รวม Vat) :").grid(row =1, column = 0)
 		self.product_total_no = Entry(frame2, width = 15, justify = 'right')
 		self.product_total_no.grid(row = 1, column = 1)
@@ -597,23 +649,23 @@ class PageThree (tk.Frame): #CalPrice
 		Label(frame2, text = "ราคาทั้งหมด(รวม Vat) :").grid(row = 3, column = 0)
 		self.product_grand_total = Entry(frame2, width = 15, justify = 'right')
 		self.product_grand_total.grid(row = 3, column = 1)
+		button1 = ttk.Button(frame2, text='คำนวณสินค้าทั้งหมด', command=self.CalProduct, width = 15)
+		button1.grid(row=4, columnspan = 2)
+		button2 = ttk.Button(frame2, text='ล้างข้อมูล', width =15)
+		button2.grid(row=5, columnspan = 2)
 
 		frame3 = ttk.LabelFrame(self, text = "ปุ่มคำสั่งต่างๆ")
-		frame3.grid(row = 4 ,column = 0, sticky = W)
-		button1 = ttk.Button(frame3, text = 'คำนวณสินค้าทั้งหมด', command = self.CalProduct)
-		button1.grid(row = 0)
+		frame3.grid(row = 0 ,column = 1, sticky = NW)
 
-		button2 = ttk.Button(frame3, text = 'ล้างข้อมูล')
-		button2.grid(row = 0, column = 1)
 
-		button3 = ttk.Button(frame3, text = 'หน้าข้อมูลสินค้า', command = lambda: controller.show_frame( PageOne ))
-		button3.grid(row = 1, column =0)
+		button3 = ttk.Button(frame3, text = 'หน้าข้อมูลสินค้า', command = lambda: controller.show_frame( PageOne ), width = 20)
+		button3.grid(row = 2, column =0)
 
-		button4 = ttk.Button(frame3, text = 'หน้าข้อมูลลูกค้า', command = lambda: controller.show_frame( PageTwo ))
-		button4.grid(row = 1, column = 1)
+		button4 = ttk.Button(frame3, text = 'หน้าข้อมูลลูกค้า', command = lambda: controller.show_frame( PageTwo ), width = 20)
+		button4.grid(row = 1, column = 0)
 
-		button5 = ttk.Button(frame3, text = "กลับหน้าคำนวณราคาน้ำมัน", command = lambda: controller.show_frame( StartPage ))
-		button5.grid(row = 1, column = 2)
+		button5 = ttk.Button(frame3, text = "กลับหน้าคำนวณราคาน้ำมัน", command = lambda: controller.show_frame( StartPage ), width = 20)
+		button5.grid(row = 0, column = 0)
 
 	def CalProduct(self):
 		self.product1 = int(self.product_number.get()) * int(self.product_price.get())
@@ -635,7 +687,7 @@ class PageThree (tk.Frame): #CalPrice
 		self.productVat = self.productTotal * 0.7 + self.productTotal
 		self.product_grand_total.insert(END, self.productVat)
 
-	def combo_input(self):
+	def combo_product(self):
 		db = sqlite3.connect('MyDatabase.db')
 		cursor = db.execute('SELECT Product_Name FROM Product')
 
