@@ -63,58 +63,91 @@ class StartPage( tk.Frame ): #Calculate Price
 		self.chk6 = BooleanVar()
 
 
-		load1 = Image.open("Gasohol95.jpg")
-		load1 = load1.resize((150,60), Image.ANTIALIAS)
-		render = ImageTk.PhotoImage(load1)
-		img1 = Label(frame, image=render)
-		img1.image = render
-		img1.grid(row = 0)
+		# load1 = Image.open("Gasohol95.jpg")
+		# load1 = load1.resize((150,60), Image.ANTIALIAS)
+		# render = ImageTk.PhotoImage(load1)
+		# img1 = Label(frame, image=render)
+		# img1.image = render
+		# img1.grid(row = 0)
+		self.image1 = Image.open("Gasohol95.jpg")
+		self.image1 = self.image1.resize((150,60), Image.ANTIALIAS)
+		self.photo1 = ImageTk.PhotoImage(self.image1)
+		self.G95_button = tk.Button(frame, image = self.photo1, height = 60, width = 150)
+		self.G95_button.grid(row = 0)
+
+
 		Product1 = Checkbutton(frame, text = "Supreme Gasohol 95", font = AFont, variable = self.chk1)
 		Product1.grid(row = 1 , column = 0)
 
 
-		load2 = Image.open("Gasohol95_Plus.jpg")
-		load2 = load2.resize((150,60), Image.ANTIALIAS)
-		render = ImageTk.PhotoImage(load2)
-		img2 = Label(frame, image=render)
-		img2.image = render
-		img2.grid(row = 0, column = 1)
+		# load2 = Image.open("Gasohol95_Plus.jpg")
+		# load2 = load2.resize((150,60), Image.ANTIALIAS)
+		# render = ImageTk.PhotoImage(load2)
+		# img2 = Label(frame, image=render)
+		# img2.image = render
+		# img2.grid(row = 0, column = 1)
+		self.image2 = Image.open("Gasohol95_Plus.jpg")
+		self.image2 = self.image2.resize((150,60), Image.ANTIALIAS)
+		self.photo2 = ImageTk.PhotoImage(self.image2)
+		self.GP95_button = tk.Button(frame, image = self.photo2, height = 60, width = 150)
+		self.GP95_button.grid(row = 0, column = 1)
 		Product2 = Checkbutton(frame, text = "Supreme Plus Gasohol 95", font = AFont, variable = self.chk2)
 		Product2.grid(row = 1 , column = 1)
 
-		load3 = Image.open("Gasohol_E20.jpg")
-		load3 = load3.resize((150,60), Image.ANTIALIAS)
-		render = ImageTk.PhotoImage(load3)
-		img3 = Label(frame, image=render)
-		img3.image = render
-		img3.grid(row = 0, column = 2)
+		# load3 = Image.open("Gasohol_E20.jpg")
+		# load3 = load3.resize((150,60), Image.ANTIALIAS)
+		# render = ImageTk.PhotoImage(load3)
+		# img3 = Label(frame, image=render)
+		# img3.image = render
+		# img3.grid(row = 0, column = 2)
+		self.image3 = Image.open("Gasohol_E20.jpg")
+		self.image3 = self.image3.resize((150,60), Image.ANTIALIAS)
+		self.photo3 = ImageTk.PhotoImage(self.image3)
+		self.E20_button = tk.Button(frame, image = self.photo3, height = 60, width = 150)
+		self.E20_button.grid(row = 0, column = 2)
 		Product3 = Checkbutton(frame, text = "Supreme E20", font = AFont, variable = self.chk3)
 		Product3.grid(row = 1 , column = 2)
 
-		load4 = Image.open("Gasohol_91.jpg")
-		load4 = load4.resize((150,60), Image.ANTIALIAS)
-		render = ImageTk.PhotoImage(load4)
-		img4 = Label(frame, image=render)
-		img4.image = render
-		img4.grid(row = 2,column = 0)
+
+		# load4 = Image.open("Gasohol_91.jpg")
+		# load4 = load4.resize((150,60), Image.ANTIALIAS)
+		# render = ImageTk.PhotoImage(load4)
+		# img4 = Label(frame, image=render)
+		# img4.image = render
+		# img4.grid(row = 2,column = 0)
+		self.image4 = Image.open("Gasohol_91.jpg")
+		self.image4 = self.image4.resize((150,60), Image.ANTIALIAS)
+		self.photo4 = ImageTk.PhotoImage(self.image4)
+		self.G91_button = tk.Button(frame, image = self.photo4, height = 60, width = 150)
+		self.G91_button.grid(row = 2, column = 0)
 		Product4 = Checkbutton(frame, text = "Supreme Gasohol 91", font = AFont, variable = self.chk4)
 		Product4.grid(row = 3 , column = 0)
 
-		load5 = Image.open("Diesel_Plus.jpg")
-		load5 = load5.resize((150,60), Image.ANTIALIAS)
-		render = ImageTk.PhotoImage(load5)
-		img5 = Label(frame, image=render)
-		img5.image = render
-		img5.grid(row = 2, column = 1)
+		# load5 = Image.open("Diesel_Plus.jpg")
+		# load5 = load5.resize((150,60), Image.ANTIALIAS)
+		# render = ImageTk.PhotoImage(load5)
+		# img5 = Label(frame, image=render)
+		# img5.image = render
+		# img5.grid(row = 2, column = 1)
+		self.image5 = Image.open("Diesel_Plus.jpg")
+		self.image5 = self.image5.resize((150,60), Image.ANTIALIAS)
+		self.photo5 = ImageTk.PhotoImage(self.image5)
+		self.DSP_button = tk.Button(frame, image = self.photo5, height = 60, width = 150)
+		self.DSP_button.grid(row = 2, column = 1)
 		Product5 = Checkbutton(frame, text = "Supreme Plus Diesel", font = AFont, variable = self.chk5)
 		Product5.grid(row = 3, column = 1)
 
-		load6 = Image.open("Diesel.jpg")
-		load6 = load6.resize((150,60), Image.ANTIALIAS)
-		render = ImageTk.PhotoImage(load6)
-		img6 = Label(frame, image=render)
-		img6.image = render
-		img6.grid(row = 2, column = 2)
+		# load6 = Image.open("Diesel.jpg")
+		# load6 = load6.resize((150,60), Image.ANTIALIAS)
+		# render = ImageTk.PhotoImage(load6)
+		# img6 = Label(frame, image=render)
+		# img6.image = render
+		# img6.grid(row = 2, column = 2)
+		self.image6 = Image.open("Diesel.jpg")
+		self.image6 = self.image6.resize((150,60), Image.ANTIALIAS)
+		self.photo6 = ImageTk.PhotoImage(self.image6)
+		self.DS_button = tk.Button(frame, image = self.photo6, height = 60, width = 150)
+		self.DS_button.grid(row = 2, column = 2)
 		Product6 = Checkbutton(frame, text = "Supreme Diesel", font = AFont, variable = self.chk5)
 		Product6.grid(row = 3 , column = 2)
 
@@ -154,8 +187,8 @@ class StartPage( tk.Frame ): #Calculate Price
 
 		Label( frame9,text = 'จำนวนลิตร' , font = BFont).grid( row = 0,column = 0)
 		Label( frame9,text = 'ลิตร' , font = BFont).grid( row = 0,column = 2)
-		self.product_price = Entry( frame9 ,justify='right' )
-		self.product_price.grid( row = 0,column = 1 )
+		self.product_liter = Entry( frame9 ,justify='right' )
+		self.product_liter.grid( row = 0,column = 1 )
 		Label( frame9,text = 'ยอดทั้งหมด' , font = BFont).grid( row = 1,column = 0)
 		Label( frame9,text = 'บาท' , font = BFont).grid( row = 1,column = 2)
 		self.total_price = Entry( frame9 ,justify='right' )
@@ -260,26 +293,58 @@ class StartPage( tk.Frame ): #Calculate Price
 
 	def CalPrice(self):
 		if self.chk1.get() == True:
-			price = float(self.product_price.get()) * float(self.G95_price.get())
-			self.total_price.insert(END,round(price,2))
+			if not self.total_price.get():
+				price = float(self.product_liter.get()) * float(self.G95_price.get())
+				self.total_price.insert(END,round(price,2))
+
+			else:
+				liter = float(self.total_price.get()) / float(self.G95_price.get())
+				self.product_liter.insert(END,round(liter,2))
+
+
 		if self.chk2.get() == True:
-			price = int(self.product_price.get()) * float(self.GP95_price.get())
-			self.total_price.insert(END,round(price,2))
+			if not self.total_price.get():
+				price = float(self.product_liter.get()) * float(self.GP95_price.get())
+				self.total_price.insert(END,round(price,2))
+
+			else:
+				liter = float(self.total_price.get()) / float(self.GP95_price.get())
+				self.product_liter.insert(END,round(liter,2))
 		if self.chk3.get() == True:
-			price = float(self.product_price.get()) * float(self.E20_price.get())
-			self.total_price.insert(END,round(price,2))
+			if not self.total_price.get():
+				price = float(self.product_liter.get()) * float(self.E20_price.get())
+				self.total_price.insert(END,round(price,2))
+
+			else:
+				liter = float(self.total_price.get()) / float(self.E20_price.get())
+				self.product_liter.insert(END,round(liter,2))
 		if self.chk4.get() == True:
-			price = float(self.product_price.get()) * float(self.G91_price.get())
-			self.total_price.insert(END,round(price,2))
+			if not self.total_price.get():
+				price = float(self.product_liter.get()) * float(self.G91_price.get())
+				self.total_price.insert(END,round(price,2))
+
+			else:
+				liter = float(self.total_price.get()) / float(self.G91_price.get())
+				self.product_liter.insert(END,round(liter,2))
 		if self.chk5.get() == True:
-			price = float(self.product_price.get()) * float(self.DS_price.get())
-			self.total_price.insert(END,round(price,2))
+			if not self.total_price.get():
+				price = float(self.product_liter.get()) * float(self.DS_price.get())
+				self.total_price.insert(END,round(price,2))
+
+			else:
+				liter = float(self.total_price.get()) / float(self.DS_price.get())
+				self.product_liter.insert(END,round(liter,2))
 		if self.chk6.get() == True:
-			price = float(self.product_price.get()) * float(self.DSP_price.get())
-			self.total_price.insert(END,round(price,2))
+			if not self.total_price.get():
+				price = float(self.product_liter.get()) * float(self.DSp_price.get())
+				self.total_price.insert(END,round(price,2))
+
+			else:
+				liter = float(self.total_price.get()) / float(self.DSP_price.get())
+				self.product_liter.insert(END,round(liter,2))
 
 	def Clear(self):
-		self.product_price.delete(0, END)
+		self.product_liter.delete(0, END)
 		self.total_price.delete(0, END)
 
 	def combo_customer(self):
