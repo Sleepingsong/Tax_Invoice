@@ -190,22 +190,22 @@ class StartPage( tk.Frame ):  # Calculate Price
 		self.total_price = Entry( frame9,justify = 'right' )
 		self.total_price.grid( row = 1,column = 1 )
 
-		Label( frame10,text = "ชื่อผู้ซื้อ :",font = BFont ).grid( row = 0 )
-		self.product_name = ttk.Combobox( frame10,width = 20,justify = 'right',state = 'readonly' )
-		self.product_name['values'] = self.combo_customer()
-		self.product_name.grid( row = 0,column = 1 )
-		button1 = ttk.Button( frame10,text = "ดูข้อมูลเพิ่มเติม",width = 15,command = lambda: self.show_cus_name() )
-		button1.grid( row = 0,column = 2 )
-		Label( frame10,text = "รหัสประจำตัว",font = BFont ).grid( row = 1 )
-		Label( frame10,text = "ทะเบียนรถ",font = BFont ).grid( row = 2 )
-		self.invoice_id = ttk.Entry( frame10 ).grid( row = 1,column = 1,sticky = W )
-		self.car_plate = ttk.Entry( frame10 ).grid( row = 2,column = 1,sticky = W )
-		Label( frame10,text = "ชื่อ",font = BFont ).grid( row = 1,column = 2,sticky = W )
-		self.c_name = ttk.Entry( frame10 ).grid( row = 1,column = 2,sticky = E )
-		Label( frame10,text = "เบอร์โทรศัพท์",font = BFont ).grid( row = 1,column = 3 )
-		self.phone_num = ttk.Entry( frame10 ).grid( row = 1,column = 4 )
-		Label( frame10,text = "ที่อยู่",font = BFont ).grid( row = 2,column = 2,sticky = W )
-		self.c_address = ttk.Entry( frame10,width = 55 ).grid( row = 2,column = 2,columnspan = 3,sticky = E )
+		# Label( frame10,text = "ชื่อผู้ซื้อ :",font = BFont ).grid( row = 0 )
+		# self.product_name = ttk.Combobox( frame10,width = 20,justify = 'right',state = 'readonly' )
+		# self.product_name['values'] = self.combo_customer()
+		# self.product_name.grid( row = 0,column = 1 )
+		# button1 = ttk.Button( frame10,text = "ดูข้อมูลเพิ่มเติม",width = 15,command = lambda: self.show_cus_name() )
+		# button1.grid( row = 0,column = 2 )
+		# Label( frame10,text = "รหัสประจำตัว",font = BFont ).grid( row = 1 )
+		# Label( frame10,text = "ทะเบียนรถ",font = BFont ).grid( row = 2 )
+		# self.invoice_id = ttk.Entry( frame10 ).grid( row = 1,column = 1,sticky = W )
+		# self.car_plate = ttk.Entry( frame10 ).grid( row = 2,column = 1,sticky = W )
+		# Label( frame10,text = "ชื่อ",font = BFont ).grid( row = 1,column = 2,sticky = W )
+		# self.c_name = ttk.Entry( frame10 ).grid( row = 1,column = 2,sticky = E )
+		# Label( frame10,text = "เบอร์โทรศัพท์",font = BFont ).grid( row = 1,column = 3 )
+		# self.phone_num = ttk.Entry( frame10 ).grid( row = 1,column = 4 )
+		# Label( frame10,text = "ที่อยู่",font = BFont ).grid( row = 2,column = 2,sticky = W )
+		# self.c_address = ttk.Entry( frame10,width = 55 ).grid( row = 2,column = 2,columnspan = 3,sticky = E )
 
 		button4 = ttk.Button( frame9,text = "คำนวณราคา",command = self.CalPrice )
 		button4.grid( row = 2,columnspan = 3 )
@@ -236,13 +236,13 @@ class StartPage( tk.Frame ):  # Calculate Price
 		self.DS_price.config( state = 'readonly' )
 		self.DSP_price.config( state = 'readonly' )
 
-	def show_cus_name(self):
-
-		con = sqlite3.connect( 'MyDatabase.db' )
-		cur = con.cursor()
-		cur.execute( 'SELECT Customer_Name FROM Customer WHERE Customer_Name = ?',self.product_name.get() )
-		# self.c_name.insert(END,cur.fetchall())
-		print( cur.fetchall() )
+	# def show_cus_name(self):
+	#
+	# 	con = sqlite3.connect( 'MyDatabase.db' )
+	# 	cur = con.cursor()
+	# 	cur.execute( 'SELECT Customer_Name FROM Customer WHERE Customer_Name = ?',self.product_name.get() )
+	# 	# self.c_name.insert(END,cur.fetchall())
+	# 	print( cur.fetchall() )
 
 	def ShowG95(self):
 		con = sqlite3.connect( 'MyDatabase.db' )
@@ -539,14 +539,20 @@ class PageTwo( tk.Frame ):  # Customer Page
 		self.branch_enter = Entry(frame, textvariable = default)
 		self.branch_enter.grid(row = 1, column = 1,sticky = W)
 		self.button1 = Button( frame,text = 'ค้นหา',font = AFont,height = 1,width = 10,command = lambda: self.tax_search() )
-		self.button1.grid( row = 2,columnspan = 2)
+		self.button1.grid( row = 2,column = 1)
+		self.button2 = Button( frame,text = 'บันทึก',font = AFont,height = 1,width = 10, command = self.save_data)
+		self.button2.grid( row = 2,sticky = E)
+
 		self.tree = ttk.Treeview( self,height = 17,column = ("1") )
 		self.tree.heading( '#0',text = "ประเภท" )
 		self.tree.heading( 0,text = "ผลลัพธ์" )
 		self.tree.grid( row = 1 )
 
-		frame2 = LabelFrame( self,text = "เพิ่มข้อมูลลูกค้า" )
+		frame2 = LabelFrame( self,text = "ชุดคำสั่ง" )
 		frame2.grid( row = 0,column = 1,sticky = E )
+
+		self.my_list = []
+
 		#
 		# Label( frame2,text = 'ชื่อลูกค้า' ).grid( row = 1,column = 2 )
 		# self.Customer_name = Entry( frame2,justify='right'  )
@@ -598,7 +604,7 @@ class PageTwo( tk.Frame ):  # Customer Page
 			try:
 				for i in self.tree.get_children():
 					self.tree.delete(i)
-
+				self.my_list.clear()
 				urllib3.disable_warnings( urllib3.exceptions.InsecureRequestWarning )
 				session = Session()
 				session.verify = False
@@ -623,62 +629,78 @@ class PageTwo( tk.Frame ):  # Customer Page
 					if result[k] is not None:
 						v = result[k].get( 'anyType',None )[0]
 						self.tree.insert( '','end',text = k,value = v )
+						self.my_list.append(v)
+
 				count = False
 			except:
-				print( "ERROR" )
+				print("TRY AGAIN!")
 
-	def run_query(self,query,parameters=()):
-		with sqlite3.connect( self.db_name ) as conn:
-			cursor = conn.cursor()
-			query_result = cursor.execute( query,parameters )
-			conn.commit()
-		return query_result
 
-	def viewing_record2(self):
-		records = self.tree2.get_children()
-		for element in records:
-			self.tree2.delete( element )
-		query = 'SELECT * FROM Customer ORDER BY Customer_ID DESC'
-		db_rows = self.run_query( query )
-		for row in db_rows:
-			self.tree2.insert( '',0,text = row[1],values = (row[2],row[3],row[4]) )
-
-	def validation2(self):
-		return len( self.Customer_name.get() ) != 0 \
-			   and len( self.Company_name.get() ) != 0 and len( self.Car_plate.get() ) != 0 \
-			   and len( self.Phone_number.get() ) != 0
-
-	def adding2(self):
-		if self.validation2():
-			query = 'INSERT INTO Customer VALUES (NULL, ?, ?,?,?,?)'
-			parameters = (
-				self.Customer_name.get(),self.Phone_number.get(),self.Car_plate.get(),self.Company_name.get(),
-				self.Customer_address.get())
-			self.run_query( query,parameters )
-			self.message2['text'] = 'Record {} added to database'.format( self.Company_name.get() )
-			self.Customer_name.delete( 0,END )
-			self.Car_plate.delete( 0,END )
-			self.Company_name.delete( 0,END )
-			self.Phone_number.delete( 0,END )
-
-		else:
-			self.message2['text'] = 'Some fields are empty'
-		self.viewing_record2()
-
-	def deleting2(self):
-		self.message2['text'] = ''
+	def save_data(self):
 		try:
-			self.tree2.item( self.tree2.selection() )['values'][0]
-		except IndexError as e:
-			self.message2['text'] = 'Please select record'
-			return
+			conn = sqlite3.connect('MyDatabase.db')
+			c = conn.cursor()
+			c.execute('INSERT INTO Customer VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', self.my_list)
+			conn.commit()
+		except:
+			print('Something wrong')
 
-		self.message2['text'] = ''
-		name = self.tree2.item( self.tree2.selection() )['text']
-		query = 'DELETE FROM Customer WHERE Customer_Name = ?'
-		self.run_query( query,(name,) )
-		self.message2['text'] = 'Record {} is deleted'.format( name )
-		self.viewing_record2()
+
+
+
+
+# def run_query(self,query,parameters=()):
+	# 	with sqlite3.connect( self.db_name ) as conn:
+	# 		cursor = conn.cursor()
+	# 		query_result = cursor.execute( query,parameters )
+	# 		conn.commit()
+	# 	return query_result
+	#
+	# def viewing_record2(self):
+	# 	records = self.tree2.get_children()
+	# 	for element in records:
+	# 		self.tree2.delete( element )
+	# 	query = 'SELECT * FROM Customer ORDER BY Customer_ID DESC'
+	# 	db_rows = self.run_query( query )
+	# 	for row in db_rows:
+	# 		self.tree2.insert( '',0,text = row[1],values = (row[2],row[3],row[4]) )
+	#
+	# def validation2(self):
+	# 	return len( self.Customer_name.get() ) != 0 \
+	# 		   and len( self.Company_name.get() ) != 0 and len( self.Car_plate.get() ) != 0 \
+	# 		   and len( self.Phone_number.get() ) != 0
+	#
+	# def adding2(self):
+	# 	if self.validation2():
+	# 		query = 'INSERT INTO Customer VALUES (NULL, ?, ?,?,?,?)'
+	# 		parameters = (
+	# 			self.Customer_name.get(),self.Phone_number.get(),self.Car_plate.get(),self.Company_name.get(),
+	# 			self.Customer_address.get())
+	# 		self.run_query( query,parameters )
+	# 		self.message2['text'] = 'Record {} added to database'.format( self.Company_name.get() )
+	# 		self.Customer_name.delete( 0,END )
+	# 		self.Car_plate.delete( 0,END )
+	# 		self.Company_name.delete( 0,END )
+	# 		self.Phone_number.delete( 0,END )
+	#
+	# 	else:
+	# 		self.message2['text'] = 'Some fields are empty'
+	# 	self.viewing_record2()
+	#
+	# def deleting2(self):
+	# 	self.message2['text'] = ''
+	# 	try:
+	# 		self.tree2.item( self.tree2.selection() )['values'][0]
+	# 	except IndexError as e:
+	# 		self.message2['text'] = 'Please select record'
+	# 		return
+	#
+	# 	self.message2['text'] = ''
+	# 	name = self.tree2.item( self.tree2.selection() )['text']
+	# 	query = 'DELETE FROM Customer WHERE Customer_Name = ?'
+	# 	self.run_query( query,(name,) )
+	# 	self.message2['text'] = 'Record {} is deleted'.format( name )
+	# 	self.viewing_record2()
 
 
 class PageThree( tk.Frame ):  # CalPrice
