@@ -2,8 +2,13 @@ from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 import sqlite3
-from  tkinter import  font
-from  PIL import  Image, ImageTk
+from tkinter import font
+from PIL import Image,ImageTk
+from requests import Session
+import zeep
+from zeep import Client
+from zeep.transports import Transport
+import urllib3
 
 LARGE_FONT = ("Verdana",12)
 
@@ -20,7 +25,7 @@ class Invoice( tk.Tk ):
 
 		self.frames = { }
 
-		for F in (StartPage,PageOne, PageTwo, PageThree):
+		for F in (StartPage,PageOne,PageTwo,PageThree):
 			frame = F( container,self )
 			self.frames[F] = frame
 			frame.grid( row = 0,column = 0,sticky = "NSEW" )
@@ -32,28 +37,26 @@ class Invoice( tk.Tk ):
 		frame.tkraise()
 
 
-class StartPage( tk.Frame ): #Calculate Price
+class StartPage( tk.Frame ):  # Calculate Price
 
 	db_name = 'MyDatabase.db'
 
 	def __init__(self,parent,controller):
 		tk.Frame.__init__( self,parent )
 
-		AFont = font.Font(family='Helvetica', size=12, weight='bold')
-		BFont = font.Font(family='Helvetica', size=11,)
+		AFont = font.Font( family = 'Helvetica',size = 12,weight = 'bold' )
+		BFont = font.Font( family = 'Helvetica',size = 11,)
 
-		frame = ttk.LabelFrame( self, text = 'สินค้า')
-		frame.grid( row = 1,column = 0, sticky =W)
-		frame7 = ttk.LabelFrame( self, text = 'ราคาน้ำมัน ณ ปัจจุบัน')
-		frame7.grid( row = 3, columnspan = 4 , sticky = "nsw")
-		frame8 = ttk.LabelFrame( self, text = 'ชุดคำสั่ง')
-		frame8.grid( row = 0,column = 3, sticky = N)
-		frame9 = ttk.LabelFrame(self, text = "คำนวณเงิน")
-		frame9.grid(row = 3, column = 0, columnspan = 2, sticky = NE)
-		frame10 = ttk.LabelFrame(self, text = "ผู้ซื้อ")
-		frame10.grid(row = 0, column = 0, sticky = W)
-
-
+		frame = ttk.LabelFrame( self,text = 'สินค้า' )
+		frame.grid( row = 1,column = 0,sticky = W )
+		frame7 = ttk.LabelFrame( self,text = 'ราคาน้ำมัน ณ ปัจจุบัน' )
+		frame7.grid( row = 3,columnspan = 4,sticky = "nsw" )
+		frame8 = ttk.LabelFrame( self,text = 'ชุดคำสั่ง' )
+		frame8.grid( row = 0,column = 3,sticky = N )
+		frame9 = ttk.LabelFrame( self,text = "คำนวณเงิน" )
+		frame9.grid( row = 3,column = 0,columnspan = 2,sticky = NE )
+		frame10 = ttk.LabelFrame( self,text = "ผู้ซื้อ" )
+		frame10.grid( row = 0,column = 0,sticky = W )
 
 		self.chk1 = BooleanVar()
 		self.chk2 = BooleanVar()
@@ -62,23 +65,20 @@ class StartPage( tk.Frame ): #Calculate Price
 		self.chk5 = BooleanVar()
 		self.chk6 = BooleanVar()
 
-
 		# load1 = Image.open("Gasohol95.jpg")
 		# load1 = load1.resize((150,60), Image.ANTIALIAS)
 		# render = ImageTk.PhotoImage(load1)
 		# img1 = Label(frame, image=render)
 		# img1.image = render
 		# img1.grid(row = 0)
-		self.image1 = Image.open("Gasohol95.jpg")
-		self.image1 = self.image1.resize((150,60), Image.ANTIALIAS)
-		self.photo1 = ImageTk.PhotoImage(self.image1)
-		self.G95_button = tk.Button(frame, image = self.photo1, height = 60, width = 150)
-		self.G95_button.grid(row = 0)
+		self.image1 = Image.open( "Gasohol95.jpg" )
+		self.image1 = self.image1.resize( (150,60),Image.ANTIALIAS )
+		self.photo1 = ImageTk.PhotoImage( self.image1 )
+		self.G95_button = tk.Button( frame,image = self.photo1,height = 60,width = 150,command = self.checkG95 )
+		self.G95_button.grid( row = 0 )
 
-
-		Product1 = Checkbutton(frame, text = "Supreme Gasohol 95", font = AFont, variable = self.chk1)
-		Product1.grid(row = 1 , column = 0)
-
+		Product1 = Checkbutton( frame,text = "Supreme Gasohol 95",font = AFont,variable = self.chk1 )
+		Product1.grid( row = 1,column = 0 )
 
 		# load2 = Image.open("Gasohol95_Plus.jpg")
 		# load2 = load2.resize((150,60), Image.ANTIALIAS)
@@ -86,13 +86,13 @@ class StartPage( tk.Frame ): #Calculate Price
 		# img2 = Label(frame, image=render)
 		# img2.image = render
 		# img2.grid(row = 0, column = 1)
-		self.image2 = Image.open("Gasohol95_Plus.jpg")
-		self.image2 = self.image2.resize((150,60), Image.ANTIALIAS)
-		self.photo2 = ImageTk.PhotoImage(self.image2)
-		self.GP95_button = tk.Button(frame, image = self.photo2, height = 60, width = 150)
-		self.GP95_button.grid(row = 0, column = 1)
-		Product2 = Checkbutton(frame, text = "Supreme Plus Gasohol 95", font = AFont, variable = self.chk2)
-		Product2.grid(row = 1 , column = 1)
+		self.image2 = Image.open( "Gasohol95_Plus.jpg" )
+		self.image2 = self.image2.resize( (150,60),Image.ANTIALIAS )
+		self.photo2 = ImageTk.PhotoImage( self.image2 )
+		self.GP95_button = tk.Button( frame,image = self.photo2,height = 60,width = 150,command = self.checkGP95 )
+		self.GP95_button.grid( row = 0,column = 1 )
+		Product2 = Checkbutton( frame,text = "Supreme Plus Gasohol 95",font = AFont,variable = self.chk2 )
+		Product2.grid( row = 1,column = 1 )
 
 		# load3 = Image.open("Gasohol_E20.jpg")
 		# load3 = load3.resize((150,60), Image.ANTIALIAS)
@@ -100,14 +100,13 @@ class StartPage( tk.Frame ): #Calculate Price
 		# img3 = Label(frame, image=render)
 		# img3.image = render
 		# img3.grid(row = 0, column = 2)
-		self.image3 = Image.open("Gasohol_E20.jpg")
-		self.image3 = self.image3.resize((150,60), Image.ANTIALIAS)
-		self.photo3 = ImageTk.PhotoImage(self.image3)
-		self.E20_button = tk.Button(frame, image = self.photo3, height = 60, width = 150)
-		self.E20_button.grid(row = 0, column = 2)
-		Product3 = Checkbutton(frame, text = "Supreme E20", font = AFont, variable = self.chk3)
-		Product3.grid(row = 1 , column = 2)
-
+		self.image3 = Image.open( "Gasohol_E20.jpg" )
+		self.image3 = self.image3.resize( (150,60),Image.ANTIALIAS )
+		self.photo3 = ImageTk.PhotoImage( self.image3 )
+		self.E20_button = tk.Button( frame,image = self.photo3,height = 60,width = 150,command = self.checkE20 )
+		self.E20_button.grid( row = 0,column = 2 )
+		Product3 = Checkbutton( frame,text = "Supreme E20",font = AFont,variable = self.chk3 )
+		Product3.grid( row = 1,column = 2 )
 
 		# load4 = Image.open("Gasohol_91.jpg")
 		# load4 = load4.resize((150,60), Image.ANTIALIAS)
@@ -115,13 +114,13 @@ class StartPage( tk.Frame ): #Calculate Price
 		# img4 = Label(frame, image=render)
 		# img4.image = render
 		# img4.grid(row = 2,column = 0)
-		self.image4 = Image.open("Gasohol_91.jpg")
-		self.image4 = self.image4.resize((150,60), Image.ANTIALIAS)
-		self.photo4 = ImageTk.PhotoImage(self.image4)
-		self.G91_button = tk.Button(frame, image = self.photo4, height = 60, width = 150)
-		self.G91_button.grid(row = 2, column = 0)
-		Product4 = Checkbutton(frame, text = "Supreme Gasohol 91", font = AFont, variable = self.chk4)
-		Product4.grid(row = 3 , column = 0)
+		self.image4 = Image.open( "Gasohol_91.jpg" )
+		self.image4 = self.image4.resize( (150,60),Image.ANTIALIAS )
+		self.photo4 = ImageTk.PhotoImage( self.image4 )
+		self.G91_button = tk.Button( frame,image = self.photo4,height = 60,width = 150,command = self.checkG91 )
+		self.G91_button.grid( row = 2,column = 0 )
+		Product4 = Checkbutton( frame,text = "Supreme Gasohol 91",font = AFont,variable = self.chk4 )
+		Product4.grid( row = 3,column = 0 )
 
 		# load5 = Image.open("Diesel_Plus.jpg")
 		# load5 = load5.resize((150,60), Image.ANTIALIAS)
@@ -129,13 +128,13 @@ class StartPage( tk.Frame ): #Calculate Price
 		# img5 = Label(frame, image=render)
 		# img5.image = render
 		# img5.grid(row = 2, column = 1)
-		self.image5 = Image.open("Diesel_Plus.jpg")
-		self.image5 = self.image5.resize((150,60), Image.ANTIALIAS)
-		self.photo5 = ImageTk.PhotoImage(self.image5)
-		self.DSP_button = tk.Button(frame, image = self.photo5, height = 60, width = 150)
-		self.DSP_button.grid(row = 2, column = 1)
-		Product5 = Checkbutton(frame, text = "Supreme Plus Diesel", font = AFont, variable = self.chk5)
-		Product5.grid(row = 3, column = 1)
+		self.image5 = Image.open( "Diesel_Plus.jpg" )
+		self.image5 = self.image5.resize( (150,60),Image.ANTIALIAS )
+		self.photo5 = ImageTk.PhotoImage( self.image5 )
+		self.DSP_button = tk.Button( frame,image = self.photo5,height = 60,width = 150,command = self.checkDSP )
+		self.DSP_button.grid( row = 2,column = 1 )
+		Product5 = Checkbutton( frame,text = "Supreme Plus Diesel",font = AFont,variable = self.chk5 )
+		Product5.grid( row = 3,column = 1 )
 
 		# load6 = Image.open("Diesel.jpg")
 		# load6 = load6.resize((150,60), Image.ANTIALIAS)
@@ -143,85 +142,84 @@ class StartPage( tk.Frame ): #Calculate Price
 		# img6 = Label(frame, image=render)
 		# img6.image = render
 		# img6.grid(row = 2, column = 2)
-		self.image6 = Image.open("Diesel.jpg")
-		self.image6 = self.image6.resize((150,60), Image.ANTIALIAS)
-		self.photo6 = ImageTk.PhotoImage(self.image6)
-		self.DS_button = tk.Button(frame, image = self.photo6, height = 60, width = 150)
-		self.DS_button.grid(row = 2, column = 2)
-		Product6 = Checkbutton(frame, text = "Supreme Diesel", font = AFont, variable = self.chk5)
-		Product6.grid(row = 3 , column = 2)
+		self.image6 = Image.open( "Diesel.jpg" )
+		self.image6 = self.image6.resize( (150,60),Image.ANTIALIAS )
+		self.photo6 = ImageTk.PhotoImage( self.image6 )
+		self.DS_button = tk.Button( frame,image = self.photo6,height = 60,width = 150,command = self.checkDS )
+		self.DS_button.grid( row = 2,column = 2 )
+		Product6 = Checkbutton( frame,text = "Supreme Diesel",font = AFont,variable = self.chk6 )
+		Product6.grid( row = 3,column = 2 )
 
+		Label( frame7,text = 'Supreme Gasohol 95 :',font = BFont ).grid( row = 0,column = 0,sticky = E )
+		Label( frame7,text = 'บาท (ต่อลิตร)',font = BFont ).grid( row = 0,column = 2 )
+		self.G95_price = Entry( frame7,width = 8,justify = 'right' )
+		self.G95_price.grid( row = 0,column = 1 )
 
-		Label( frame7,text = 'Supreme Gasohol 95 :' , font = BFont).grid( row = 0,column = 0, sticky = E)
-		Label( frame7,text = 'บาท (ต่อลิตร)' , font = BFont).grid( row = 0,column = 2)
-		self.G95_price = Entry(frame7,width = 8, justify = 'right')
-		self.G95_price.grid(row = 0, column = 1)
+		Label( frame7,text = 'Supreme Plus Gasohol 95 :',font = BFont ).grid( row = 1,column = 0,sticky = E )
+		Label( frame7,text = 'บาท (ต่อลิตร)',font = BFont ).grid( row = 1,column = 2 )
+		self.GP95_price = Entry( frame7,width = 8,justify = 'right' )
+		self.GP95_price.grid( row = 1,column = 1 )
 
-		Label( frame7,text = 'Supreme Plus Gasohol 95 :' , font = BFont).grid( row = 1,column = 0, sticky = E)
-		Label( frame7,text = 'บาท (ต่อลิตร)' , font = BFont).grid( row = 1,column = 2)
-		self.GP95_price = Entry(frame7 ,width = 8, justify = 'right')
-		self.GP95_price.grid(row = 1, column = 1)
+		Label( frame7,text = 'Supreme E20 :',font = BFont ).grid( row = 2,column = 0,sticky = E )
+		Label( frame7,text = 'บาท (ต่อลิตร)',font = BFont ).grid( row = 2,column = 2 )
+		self.E20_price = Entry( frame7,width = 8,justify = 'right' )
+		self.E20_price.grid( row = 2,column = 1 )
 
+		Label( frame7,text = 'Supreme Gasohol 91 :',font = BFont ).grid( row = 3,column = 0,sticky = E )
+		Label( frame7,text = 'บาท (ต่อลิตร)',font = BFont ).grid( row = 3,column = 2 )
 
+		self.G91_price = Entry( frame7,width = 8,justify = 'right' )
+		self.G91_price.grid( row = 3,column = 1 )
 
-		Label( frame7,text = 'Supreme E20 :' , font = BFont).grid( row = 2,column = 0, sticky = E)
-		Label( frame7,text = 'บาท (ต่อลิตร)' , font = BFont).grid( row = 2,column = 2)
-		self.E20_price = Entry(frame7 ,width = 8, justify = 'right')
-		self.E20_price.grid(row = 2, column = 1)
+		Label( frame7,text = 'Supreme Diesel :',font = BFont ).grid( row = 4,column = 0,sticky = E )
+		Label( frame7,text = 'บาท (ต่อลิตร)',font = BFont ).grid( row = 4,column = 2 )
+		self.DS_price = Entry( frame7,width = 8,justify = 'right' )
+		self.DS_price.grid( row = 4,column = 1 )
 
-		Label( frame7,text = 'Supreme Gasohol 91 :' , font = BFont).grid( row = 3,column = 0, sticky = E)
-		Label( frame7,text = 'บาท (ต่อลิตร)' , font = BFont).grid( row = 3,column = 2)
+		Label( frame7,text = 'Supreme Plus Diesel :',font = BFont ).grid( row = 5,column = 0,sticky = E )
+		Label( frame7,text = 'บาท (ต่อลิตร)',font = BFont ).grid( row = 5,column = 2 )
+		self.DSP_price = Entry( frame7,width = 8,justify = 'right' )
+		self.DSP_price.grid( row = 5,column = 1 )
 
-		self.G91_price = Entry(frame7 ,width = 8, justify = 'right')
-		self.G91_price.grid(row = 3, column = 1)
-
-		Label( frame7,text = 'Supreme Diesel :' , font = BFont).grid( row = 4,column = 0, sticky = E)
-		Label( frame7,text = 'บาท (ต่อลิตร)' , font = BFont).grid( row = 4,column = 2)
-		self.DS_price = Entry(frame7 ,width = 8, justify = 'right')
-		self.DS_price.grid(row = 4, column = 1)
-
-		Label( frame7,text = 'Supreme Plus Diesel :' , font = BFont).grid( row = 5,column = 0, sticky = E)
-		Label( frame7,text = 'บาท (ต่อลิตร)' , font = BFont).grid( row = 5,column = 2)
-		self.DSP_price = Entry(frame7,width = 8, justify = 'right')
-		self.DSP_price.grid(row = 5, column = 1)
-
-		Label( frame9,text = 'จำนวนลิตร' , font = BFont).grid( row = 0,column = 0)
-		Label( frame9,text = 'ลิตร' , font = BFont).grid( row = 0,column = 2)
-		self.product_liter = Entry( frame9 ,justify='right' )
+		Label( frame9,text = 'จำนวนลิตร',font = BFont ).grid( row = 0,column = 0 )
+		Label( frame9,text = 'ลิตร',font = BFont ).grid( row = 0,column = 2 )
+		self.product_liter = Entry( frame9,justify = 'right' )
 		self.product_liter.grid( row = 0,column = 1 )
-		Label( frame9,text = 'ยอดทั้งหมด' , font = BFont).grid( row = 1,column = 0)
-		Label( frame9,text = 'บาท' , font = BFont).grid( row = 1,column = 2)
-		self.total_price = Entry( frame9 ,justify='right' )
+		Label( frame9,text = 'ยอดทั้งหมด',font = BFont ).grid( row = 1,column = 0 )
+		Label( frame9,text = 'บาท',font = BFont ).grid( row = 1,column = 2 )
+		self.total_price = Entry( frame9,justify = 'right' )
 		self.total_price.grid( row = 1,column = 1 )
 
-		Label(frame10, text = "ชื่อผู้ซื้อ :", font = BFont).grid(row =0)
-		self.product_name = ttk.Combobox(frame10, width=20, justify='right' , state = 'readonly')
+		Label( frame10,text = "ชื่อผู้ซื้อ :",font = BFont ).grid( row = 0 )
+		self.product_name = ttk.Combobox( frame10,width = 20,justify = 'right',state = 'readonly' )
 		self.product_name['values'] = self.combo_customer()
-		self.product_name.grid(row = 0 , column =1)
-		button1 = ttk.Button(frame10, text = "ดูข้อมูลเพิ่มเติม",width = 15, command = lambda : self.show_cus_name())
-		button1.grid(row = 0 ,column = 2)
-		Label(frame10, text = "รหัสประจำตัว", font = BFont).grid(row =1)
-		Label(frame10, text = "ทะเบียนรถ", font = BFont).grid(row=2)
-		self.invoice_id = ttk.Entry(frame10).grid(row = 1 , column=1, sticky = W)
-		self.car_plate = ttk.Entry(frame10).grid(row=2, column=1, sticky=W)
-		Label(frame10, text = "ชื่อ", font = BFont).grid(row =1,column =2,sticky = W)
-		self.c_name = ttk.Entry(frame10).grid(row = 1 , column =2, sticky = E)
-		Label(frame10, text = "เบอร์โทรศัพท์", font = BFont).grid(row = 1,column = 3)
-		self.phone_num = ttk.Entry(frame10).grid(row = 1 ,column = 4)
-		Label(frame10, text = "ที่อยู่", font = BFont).grid(row =2 , column = 2, sticky = W)
-		self.c_address = ttk.Entry(frame10, width = 55).grid(row = 2 ,column = 2, columnspan = 3,sticky = E )
+		self.product_name.grid( row = 0,column = 1 )
+		button1 = ttk.Button( frame10,text = "ดูข้อมูลเพิ่มเติม",width = 15,command = lambda: self.show_cus_name() )
+		button1.grid( row = 0,column = 2 )
+		Label( frame10,text = "รหัสประจำตัว",font = BFont ).grid( row = 1 )
+		Label( frame10,text = "ทะเบียนรถ",font = BFont ).grid( row = 2 )
+		self.invoice_id = ttk.Entry( frame10 ).grid( row = 1,column = 1,sticky = W )
+		self.car_plate = ttk.Entry( frame10 ).grid( row = 2,column = 1,sticky = W )
+		Label( frame10,text = "ชื่อ",font = BFont ).grid( row = 1,column = 2,sticky = W )
+		self.c_name = ttk.Entry( frame10 ).grid( row = 1,column = 2,sticky = E )
+		Label( frame10,text = "เบอร์โทรศัพท์",font = BFont ).grid( row = 1,column = 3 )
+		self.phone_num = ttk.Entry( frame10 ).grid( row = 1,column = 4 )
+		Label( frame10,text = "ที่อยู่",font = BFont ).grid( row = 2,column = 2,sticky = W )
+		self.c_address = ttk.Entry( frame10,width = 55 ).grid( row = 2,column = 2,columnspan = 3,sticky = E )
 
-		button4 = ttk.Button(frame9, text = "คำนวณราคา", command = self.CalPrice)
-		button4.grid(row = 2, columnspan = 3)
-		button4 = ttk.Button(frame9, text = "ยกเลิก", command = self.Clear)
-		button4.grid(row = 3, columnspan = 3)
+		button4 = ttk.Button( frame9,text = "คำนวณราคา",command = self.CalPrice )
+		button4.grid( row = 2,columnspan = 3 )
+		button4 = ttk.Button( frame9,text = "ยกเลิก",command = self.Clear )
+		button4.grid( row = 3,columnspan = 3 )
 
-
-		button3 = ttk.Button( frame8,text = "หน้าข้อมูลลูกค้า",command = lambda: controller.show_frame( PageTwo ) ,width=15)
+		button3 = ttk.Button( frame8,text = "หน้าข้อมูลลูกค้า",command = lambda: controller.show_frame( PageTwo ),
+							  width = 15 )
 		button3.grid( row = 2,column = 0,)
-		button3 = ttk.Button( frame8,text = "หน้าข้อมูลสินค้า",command = lambda: controller.show_frame( PageOne ) ,width=15)
+		button3 = ttk.Button( frame8,text = "หน้าข้อมูลสินค้า",command = lambda: controller.show_frame( PageOne ),
+							  width = 15 )
 		button3.grid( row = 1,column = 0,)
-		button3 = ttk.Button( frame8,text = "คำนวณสินค้าเพิ่มเติม",command = lambda: controller.show_frame( PageThree ) ,width=15 )
+		button3 = ttk.Button( frame8,text = "คำนวณสินค้าเพิ่มเติม",command = lambda: controller.show_frame( PageThree ),
+							  width = 15 )
 		button3.grid( row = 0,column = 0,)
 
 		self.ShowG95()
@@ -231,132 +229,159 @@ class StartPage( tk.Frame ): #Calculate Price
 		self.ShowE20()
 		self.ShowG91()
 
-		self.G95_price.config(state='readonly')
-		self.GP95_price.config(state='readonly')
-		self.E20_price.config(state='readonly')
-		self.G91_price.config(state='readonly')
-		self.DS_price.config(state='readonly')
-		self.DSP_price.config(state='readonly')
-
+		self.G95_price.config( state = 'readonly' )
+		self.GP95_price.config( state = 'readonly' )
+		self.E20_price.config( state = 'readonly' )
+		self.G91_price.config( state = 'readonly' )
+		self.DS_price.config( state = 'readonly' )
+		self.DSP_price.config( state = 'readonly' )
 
 	def show_cus_name(self):
 
-		con = sqlite3.connect('MyDatabase.db')
+		con = sqlite3.connect( 'MyDatabase.db' )
 		cur = con.cursor()
-		cur.execute('SELECT Customer_Name FROM Customer WHERE Customer_Name = ?', self.product_name.get())
+		cur.execute( 'SELECT Customer_Name FROM Customer WHERE Customer_Name = ?',self.product_name.get() )
 		# self.c_name.insert(END,cur.fetchall())
-		print(cur.fetchall())
-
-
-
-
-
-
+		print( cur.fetchall() )
 
 	def ShowG95(self):
-		con = sqlite3.connect('MyDatabase.db')
+		con = sqlite3.connect( 'MyDatabase.db' )
 		cur = con.cursor()
-		cur.execute('SELECT Product_Price FROM Product WHERE Product_ID = 1')
-		self.G95_price.insert(END,cur.fetchall())
-
-
+		cur.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 1' )
+		self.G95_price.insert( END,cur.fetchall() )
 
 	def ShowGP95(self):
-		con = sqlite3.connect('MyDatabase.db')
+		con = sqlite3.connect( 'MyDatabase.db' )
 		cur = con.cursor()
-		cur.execute('SELECT Product_Price FROM Product WHERE Product_ID = 26')
-		self.GP95_price.insert(END,cur.fetchall())
+		cur.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 26' )
+		self.GP95_price.insert( END,cur.fetchall() )
 
 	def ShowE20(self):
-		con = sqlite3.connect('MyDatabase.db')
+		con = sqlite3.connect( 'MyDatabase.db' )
 		cur = con.cursor()
-		cur.execute('SELECT Product_Price FROM Product WHERE Product_ID = 27')
-		self.E20_price.insert(END,cur.fetchall())
+		cur.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 27' )
+		self.E20_price.insert( END,cur.fetchall() )
 
 	def ShowG91(self):
-		con = sqlite3.connect('MyDatabase.db')
+		con = sqlite3.connect( 'MyDatabase.db' )
 		cur = con.cursor()
-		cur.execute('SELECT Product_Price FROM Product WHERE Product_ID = 28')
-		self.G91_price.insert(END,cur.fetchall())
+		cur.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 28' )
+		self.G91_price.insert( END,cur.fetchall() )
 
 	def ShowDS(self):
-		con = sqlite3.connect('MyDatabase.db')
+		con = sqlite3.connect( 'MyDatabase.db' )
 		cur = con.cursor()
-		cur.execute('SELECT Product_Price FROM Product WHERE Product_ID = 29')
-		self.DS_price.insert(END,cur.fetchall())
+		cur.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 29' )
+		self.DS_price.insert( END,cur.fetchall() )
 
 	def ShowDSP(self):
-		con = sqlite3.connect('MyDatabase.db')
+		con = sqlite3.connect( 'MyDatabase.db' )
 		cur = con.cursor()
-		cur.execute('SELECT Product_Price FROM Product WHERE Product_ID = 30')
-		self.DSP_price.insert(END,cur.fetchall())
+		cur.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 30' )
+		self.DSP_price.insert( END,cur.fetchall() )
+
+	def checkG95(self):
+		if self.chk1.get() == False:
+			self.chk1.set( True )
+		else:
+			self.chk1.set( False )
+
+	def checkGP95(self):
+		if self.chk2.get() == False:
+			self.chk2.set( True )
+		else:
+			self.chk2.set( False )
+
+	def checkE20(self):
+		if self.chk3.get() == False:
+			self.chk3.set( True )
+		else:
+			self.chk3.set( False )
+
+	def checkG91(self):
+		if self.chk4.get() == False:
+			self.chk4.set( True )
+		else:
+			self.chk4.set( False )
+
+	def checkDSP(self):
+		if self.chk5.get() == False:
+			self.chk5.set( True )
+		else:
+			self.chk5.set( False )
+
+	def checkDS(self):
+		if self.chk6.get() == False:
+			self.chk6.set( True )
+		else:
+			self.chk6.set( False )
 
 	def CalPrice(self):
 		if self.chk1.get() == True:
 			if not self.total_price.get():
-				price = float(self.product_liter.get()) * float(self.G95_price.get())
-				self.total_price.insert(END,round(price,2))
+				price = float( self.product_liter.get() ) * float( self.G95_price.get() )
+				self.total_price.insert( END,round( price,2 ) )
 
 			else:
-				liter = float(self.total_price.get()) / float(self.G95_price.get())
-				self.product_liter.insert(END,round(liter,2))
-
+				liter = float( self.total_price.get() ) / float( self.G95_price.get() )
+				self.product_liter.insert( END,round( liter,2 ) )
 
 		if self.chk2.get() == True:
 			if not self.total_price.get():
-				price = float(self.product_liter.get()) * float(self.GP95_price.get())
-				self.total_price.insert(END,round(price,2))
+				price = float( self.product_liter.get() ) * float( self.GP95_price.get() )
+				self.total_price.insert( END,round( price,2 ) )
 
 			else:
-				liter = float(self.total_price.get()) / float(self.GP95_price.get())
-				self.product_liter.insert(END,round(liter,2))
+				liter = float( self.total_price.get() ) / float( self.GP95_price.get() )
+				self.product_liter.insert( END,round( liter,2 ) )
 		if self.chk3.get() == True:
 			if not self.total_price.get():
-				price = float(self.product_liter.get()) * float(self.E20_price.get())
-				self.total_price.insert(END,round(price,2))
+				price = float( self.product_liter.get() ) * float( self.E20_price.get() )
+				self.total_price.insert( END,round( price,2 ) )
 
 			else:
-				liter = float(self.total_price.get()) / float(self.E20_price.get())
-				self.product_liter.insert(END,round(liter,2))
+				liter = float( self.total_price.get() ) / float( self.E20_price.get() )
+				self.product_liter.insert( END,round( liter,2 ) )
 		if self.chk4.get() == True:
 			if not self.total_price.get():
-				price = float(self.product_liter.get()) * float(self.G91_price.get())
-				self.total_price.insert(END,round(price,2))
+				price = float( self.product_liter.get() ) * float( self.G91_price.get() )
+				self.total_price.insert( END,round( price,2 ) )
 
 			else:
-				liter = float(self.total_price.get()) / float(self.G91_price.get())
-				self.product_liter.insert(END,round(liter,2))
+				liter = float( self.total_price.get() ) / float( self.G91_price.get() )
+				self.product_liter.insert( END,round( liter,2 ) )
 		if self.chk5.get() == True:
 			if not self.total_price.get():
-				price = float(self.product_liter.get()) * float(self.DS_price.get())
-				self.total_price.insert(END,round(price,2))
+				price = float( self.product_liter.get() ) * float( self.DSP_price.get() )
+				self.total_price.insert( END,round( price,2 ) )
 
 			else:
-				liter = float(self.total_price.get()) / float(self.DS_price.get())
-				self.product_liter.insert(END,round(liter,2))
+				liter = float( self.total_price.get() ) / float( self.DSP_price.get() )
+				self.product_liter.insert( END,round( liter,2 ) )
 		if self.chk6.get() == True:
 			if not self.total_price.get():
-				price = float(self.product_liter.get()) * float(self.DSp_price.get())
-				self.total_price.insert(END,round(price,2))
+				price = float( self.product_liter.get() ) * float( self.DS_price.get() )
+				self.total_price.insert( END,round( price,2 ) )
 
 			else:
-				liter = float(self.total_price.get()) / float(self.DSP_price.get())
-				self.product_liter.insert(END,round(liter,2))
+				liter = float( self.total_price.get() ) / float( self.DS_price.get() )
+				self.product_liter.insert( END,round( liter,2 ) )
 
 	def Clear(self):
-		self.product_liter.delete(0, END)
-		self.total_price.delete(0, END)
+		self.product_liter.delete( 0,END )
+		self.total_price.delete( 0,END )
 
 	def combo_customer(self):
-		db = sqlite3.connect('MyDatabase.db')
-		cursor = db.execute('SELECT Customer_Name FROM Customer')
+		db = sqlite3.connect( 'MyDatabase.db' )
+		cursor = db.execute( 'SELECT Customer_Name FROM Customer' )
 
 		data = []
 
 		for row in cursor.fetchall():
-			data.append(row[0])
+			data.append( row[0] )
 
 		return data
+
 
 class PageOne( tk.Frame ):  # Product Page
 
@@ -367,37 +392,35 @@ class PageOne( tk.Frame ):  # Product Page
 		frame = ttk.LabelFrame( self,text = 'เพิ่มสินค้า' )
 		frame.grid( row = 0,column = 0,sticky = NW )
 
-
-		style = ttk.Style(self)
-		style.configure("TButton", font=('wasy10', 14))
+		style = ttk.Style( self )
+		style.configure( "TButton",font = ('wasy10',14) )
 
 		Label( frame,text = 'ชื่อสินค้า' ).grid( row = 1,column = 0 )
 		self.name = Entry( frame )
 		self.name.grid( row = 1,column = 1 )
 
 		Label( frame,text = 'ประเภทสินค้า' ).grid( row = 2,column = 0 )
-		self.type = Entry( frame ,justify='right' )
+		self.type = Entry( frame,justify = 'right' )
 		self.type.grid( row = 2,column = 1 )
 
 		Label( frame,text = 'ราคา' ).grid( row = 3,column = 0 )
-		self.price = Entry( frame,justify='right'  )
+		self.price = Entry( frame,justify = 'right' )
 		self.price.grid( row = 3,column = 1 )
 
-		ttk.Button( frame,text = 'เพิ่มข้อมูล',command = self.adding ).grid( row = 4,column = 0)
+		ttk.Button( frame,text = 'เพิ่มข้อมูล',command = self.adding ).grid( row = 4,column = 0 )
 		button1 = ttk.Button( frame,text = 'ลบข้อมูล',command = self.deleting )
 		button1.grid( row = 4,column = 1 )
 		button2 = ttk.Button( frame,text = 'แก้ไขข้อมูล',command = self.editing )
 		button2.grid( row = 4,column = 2 )
 
 		self.tree = ttk.Treeview( self,height = 15,column = ("2","3") )
-		self.tree.grid( row = 1,column = 0)
+		self.tree.grid( row = 1,column = 0 )
 		self.tree.heading( '#0',text = 'ชื่อสินค้า',anchor = W )
 		self.tree.heading( 0,text = 'ประเภทสินค้า',anchor = W )
 		self.tree.heading( 1,text = 'ราคา',anchor = W )
 
-		frame2 = LabelFrame(self, text = 'ชุดคำสั่ง')
-		frame2.grid(row = 0, column = 0,sticky = E)
-
+		frame2 = LabelFrame( self,text = 'ชุดคำสั่ง' )
+		frame2.grid( row = 0,column = 0,sticky = E )
 
 		button3 = ttk.Button( frame2,text = "หน้าข้อมูลลูกค้า",command = lambda: controller.show_frame( PageTwo ) )
 		button3.grid( row = 1,column = 0,)
@@ -503,56 +526,106 @@ class PageTwo( tk.Frame ):  # Customer Page
 
 	def __init__(self,parent,controller):
 		tk.Frame.__init__( self,parent )
+		AFont = font.Font( family = 'Helvetica',size = 12,weight = 'bold' )
+		BFont = font.Font( family = 'Helvetica',size = 11,)
+		frame =LabelFrame(self,text = "ค้นหา")
+		frame.grid(row = 0, sticky = NW)
 
-
+		default = StringVar(self, value = 0)
+		Label(frame, text = "เลขประจำตัวผู้เสียภาษีอากร (13 หลัก)",font = BFont).grid(row = 0)
+		Label(frame, text = "สาขาที่",font = BFont).grid(row = 1,sticky = E)
+		self.tax_enter = Entry( frame )
+		self.tax_enter.grid( row = 0,column = 1,sticky = W )
+		self.branch_enter = Entry(frame, textvariable = default)
+		self.branch_enter.grid(row = 1, column = 1,sticky = W)
+		self.button1 = Button( frame,text = 'ค้นหา',font = AFont,height = 1,width = 10,command = lambda: self.tax_search() )
+		self.button1.grid( row = 2,columnspan = 2)
+		self.tree = ttk.Treeview( self,height = 17,column = ("1") )
+		self.tree.heading( '#0',text = "ประเภท" )
+		self.tree.heading( 0,text = "ผลลัพธ์" )
+		self.tree.grid( row = 1 )
 
 		frame2 = LabelFrame( self,text = "เพิ่มข้อมูลลูกค้า" )
-		frame2.grid( row = 0,column = 0,sticky = NW )
-
-		Label( frame2,text = 'ชื่อลูกค้า' ).grid( row = 1,column = 2 )
-		self.Customer_name = Entry( frame2,justify='right'  )
-		self.Customer_name.grid( row = 1,column = 3 )
-
-		Label( frame2,text = 'ทะเบียนรถ' ).grid( row = 1,column = 4 )
-		self.Car_plate = Entry( frame2,justify='right'  )
-		self.Car_plate.grid( row = 1,column = 5 )
-
-		Label( frame2,text = 'ชื่อบริษัท' ).grid( row = 3,column = 2 )
-		self.Company_name = Entry( frame2,justify='right'  )
-		self.Company_name.grid( row = 3,column = 3 )
-
-		Label( frame2,text = 'เบอร์โทรศัพท์' ).grid( row = 2,column = 2 )
-		self.Phone_number = Entry( frame2,justify='right'  )
-		self.Phone_number.grid( row = 2,column = 3 )
-
-		Label( frame2,text = 'ที่อยู่' ).grid( row = 2,column = 4 )
-		self.Customer_address = Entry( frame2 ,justify='right' )
-		self.Customer_address.grid( row = 2,column = 5 )
-
-		ttk.Button( frame2,text = 'เพิ่มข้อมูล',command = self.adding2 ).grid( row = 4,column = 2 )
-		button1 = ttk.Button( frame2,text = 'ลบข้อมูล',command = self.deleting2 )
-		button1.grid( row = 4,column = 3 )
-		button2 = ttk.Button( frame2,text = 'แก้ไขข้อมูล' )
-		button2.grid( row = 4,column = 4 )
-
-		self.tree2 = ttk.Treeview( self,height = 15,column = ("1","2","3") )
-		self.tree2.grid( row = 2,column = 0)
-		self.tree2.heading( '#0',text = 'ชื่อลูกค้า',anchor = W )
-		self.tree2.heading( 1,text = 'ทะเบียนรถ',anchor = W )
-		self.tree2.heading( 2,text = 'ชื่อบริษัท',anchor = W )
-		self.tree2.heading( 3,text = 'เบอร์โทรศัพท์',anchor = W )
-
-		frame2 = LabelFrame(self, text = 'ชุดคำสั่ง')
-		frame2.grid(row = 0, column = 0, sticky = E)
-
+		frame2.grid( row = 0,column = 1,sticky = E )
+		#
+		# Label( frame2,text = 'ชื่อลูกค้า' ).grid( row = 1,column = 2 )
+		# self.Customer_name = Entry( frame2,justify='right'  )
+		# self.Customer_name.grid( row = 1,column = 3 )
+		#
+		# Label( frame2,text = 'ทะเบียนรถ' ).grid( row = 1,column = 4 )
+		# self.Car_plate = Entry( frame2,justify='right'  )
+		# self.Car_plate.grid( row = 1,column = 5 )
+		#
+		# Label( frame2,text = 'ชื่อบริษัท' ).grid( row = 3,column = 2 )
+		# self.Company_name = Entry( frame2,justify='right'  )
+		# self.Company_name.grid( row = 3,column = 3 )
+		#
+		# Label( frame2,text = 'เบอร์โทรศัพท์' ).grid( row = 2,column = 2 )
+		# self.Phone_number = Entry( frame2,justify='right'  )
+		# self.Phone_number.grid( row = 2,column = 3 )
+		#
+		# Label( frame2,text = 'ที่อยู่' ).grid( row = 2,column = 4 )
+		# self.Customer_address = Entry( frame2 ,justify='right' )
+		# self.Customer_address.grid( row = 2,column = 5 )
+		#
+		# ttk.Button( frame2,text = 'เพิ่มข้อมูล',command = self.adding2 ).grid( row = 4,column = 2 )
+		# button1 = ttk.Button( frame2,text = 'ลบข้อมูล',command = self.deleting2 )
+		# button1.grid( row = 4,column = 3 )
+		# button2 = ttk.Button( frame2,text = 'แก้ไขข้อมูล' )
+		# button2.grid( row = 4,column = 4 )
+		#
+		# self.tree2 = ttk.Treeview( self,height = 15,column = ("1","2","3") )
+		# self.tree2.grid( row = 2,column = 0)
+		# self.tree2.heading( '#0',text = 'ชื่อลูกค้า',anchor = W )
+		# self.tree2.heading( 1,text = 'ทะเบียนรถ',anchor = W )
+		# self.tree2.heading( 2,text = 'ชื่อบริษัท',anchor = W )
+		# self.tree2.heading( 3,text = 'เบอร์โทรศัพท์',anchor = W )
+		#
+		# frame2 = LabelFrame(self, text = 'ชุดคำสั่ง')
+		# frame2.grid(row = 0, column = 0, sticky = E)
 
 		button3 = ttk.Button( frame2,text = "หน้าข้อมูลสินค้า",command = lambda: controller.show_frame( PageOne ) )
 		button3.grid( row = 1,column = 0,)
 		button3 = ttk.Button( frame2,text = "หน้าคำนวณสินค้า",command = lambda: controller.show_frame( StartPage ) )
 		button3.grid( row = 0,column = 0,)
 
+	# self.viewing_record2()
 
-		self.viewing_record2()
+	def tax_search(self):
+
+		count = True
+		while count:
+			try:
+				for i in self.tree.get_children():
+					self.tree.delete(i)
+
+				urllib3.disable_warnings( urllib3.exceptions.InsecureRequestWarning )
+				session = Session()
+				session.verify = False
+				transport = Transport( session = session )
+
+				client = Client( 'https://rdws.rd.go.th/serviceRD3/vatserviceRD3.asmx?wsdl',
+								 transport = transport )
+				result = client.service.Service(
+					username = 'anonymous',
+					password = 'anonymous',
+					TIN = self.tax_enter.get(),
+					ProvinceCode = 0,
+					BranchNumber = self.branch_enter.get(),
+					AmphurCode = 0
+				)
+
+				# Convert Zeep Response object (in this case Service) to Python dict.
+				result = zeep.helpers.serialize_object( result )
+
+				# print(result)
+				for k in result.keys():
+					if result[k] is not None:
+						v = result[k].get( 'anyType',None )[0]
+						self.tree.insert( '','end',text = k,value = v )
+				count = False
+			except:
+				print( "ERROR" )
 
 	def run_query(self,query,parameters=()):
 		with sqlite3.connect( self.db_name ) as conn:
@@ -607,7 +680,8 @@ class PageTwo( tk.Frame ):  # Customer Page
 		self.message2['text'] = 'Record {} is deleted'.format( name )
 		self.viewing_record2()
 
-class PageThree (tk.Frame): #CalPrice
+
+class PageThree( tk.Frame ):  # CalPrice
 
 	def __init__(self,parent,controller):
 		tk.Frame.__init__( self,parent )
@@ -615,25 +689,23 @@ class PageThree (tk.Frame): #CalPrice
 		frame = ttk.LabelFrame( self,text = 'สินค้าทั้งหมด' )
 		frame.grid( row = 0,column = 0,sticky = NW )
 
-
-
 		Label( frame,text = "ชื่อสินค้า" ).grid( row = 1,sticky = W )
-		self.product_name = ttk.Combobox( frame,width = 40,justify='right'   )
+		self.product_name = ttk.Combobox( frame,width = 40,justify = 'right' )
 		self.product_name['values'] = self.combo_product()
 		self.product_name.grid( row = 2,column = 0 )
-		self.product_name2 = ttk.Combobox( frame,width = 40,justify='right'  )
+		self.product_name2 = ttk.Combobox( frame,width = 40,justify = 'right' )
 		self.product_name2['values'] = self.combo_product()
 		self.product_name2.grid( row = 3,column = 0 )
-		self.product_name3 = ttk.Combobox( frame,width = 40,justify='right'  )
+		self.product_name3 = ttk.Combobox( frame,width = 40,justify = 'right' )
 		self.product_name3['values'] = self.combo_product()
 		self.product_name3.grid( row = 4,column = 0 )
-		self.product_name4 = ttk.Combobox( frame,width = 40,justify='right'  )
+		self.product_name4 = ttk.Combobox( frame,width = 40,justify = 'right' )
 		self.product_name4['values'] = self.combo_product()
 		self.product_name4.grid( row = 5,column = 0 )
-		self.product_name5 = ttk.Combobox( frame,width = 40,justify='right'  )
+		self.product_name5 = ttk.Combobox( frame,width = 40,justify = 'right' )
 		self.product_name5['values'] = self.combo_product()
 		self.product_name5.grid( row = 6,column = 0 )
-		self.product_name6 = ttk.Combobox( frame,width = 40,justify='right'  )
+		self.product_name6 = ttk.Combobox( frame,width = 40,justify = 'right' )
 		self.product_name6['values'] = self.combo_product()
 		self.product_name6.grid( row = 7,column = 0 )
 
@@ -657,113 +729,115 @@ class PageThree (tk.Frame): #CalPrice
 		# self.product_type6['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
 		# self.product_type6.grid( row = 7,column = 1 )
 
-
 		Label( frame,text = "ราคา(บาท)" ).grid( row = 1,column = 1,sticky = W )
-		self.product_price = Entry(frame, width = 10,justify='right' )
-		self.product_price.grid(row = 2, column = 1)
-		self.product_price2 = Entry(frame, width = 10,justify='right' )
-		self.product_price2.grid(row = 3, column = 1)
-		self.product_price3 = Entry(frame, width = 10,justify='right' )
-		self.product_price3.grid(row = 4, column = 1)
-		self.product_price4 = Entry(frame, width = 10,justify='right' )
-		self.product_price4.grid(row = 5, column = 1)
-		self.product_price5 = Entry(frame, width = 10,justify='right' )
-		self.product_price5.grid(row = 6, column = 1)
-		self.product_price6 = Entry(frame, width = 10,justify='right' )
-		self.product_price6.grid(row = 7, column = 1)
+		self.product_price = Entry( frame,width = 10,justify = 'right' )
+		self.product_price.grid( row = 2,column = 1 )
+		self.product_price2 = Entry( frame,width = 10,justify = 'right' )
+		self.product_price2.grid( row = 3,column = 1 )
+		self.product_price3 = Entry( frame,width = 10,justify = 'right' )
+		self.product_price3.grid( row = 4,column = 1 )
+		self.product_price4 = Entry( frame,width = 10,justify = 'right' )
+		self.product_price4.grid( row = 5,column = 1 )
+		self.product_price5 = Entry( frame,width = 10,justify = 'right' )
+		self.product_price5.grid( row = 6,column = 1 )
+		self.product_price6 = Entry( frame,width = 10,justify = 'right' )
+		self.product_price6.grid( row = 7,column = 1 )
 
-		Label(frame,text = "จำนวน").grid(row = 1, column = 2, sticky = W)
-		self.product_number  = Entry(frame, width = 10,justify='right' )
-		self.product_number.grid(row =2, column = 2)
-		self.product_number2  = Entry(frame, width = 10,justify='right' )
-		self.product_number2.grid(row =3, column = 2)
-		self.product_number3  = Entry(frame, width = 10,justify='right' )
-		self.product_number3.grid(row =4, column = 2)
-		self.product_number4  = Entry(frame, width = 10,justify='right' )
-		self.product_number4.grid(row =5, column = 2)
-		self.product_number5  = Entry(frame, width = 10,justify='right' )
-		self.product_number5.grid(row =6, column = 2)
-		self.product_number6  = Entry(frame, width = 10,justify='right' )
-		self.product_number6.grid(row =7, column = 2)
+		Label( frame,text = "จำนวน" ).grid( row = 1,column = 2,sticky = W )
+		self.product_number = Entry( frame,width = 10,justify = 'right' )
+		self.product_number.grid( row = 2,column = 2 )
+		self.product_number2 = Entry( frame,width = 10,justify = 'right' )
+		self.product_number2.grid( row = 3,column = 2 )
+		self.product_number3 = Entry( frame,width = 10,justify = 'right' )
+		self.product_number3.grid( row = 4,column = 2 )
+		self.product_number4 = Entry( frame,width = 10,justify = 'right' )
+		self.product_number4.grid( row = 5,column = 2 )
+		self.product_number5 = Entry( frame,width = 10,justify = 'right' )
+		self.product_number5.grid( row = 6,column = 2 )
+		self.product_number6 = Entry( frame,width = 10,justify = 'right' )
+		self.product_number6.grid( row = 7,column = 2 )
 
-		Label(frame, text = "ราคาทั้งหมด(บาท)").grid(row = 1, column = 3, sticky = W)
-		self.product_total = Text(frame, height =1 , width= 10 )
-		self.product_total.grid(row = 2, column = 3)
-		self.product_total2 = Text(frame, height =1 , width= 10, )
-		self.product_total2.grid(row = 3, column = 3)
-		self.product_total3 = Text(frame, height =1 , width= 10, )
-		self.product_total3.grid(row = 4, column = 3)
-		self.product_total4 = Text(frame, height =1 , width= 10, )
-		self.product_total4.grid(row = 5, column = 3)
-		self.product_total5 = Text(frame, height =1 , width= 10, )
-		self.product_total5.grid(row = 6, column = 3)
-		self.product_total6 = Text(frame, height =1 , width= 10, )
-		self.product_total6.grid(row = 7, column = 3)
+		Label( frame,text = "ราคาทั้งหมด(บาท)" ).grid( row = 1,column = 3,sticky = W )
+		self.product_total = Text( frame,height = 1,width = 10 )
+		self.product_total.grid( row = 2,column = 3 )
+		self.product_total2 = Text( frame,height = 1,width = 10,)
+		self.product_total2.grid( row = 3,column = 3 )
+		self.product_total3 = Text( frame,height = 1,width = 10,)
+		self.product_total3.grid( row = 4,column = 3 )
+		self.product_total4 = Text( frame,height = 1,width = 10,)
+		self.product_total4.grid( row = 5,column = 3 )
+		self.product_total5 = Text( frame,height = 1,width = 10,)
+		self.product_total5.grid( row = 6,column = 3 )
+		self.product_total6 = Text( frame,height = 1,width = 10,)
+		self.product_total6.grid( row = 7,column = 3 )
 
 		frame2 = ttk.LabelFrame( self,text = 'คำนวณราคา' )
-		frame2.grid( row = 1,column = 0, sticky = W)
-		Label(frame2, text = "ราคาสินค้าทั้งหมด(ไม่รวม Vat) :").grid(row =1, column = 0)
-		self.product_total_no = Entry(frame2, width = 15, justify = 'right')
-		self.product_total_no.grid(row = 1, column = 1)
+		frame2.grid( row = 1,column = 0,sticky = W )
+		Label( frame2,text = "ราคาสินค้าทั้งหมด(ไม่รวม Vat) :" ).grid( row = 1,column = 0 )
+		self.product_total_no = Entry( frame2,width = 15,justify = 'right' )
+		self.product_total_no.grid( row = 1,column = 1 )
 
-		Label(frame2, text = "ภาษีมูลค่าเพิ่ม :").grid(row =2, column = 0)
-		v = StringVar(self, value='7%')
-		self.Invoice = Entry(frame2, textvariable = v ,width = 15, justify = 'right' , state = 'readonly')
-		self.Invoice.grid(row = 2, column = 1)
+		Label( frame2,text = "ภาษีมูลค่าเพิ่ม :" ).grid( row = 2,column = 0 )
+		v = StringVar( self,value = '7%' )
+		self.Invoice = Entry( frame2,textvariable = v,width = 15,justify = 'right',state = 'readonly' )
+		self.Invoice.grid( row = 2,column = 1 )
 
-		Label(frame2, text = "ราคาทั้งหมด(รวม Vat) :").grid(row = 3, column = 0)
-		self.product_grand_total = Entry(frame2, width = 15, justify = 'right')
-		self.product_grand_total.grid(row = 3, column = 1)
-		button1 = ttk.Button(frame2, text='คำนวณสินค้าทั้งหมด', command=self.CalProduct, width = 15)
-		button1.grid(row=4, columnspan = 2)
-		button2 = ttk.Button(frame2, text='ล้างข้อมูล', width =15)
-		button2.grid(row=5, columnspan = 2)
+		Label( frame2,text = "ราคาทั้งหมด(รวม Vat) :" ).grid( row = 3,column = 0 )
+		self.product_grand_total = Entry( frame2,width = 15,justify = 'right' )
+		self.product_grand_total.grid( row = 3,column = 1 )
+		button1 = ttk.Button( frame2,text = 'คำนวณสินค้าทั้งหมด',command = self.CalProduct,width = 15 )
+		button1.grid( row = 4,columnspan = 2 )
+		button2 = ttk.Button( frame2,text = 'ล้างข้อมูล',width = 15 )
+		button2.grid( row = 5,columnspan = 2 )
 
-		frame3 = ttk.LabelFrame(self, text = "ปุ่มคำสั่งต่างๆ")
-		frame3.grid(row = 0 ,column = 1, sticky = NW)
+		frame3 = ttk.LabelFrame( self,text = "ปุ่มคำสั่งต่างๆ" )
+		frame3.grid( row = 0,column = 1,sticky = NW )
 
+		button3 = ttk.Button( frame3,text = 'หน้าข้อมูลสินค้า',command = lambda: controller.show_frame( PageOne ),
+							  width = 20 )
+		button3.grid( row = 2,column = 0 )
 
-		button3 = ttk.Button(frame3, text = 'หน้าข้อมูลสินค้า', command = lambda: controller.show_frame( PageOne ), width = 20)
-		button3.grid(row = 2, column =0)
+		button4 = ttk.Button( frame3,text = 'หน้าข้อมูลลูกค้า',command = lambda: controller.show_frame( PageTwo ),
+							  width = 20 )
+		button4.grid( row = 1,column = 0 )
 
-		button4 = ttk.Button(frame3, text = 'หน้าข้อมูลลูกค้า', command = lambda: controller.show_frame( PageTwo ), width = 20)
-		button4.grid(row = 1, column = 0)
-
-		button5 = ttk.Button(frame3, text = "กลับหน้าคำนวณราคาน้ำมัน", command = lambda: controller.show_frame( StartPage ), width = 20)
-		button5.grid(row = 0, column = 0)
+		button5 = ttk.Button( frame3,text = "กลับหน้าคำนวณราคาน้ำมัน",
+							  command = lambda: controller.show_frame( StartPage ),width = 20 )
+		button5.grid( row = 0,column = 0 )
 
 	def CalProduct(self):
-		self.product1 = int(self.product_number.get()) * int(self.product_price.get())
-		self.product_total.insert(END,self.product1)
-		self.product2 = int(self.product_number2.get()) * int(self.product_price2.get())
-		self.product_total2.insert(END, self.product2)
-		self.product3 = int(self.product_number3.get()) * int(self.product_price3.get())
-		self.product_total3.insert(END, self.product3)
-		self.product4 = int(self.product_number4.get()) * int(self.product_price4.get())
-		self.product_total4.insert(END, self.product4)
-		self.product5 = int(self.product_number5.get()) * int(self.product_price5.get())
-		self.product_total5.insert(END, self.product5)
-		self.product6 = int(self.product_number6.get()) * int(self.product_price6.get())
-		self.product_total6.insert(END, self.product6)
+		self.product1 = int( self.product_number.get() ) * int( self.product_price.get() )
+		self.product_total.insert( END,self.product1 )
+		self.product2 = int( self.product_number2.get() ) * int( self.product_price2.get() )
+		self.product_total2.insert( END,self.product2 )
+		self.product3 = int( self.product_number3.get() ) * int( self.product_price3.get() )
+		self.product_total3.insert( END,self.product3 )
+		self.product4 = int( self.product_number4.get() ) * int( self.product_price4.get() )
+		self.product_total4.insert( END,self.product4 )
+		self.product5 = int( self.product_number5.get() ) * int( self.product_price5.get() )
+		self.product_total5.insert( END,self.product5 )
+		self.product6 = int( self.product_number6.get() ) * int( self.product_price6.get() )
+		self.product_total6.insert( END,self.product6 )
 
 		self.productTotal = self.product1 + self.product2 + self.product3 + self.product4 + self.product5 + self.product6
-		self.product_total_no.insert(END, self.productTotal)
+		self.product_total_no.insert( END,self.productTotal )
 
 		self.productVat = self.productTotal * 0.7 + self.productTotal
-		self.product_grand_total.insert(END, self.productVat)
+		self.product_grand_total.insert( END,self.productVat )
 
 	def combo_product(self):
-		db = sqlite3.connect('MyDatabase.db')
-		cursor = db.execute('SELECT Product_Name FROM Product')
+		db = sqlite3.connect( 'MyDatabase.db' )
+		cursor = db.execute( 'SELECT Product_Name FROM Product' )
 
 		data = []
 
 		for row in cursor.fetchall():
-			data.append(row[0])
+			data.append( row[0] )
 
 		return data
 
+
 app = Invoice()
 app.geometry( "800x480" )
-app.title("Invoice")
+app.title( "Invoice" )
 app.mainloop()
