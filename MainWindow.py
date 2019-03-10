@@ -48,7 +48,7 @@ class StartPage( tk.Frame ):  # Calculate Price
 		BFont = font.Font( family = 'Helvetica',size = 11,)
 
 		frame = ttk.LabelFrame( self,text = 'สินค้า' )
-		frame.grid( row = 1,column = 0,sticky = W )
+		frame.grid( row = 0,column = 0,sticky = W )
 		frame7 = ttk.LabelFrame( self,text = 'ราคาน้ำมัน ณ ปัจจุบัน' )
 		frame7.grid( row = 3,columnspan = 4,sticky = "nsw" )
 		frame8 = ttk.LabelFrame( self,text = 'ชุดคำสั่ง' )
@@ -56,7 +56,7 @@ class StartPage( tk.Frame ):  # Calculate Price
 		frame9 = ttk.LabelFrame( self,text = "คำนวณเงิน" )
 		frame9.grid( row = 3,column = 0,columnspan = 2,sticky = NE )
 		frame10 = ttk.LabelFrame( self,text = "ผู้ซื้อ" )
-		frame10.grid( row = 0,column = 0,sticky = W )
+		frame10.grid( row = 4,column = 0,sticky = W )
 
 		self.chk1 = BooleanVar()
 		self.chk2 = BooleanVar()
@@ -190,10 +190,10 @@ class StartPage( tk.Frame ):  # Calculate Price
 		self.total_price = Entry( frame9,justify = 'right' )
 		self.total_price.grid( row = 1,column = 1 )
 
-		# Label( frame10,text = "ชื่อผู้ซื้อ :",font = BFont ).grid( row = 0 )
-		# self.product_name = ttk.Combobox( frame10,width = 20,justify = 'right',state = 'readonly' )
-		# self.product_name['values'] = self.combo_customer()
-		# self.product_name.grid( row = 0,column = 1 )
+		Label( frame10,text = "ชื่อผู้ซื้อ :",font = BFont ).grid( row = 0 )
+		self.product_name = ttk.Combobox( frame10,width = 20,justify = 'right',state = 'readonly' )
+		self.product_name['values'] = self.combo_customer()
+		self.product_name.grid( row = 0,column = 1 )
 		# button1 = ttk.Button( frame10,text = "ดูข้อมูลเพิ่มเติม",width = 15,command = lambda: self.show_cus_name() )
 		# button1.grid( row = 0,column = 2 )
 		# Label( frame10,text = "รหัสประจำตัว",font = BFont ).grid( row = 1 )
@@ -373,7 +373,7 @@ class StartPage( tk.Frame ):  # Calculate Price
 
 	def combo_customer(self):
 		db = sqlite3.connect( 'MyDatabase.db' )
-		cursor = db.execute( 'SELECT Customer_Name FROM Customer' )
+		cursor = db.execute( 'SELECT Tax_ID FROM Customer' )
 
 		data = []
 
@@ -630,10 +630,10 @@ class PageTwo( tk.Frame ):  # Customer Page
 						v = result[k].get( 'anyType',None )[0]
 						self.tree.insert( '','end',text = k,value = v )
 						self.my_list.append(v)
-
-				count = False
 			except:
-				print("TRY AGAIN!")
+				print("Try Again")
+			else:
+				count = False
 
 
 	def save_data(self):

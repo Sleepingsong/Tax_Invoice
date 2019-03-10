@@ -4,7 +4,6 @@
     <list default="true" id="01fef1f8-0460-44d2-9a11-1f49b52f8b0b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyDatabase.db" beforeDir="false" afterPath="$PROJECT_DIR$/MyDatabase.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -19,8 +18,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MainWindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="623" column="70" lean-forward="true" selection-start-line="623" selection-start-column="70" selection-end-line="623" selection-end-column="70" />
+            <state relative-caret-position="315">
+              <caret line="609" column="84" lean-forward="true" selection-start-line="609" selection-start-column="84" selection-end-line="609" selection-end-column="84" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -30,7 +29,11 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test.py">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-3332">
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -66,8 +69,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Test02.py" />
-        <option value="$PROJECT_DIR$/MainWindow.py" />
         <option value="$PROJECT_DIR$/Test.py" />
+        <option value="$PROJECT_DIR$/MainWindow.py" />
       </list>
     </option>
   </component>
@@ -88,7 +91,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552240940009" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552245706863" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -239,7 +242,14 @@
       <option name="project" value="LOCAL" />
       <updated>1552229659700</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="- Add record to database">
+      <created>1552240964778</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1552240964778</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -312,7 +322,8 @@
     <MESSAGE value="- Adjust button" />
     <MESSAGE value="- Add image button&#10;- Can both calculate liter and price" />
     <MESSAGE value="- Search Tax_ID and Branch_number" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Search Tax_ID and Branch_number" />
+    <MESSAGE value="- Add record to database" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Add record to database" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py">
@@ -333,12 +344,16 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test.py">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3332">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MainWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="623" column="70" lean-forward="true" selection-start-line="623" selection-start-column="70" selection-end-line="623" selection-end-column="70" />
+        <state relative-caret-position="315">
+          <caret line="609" column="84" lean-forward="true" selection-start-line="609" selection-start-column="84" selection-end-line="609" selection-end-column="84" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
