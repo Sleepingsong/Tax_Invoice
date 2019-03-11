@@ -52,9 +52,9 @@ class StartPage( tk.Frame ):  # Calculate Price
 		frame7 = ttk.LabelFrame( self,text = 'ราคาน้ำมัน ณ ปัจจุบัน' )
 		frame7.grid( row = 3,columnspan = 4,sticky = "nsw" )
 		frame8 = ttk.LabelFrame( self,text = 'ชุดคำสั่ง' )
-		frame8.grid( row = 0,column = 3,sticky = N )
+		frame8.grid( row = 0,column = 0,sticky = NE )
 		frame9 = ttk.LabelFrame( self,text = "คำนวณเงิน" )
-		frame9.grid( row = 3,column = 0,columnspan = 2,sticky = NE )
+		frame9.grid( row = 3,column = 0,columnspan = 2,sticky = N )
 		frame10 = ttk.LabelFrame( self,text = "ผู้ซื้อ" )
 		frame10.grid( row = 4,column = 0,sticky = W )
 
@@ -151,33 +151,33 @@ class StartPage( tk.Frame ):  # Calculate Price
 		Product6.grid( row = 3,column = 2 )
 
 		Label( frame7,text = 'Supreme Gasohol 95 :',font = BFont ).grid( row = 0,column = 0,sticky = E )
-		Label( frame7,text = 'บาท (ต่อลิตร)',font = BFont ).grid( row = 0,column = 2 )
+		Label( frame7,text = 'บาท',font = BFont ).grid( row = 0,column = 2 )
 		self.G95_price = Entry( frame7,width = 8,justify = 'right' )
 		self.G95_price.grid( row = 0,column = 1 )
 
 		Label( frame7,text = 'Supreme Plus Gasohol 95 :',font = BFont ).grid( row = 1,column = 0,sticky = E )
-		Label( frame7,text = 'บาท (ต่อลิตร)',font = BFont ).grid( row = 1,column = 2 )
+		Label( frame7,text = 'บาท',font = BFont ).grid( row = 1,column = 2 )
 		self.GP95_price = Entry( frame7,width = 8,justify = 'right' )
 		self.GP95_price.grid( row = 1,column = 1 )
 
 		Label( frame7,text = 'Supreme E20 :',font = BFont ).grid( row = 2,column = 0,sticky = E )
-		Label( frame7,text = 'บาท (ต่อลิตร)',font = BFont ).grid( row = 2,column = 2 )
+		Label( frame7,text = 'บาท',font = BFont ).grid( row = 2,column = 2 )
 		self.E20_price = Entry( frame7,width = 8,justify = 'right' )
 		self.E20_price.grid( row = 2,column = 1 )
 
 		Label( frame7,text = 'Supreme Gasohol 91 :',font = BFont ).grid( row = 3,column = 0,sticky = E )
-		Label( frame7,text = 'บาท (ต่อลิตร)',font = BFont ).grid( row = 3,column = 2 )
+		Label( frame7,text = 'บาท',font = BFont ).grid( row = 3,column = 2 )
 
 		self.G91_price = Entry( frame7,width = 8,justify = 'right' )
 		self.G91_price.grid( row = 3,column = 1 )
 
 		Label( frame7,text = 'Supreme Diesel :',font = BFont ).grid( row = 4,column = 0,sticky = E )
-		Label( frame7,text = 'บาท (ต่อลิตร)',font = BFont ).grid( row = 4,column = 2 )
+		Label( frame7,text = 'บาท',font = BFont ).grid( row = 4,column = 2 )
 		self.DS_price = Entry( frame7,width = 8,justify = 'right' )
 		self.DS_price.grid( row = 4,column = 1 )
 
 		Label( frame7,text = 'Supreme Plus Diesel :',font = BFont ).grid( row = 5,column = 0,sticky = E )
-		Label( frame7,text = 'บาท (ต่อลิตร)',font = BFont ).grid( row = 5,column = 2 )
+		Label( frame7,text = 'บาท',font = BFont ).grid( row = 5,column = 2 )
 		self.DSP_price = Entry( frame7,width = 8,justify = 'right' )
 		self.DSP_price.grid( row = 5,column = 1 )
 
@@ -190,10 +190,41 @@ class StartPage( tk.Frame ):  # Calculate Price
 		self.total_price = Entry( frame9,justify = 'right' )
 		self.total_price.grid( row = 1,column = 1 )
 
-		Label( frame10,text = "ชื่อผู้ซื้อ :",font = BFont ).grid( row = 0 )
+		Label( frame10,text = "รหัสประจำตัวผู้เสียภาษี",font = BFont ).grid( row = 0 )
 		self.product_name = ttk.Combobox( frame10,width = 20,justify = 'right',state = 'readonly' )
 		self.product_name['values'] = self.combo_customer()
 		self.product_name.grid( row = 0,column = 1 )
+		button5 = tk.Button(frame10,text = "ค้นหา")
+		button5.grid(row = 0 , column = 2)
+		Label(frame10, text = "ชื่อบริษัท").grid(row=1,sticky = E)
+		self.comp_name = Entry(frame10,justify = 'right',width = 17).grid(row =1 , column = 1,sticky = W)
+		Label(frame10,text= "สาขา").grid(row =1 , column = 2)
+		self.branch_num = Entry(frame10,justify = 'right',width = 5).grid(row =1 , column = 3,sticky = W)
+		Label(frame10,text="ชื่อตึก").grid(row =1 , column = 4)
+		self.building_name = Entry(frame10, justify='right',width =17).grid(row=1, column=5,sticky = W)
+		Label(frame10,text= "ชั้น").grid(row=1, column = 6,sticky = E)
+		self.branch_floor = Entry(frame10, justify='right',width = 5).grid(row=1, column=7,sticky = W)
+		Label(frame10, text="หมู่บ้าน").grid(row=1,column=8)
+		self.village_name = Entry(frame10, justify='right',width = 17).grid(row=1, column=9,sticky = W)
+		Label(frame10, text="เลขห้อง").grid(row=2,sticky = E)
+		self.room_no = Entry(frame10, justify='right', width=5).grid(row=2, column=1,sticky =W)
+		Label(frame10, text="เลขที่บ้าน").grid(row=2, column=2)
+		self.house_no = Entry(frame10, justify='right', width=5).grid(row=2, column=3,sticky = W)
+		Label(frame10, text="หมู่").grid(row=2, column=4)
+		self.Moo_no = Entry(frame10, justify='right', width=4).grid(row=2, column=5,sticky = W)
+		Label(frame10, text="ซอย").grid(row=2,column = 6,sticky = E)
+		self.Soi_no = Entry(frame10, justify='right',width = 10).grid(row=2, column=7,sticky =W)
+		Label(frame10, text="ถนน").grid(row=2, column=8)
+		self.Stree_name = Entry(frame10, justify='right',width = 17).grid(row=2, column=9,sticky =W)
+		Label(frame10, text="ตำบล").grid(row=3, sticky = E)
+		self.Thumbon_name = Entry(frame10, justify='right', width=17).grid(row=3, column=1, sticky=W)
+		Label(frame10, text="อำเภอ").grid(row=3, column = 2, sticky=E)
+		self.Aumper_name = Entry(frame10, justify='right', width=8).grid(row=3, column=3, sticky=W)
+		Label(frame10, text="จังหวัด").grid(row=3, column=4,sticky=E)
+		self.Province_name = Entry(frame10, justify='right', width=17).grid(row=3, column=5, sticky=W)
+		Label(frame10, text="รหัสไปษณีย์").grid(row=3, column = 6,sticky=E)
+		self.Postcode = Entry(frame10, justify='right', width=5).grid(row=3, column=7, sticky=W)
+
 		# button1 = ttk.Button( frame10,text = "ดูข้อมูลเพิ่มเติม",width = 15,command = lambda: self.show_cus_name() )
 		# button1.grid( row = 0,column = 2 )
 		# Label( frame10,text = "รหัสประจำตัว",font = BFont ).grid( row = 1 )
@@ -630,10 +661,8 @@ class PageTwo( tk.Frame ):  # Customer Page
 						v = result[k].get( 'anyType',None )[0]
 						self.tree.insert( '','end',text = k,value = v )
 						self.my_list.append(v)
-			except Exception:
-				print("TRY AGAIN!")
 			except:
-				print("ASDASD")
+				print("Try Again")
 			else:
 				count = False
 
@@ -652,57 +681,57 @@ class PageTwo( tk.Frame ):  # Customer Page
 
 
 # def run_query(self,query,parameters=()):
-# 	with sqlite3.connect( self.db_name ) as conn:
-# 		cursor = conn.cursor()
-# 		query_result = cursor.execute( query,parameters )
-# 		conn.commit()
-# 	return query_result
-#
-# def viewing_record2(self):
-# 	records = self.tree2.get_children()
-# 	for element in records:
-# 		self.tree2.delete( element )
-# 	query = 'SELECT * FROM Customer ORDER BY Customer_ID DESC'
-# 	db_rows = self.run_query( query )
-# 	for row in db_rows:
-# 		self.tree2.insert( '',0,text = row[1],values = (row[2],row[3],row[4]) )
-#
-# def validation2(self):
-# 	return len( self.Customer_name.get() ) != 0 \
-# 		   and len( self.Company_name.get() ) != 0 and len( self.Car_plate.get() ) != 0 \
-# 		   and len( self.Phone_number.get() ) != 0
-#
-# def adding2(self):
-# 	if self.validation2():
-# 		query = 'INSERT INTO Customer VALUES (NULL, ?, ?,?,?,?)'
-# 		parameters = (
-# 			self.Customer_name.get(),self.Phone_number.get(),self.Car_plate.get(),self.Company_name.get(),
-# 			self.Customer_address.get())
-# 		self.run_query( query,parameters )
-# 		self.message2['text'] = 'Record {} added to database'.format( self.Company_name.get() )
-# 		self.Customer_name.delete( 0,END )
-# 		self.Car_plate.delete( 0,END )
-# 		self.Company_name.delete( 0,END )
-# 		self.Phone_number.delete( 0,END )
-#
-# 	else:
-# 		self.message2['text'] = 'Some fields are empty'
-# 	self.viewing_record2()
-#
-# def deleting2(self):
-# 	self.message2['text'] = ''
-# 	try:
-# 		self.tree2.item( self.tree2.selection() )['values'][0]
-# 	except IndexError as e:
-# 		self.message2['text'] = 'Please select record'
-# 		return
-#
-# 	self.message2['text'] = ''
-# 	name = self.tree2.item( self.tree2.selection() )['text']
-# 	query = 'DELETE FROM Customer WHERE Customer_Name = ?'
-# 	self.run_query( query,(name,) )
-# 	self.message2['text'] = 'Record {} is deleted'.format( name )
-# 	self.viewing_record2()
+	# 	with sqlite3.connect( self.db_name ) as conn:
+	# 		cursor = conn.cursor()
+	# 		query_result = cursor.execute( query,parameters )
+	# 		conn.commit()
+	# 	return query_result
+	#
+	# def viewing_record2(self):
+	# 	records = self.tree2.get_children()
+	# 	for element in records:
+	# 		self.tree2.delete( element )
+	# 	query = 'SELECT * FROM Customer ORDER BY Customer_ID DESC'
+	# 	db_rows = self.run_query( query )
+	# 	for row in db_rows:
+	# 		self.tree2.insert( '',0,text = row[1],values = (row[2],row[3],row[4]) )
+	#
+	# def validation2(self):
+	# 	return len( self.Customer_name.get() ) != 0 \
+	# 		   and len( self.Company_name.get() ) != 0 and len( self.Car_plate.get() ) != 0 \
+	# 		   and len( self.Phone_number.get() ) != 0
+	#
+	# def adding2(self):
+	# 	if self.validation2():
+	# 		query = 'INSERT INTO Customer VALUES (NULL, ?, ?,?,?,?)'
+	# 		parameters = (
+	# 			self.Customer_name.get(),self.Phone_number.get(),self.Car_plate.get(),self.Company_name.get(),
+	# 			self.Customer_address.get())
+	# 		self.run_query( query,parameters )
+	# 		self.message2['text'] = 'Record {} added to database'.format( self.Company_name.get() )
+	# 		self.Customer_name.delete( 0,END )
+	# 		self.Car_plate.delete( 0,END )
+	# 		self.Company_name.delete( 0,END )
+	# 		self.Phone_number.delete( 0,END )
+	#
+	# 	else:
+	# 		self.message2['text'] = 'Some fields are empty'
+	# 	self.viewing_record2()
+	#
+	# def deleting2(self):
+	# 	self.message2['text'] = ''
+	# 	try:
+	# 		self.tree2.item( self.tree2.selection() )['values'][0]
+	# 	except IndexError as e:
+	# 		self.message2['text'] = 'Please select record'
+	# 		return
+	#
+	# 	self.message2['text'] = ''
+	# 	name = self.tree2.item( self.tree2.selection() )['text']
+	# 	query = 'DELETE FROM Customer WHERE Customer_Name = ?'
+	# 	self.run_query( query,(name,) )
+	# 	self.message2['text'] = 'Record {} is deleted'.format( name )
+	# 	self.viewing_record2()
 
 
 class PageThree( tk.Frame ):  # CalPrice
