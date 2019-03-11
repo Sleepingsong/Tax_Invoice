@@ -194,36 +194,50 @@ class StartPage( tk.Frame ):  # Calculate Price
 		self.product_name = ttk.Combobox( frame10,width = 20,justify = 'right',state = 'readonly' )
 		self.product_name['values'] = self.combo_customer()
 		self.product_name.grid( row = 0,column = 1 )
-		button5 = tk.Button(frame10,text = "ค้นหา")
+		button5 = tk.Button(frame10,text = "ค้นหา", command = self.show_data)
 		button5.grid(row = 0 , column = 2)
 		Label(frame10, text = "ชื่อบริษัท").grid(row=1,sticky = E)
-		self.comp_name = Entry(frame10,justify = 'right',width = 17).grid(row =1 , column = 1,sticky = W)
+		self.comp_name = Entry(frame10,justify = 'right',width = 17)
+		self.comp_name.grid(row =1 , column = 1,sticky = W)
 		Label(frame10,text= "สาขา").grid(row =1 , column = 2)
-		self.branch_num = Entry(frame10,justify = 'right',width = 5).grid(row =1 , column = 3,sticky = W)
+		self.branch_num = Entry(frame10,justify = 'right',width = 5)
+		self.branch_num.grid(row =1 , column = 3,sticky = W)
 		Label(frame10,text="ชื่อตึก").grid(row =1 , column = 4)
-		self.building_name = Entry(frame10, justify='right',width =17).grid(row=1, column=5,sticky = W)
+		self.building_name = Entry(frame10, justify='right',width =17)
+		self.building_name.grid(row=1, column=5,sticky = W)
 		Label(frame10,text= "ชั้น").grid(row=1, column = 6,sticky = E)
-		self.branch_floor = Entry(frame10, justify='right',width = 5).grid(row=1, column=7,sticky = W)
+		self.branch_floor = Entry(frame10, justify='right',width = 5)
+		self.branch_floor.grid(row=1, column=7,sticky = W)
 		Label(frame10, text="หมู่บ้าน").grid(row=1,column=8)
-		self.village_name = Entry(frame10, justify='right',width = 17).grid(row=1, column=9,sticky = W)
+		self.village_name = Entry(frame10, justify='right',width = 17)
+		self.village_name.grid(row=1, column=9,sticky = W)
 		Label(frame10, text="เลขห้อง").grid(row=2,sticky = E)
-		self.room_no = Entry(frame10, justify='right', width=5).grid(row=2, column=1,sticky =W)
+		self.room_no = Entry(frame10, justify='right', width=5)
+		self.room_no.grid(row=2, column=1,sticky =W)
 		Label(frame10, text="เลขที่บ้าน").grid(row=2, column=2)
-		self.house_no = Entry(frame10, justify='right', width=5).grid(row=2, column=3,sticky = W)
+		self.house_no = Entry(frame10, justify='right', width=5)
+		self.house_no.grid(row=2, column=3,sticky = W)
 		Label(frame10, text="หมู่").grid(row=2, column=4)
-		self.Moo_no = Entry(frame10, justify='right', width=4).grid(row=2, column=5,sticky = W)
+		self.Moo_no = Entry(frame10, justify='right', width=4)
+		self.Moo_no.grid(row=2, column=5,sticky = W)
 		Label(frame10, text="ซอย").grid(row=2,column = 6,sticky = E)
-		self.Soi_no = Entry(frame10, justify='right',width = 10).grid(row=2, column=7,sticky =W)
+		self.Soi_no = Entry(frame10, justify='right',width = 10)
+		self.Soi_no.grid(row=2, column=7,sticky =W)
 		Label(frame10, text="ถนน").grid(row=2, column=8)
-		self.Stree_name = Entry(frame10, justify='right',width = 17).grid(row=2, column=9,sticky =W)
+		self.Stree_name = Entry(frame10, justify='right',width = 17)
+		self.Stree_name.grid(row=2, column=9,sticky =W)
 		Label(frame10, text="ตำบล").grid(row=3, sticky = E)
-		self.Thumbon_name = Entry(frame10, justify='right', width=17).grid(row=3, column=1, sticky=W)
+		self.Thumbon_name = Entry(frame10, justify='right', width=17)
+		self.Thumbon_name.grid(row=3, column=1, sticky=W)
 		Label(frame10, text="อำเภอ").grid(row=3, column = 2, sticky=E)
-		self.Aumper_name = Entry(frame10, justify='right', width=8).grid(row=3, column=3, sticky=W)
+		self.Aumper_name = Entry(frame10, justify='right', width=8)
+		self.Aumper_name.grid(row=3, column=3, sticky=W)
 		Label(frame10, text="จังหวัด").grid(row=3, column=4,sticky=E)
-		self.Province_name = Entry(frame10, justify='right', width=17).grid(row=3, column=5, sticky=W)
+		self.Province_name = Entry(frame10, justify='right', width=17)
+		self.Province_name.grid(row=3, column=5, sticky=W)
 		Label(frame10, text="รหัสไปษณีย์").grid(row=3, column = 6,sticky=E)
-		self.Postcode = Entry(frame10, justify='right', width=5).grid(row=3, column=7, sticky=W)
+		self.Postcode = Entry(frame10, justify='right', width=5)
+		self.Postcode.grid(row=3, column=7, sticky=W)
 
 		# button1 = ttk.Button( frame10,text = "ดูข้อมูลเพิ่มเติม",width = 15,command = lambda: self.show_cus_name() )
 		# button1.grid( row = 0,column = 2 )
@@ -260,12 +274,14 @@ class StartPage( tk.Frame ):  # Calculate Price
 		self.ShowE20()
 		self.ShowG91()
 
+
 		self.G95_price.config( state = 'readonly' )
 		self.GP95_price.config( state = 'readonly' )
 		self.E20_price.config( state = 'readonly' )
 		self.G91_price.config( state = 'readonly' )
 		self.DS_price.config( state = 'readonly' )
 		self.DSP_price.config( state = 'readonly' )
+
 
 	# def show_cus_name(self):
 	#
@@ -275,11 +291,83 @@ class StartPage( tk.Frame ):  # Calculate Price
 	# 	# self.c_name.insert(END,cur.fetchall())
 	# 	print( cur.fetchall() )
 
+	def show_data(self):
+
+		self.comp_name.delete(0,'end')
+		self.branch_num.delete(0,'end')
+		self.branch_floor.delete(0,'end')
+		self.building_name.delete(0,'end')
+		self.village_name.delete(0,'end')
+		self.house_no.delete(0,'end')
+		self.Moo_no.delete(0,'end')
+		self.Soi_no.delete(0,'end')
+		self.Stree_name.delete(0,'end')
+		self.Thumbon_name.delete(0,'end')
+		self.Aumper_name.delete(0,'end')
+		self.Province_name.delete(0,'end')
+		self.Postcode.delete(0,'end')
+
+		con = sqlite3.connect('MyDatabase.db')
+		cur = con.cursor()
+		cur.execute('SELECT Name FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		self.comp_name.insert(END,cur.fetchone())
+
+		cur2 = con.cursor()
+		cur2.execute('SELECT BranchNumber FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		self.branch_num.insert(END,cur2.fetchall())
+
+		cur3 = con.cursor()
+		cur3.execute('SELECT BuildingName FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		self.building_name.insert(END, cur3.fetchall())
+
+		cur4 = con.cursor()
+		cur4.execute('SELECT FloorNumber FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		self.branch_floor.insert(END, cur4.fetchall())
+
+		cur5 = con.cursor()
+		cur5.execute('SELECT VillageName FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		self.village_name.insert(END, cur5.fetchall())
+
+		cur6 = con.cursor()
+		cur6.execute('SELECT HouseNumber FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		self.house_no.insert(END, cur6.fetchall())
+
+		cur7 = con.cursor()
+		cur7.execute('SELECT MooNumber FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		self.Moo_no.insert(END, cur7.fetchall())
+
+		cur8 = con.cursor()
+		cur8.execute('SELECT SoiName FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		self.Soi_no.insert(END, cur8.fetchone())
+
+		cur9 = con.cursor()
+		cur9.execute('SELECT StreetName FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		self.Stree_name.insert(END, cur9.fetchall())
+
+		cur10 = con.cursor()
+		cur10.execute('SELECT Thambol FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		self.Thumbon_name.insert(END, cur10.fetchall())
+
+		cur11 = con.cursor()
+		cur11.execute('SELECT Amphur FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		self.Aumper_name.insert(END, cur11.fetchall())
+
+		cur12 = con.cursor()
+		cur12.execute('SELECT Province FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		self.Province_name.insert(END, cur12.fetchall())
+
+		cur13 = con.cursor()
+		cur13.execute('SELECT PostCode FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		self.Postcode.insert(END, cur13.fetchall())
+
+
 	def ShowG95(self):
 		con = sqlite3.connect( 'MyDatabase.db' )
 		cur = con.cursor()
 		cur.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 1' )
-		self.G95_price.insert( END,cur.fetchall() )
+		self.G95_price.insert(END,cur.fetchall())
+
+
 
 	def ShowGP95(self):
 		con = sqlite3.connect( 'MyDatabase.db' )
