@@ -898,7 +898,7 @@ class PageThree( tk.Frame ):  # CalPrice
 		self.product_number6 = Entry( frame,width = 10,justify = 'right' )
 		self.product_number6.grid( row = 7,column = 2 )
 
-		Label( frame,text = "ราคาทั้งหมด(บาท)" ).grid( row = 1,column = 3,sticky = W )
+		Label( frame,text = "ราคาทั้งหมด" ).grid( row = 1,column = 3,sticky = W )
 		self.product_total = Text( frame,height = 1,width = 10 )
 		self.product_total.grid( row = 2,column = 3 )
 		self.product_total2 = Text( frame,height = 1,width = 10,)
