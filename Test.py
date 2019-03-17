@@ -293,72 +293,73 @@ class StartPage( tk.Frame ):  # Calculate Price
 
 	def show_data(self):
 
-		self.comp_name.delete(0,'end')
-		self.branch_num.delete(0,'end')
-		self.branch_floor.delete(0,'end')
-		self.building_name.delete(0,'end')
-		self.village_name.delete(0,'end')
-		self.house_no.delete(0,'end')
-		self.Moo_no.delete(0,'end')
-		self.Soi_no.delete(0,'end')
-		self.Stree_name.delete(0,'end')
-		self.Thumbon_name.delete(0,'end')
-		self.Aumper_name.delete(0,'end')
-		self.Province_name.delete(0,'end')
-		self.Postcode.delete(0,'end')
-
-		con = sqlite3.connect('MyDatabase.db')
-		cur = con.cursor()
-		cur.execute('SELECT Name FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		self.comp_name.insert(END,cur.fetchone())
-
-		cur2 = con.cursor()
-		cur2.execute('SELECT BranchNumber FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		self.branch_num.insert(END,cur2.fetchall())
-
-		cur3 = con.cursor()
-		cur3.execute('SELECT BuildingName FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		self.building_name.insert(END, cur3.fetchall())
-
-		cur4 = con.cursor()
-		cur4.execute('SELECT FloorNumber FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		self.branch_floor.insert(END, cur4.fetchall())
-
-		cur5 = con.cursor()
-		cur5.execute('SELECT VillageName FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		self.village_name.insert(END, cur5.fetchall())
-
-		cur6 = con.cursor()
-		cur6.execute('SELECT HouseNumber FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		self.house_no.insert(END, cur6.fetchall())
-
-		cur7 = con.cursor()
-		cur7.execute('SELECT MooNumber FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		self.Moo_no.insert(END, cur7.fetchall())
-
-		cur8 = con.cursor()
-		cur8.execute('SELECT SoiName FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		self.Soi_no.insert(END, cur8.fetchone())
-
-		cur9 = con.cursor()
-		cur9.execute('SELECT StreetName FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		self.Stree_name.insert(END, cur9.fetchall())
-
-		cur10 = con.cursor()
-		cur10.execute('SELECT Thambol FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		self.Thumbon_name.insert(END, cur10.fetchall())
-
-		cur11 = con.cursor()
-		cur11.execute('SELECT Amphur FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		self.Aumper_name.insert(END, cur11.fetchall())
-
-		cur12 = con.cursor()
-		cur12.execute('SELECT Province FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		self.Province_name.insert(END, cur12.fetchall())
-
-		cur13 = con.cursor()
-		cur13.execute('SELECT PostCode FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		self.Postcode.insert(END, cur13.fetchall())
+		print(self.product_name.get())
+		# self.comp_name.delete(0,'end')
+		# self.branch_num.delete(0,'end')
+		# self.branch_floor.delete(0,'end')
+		# self.building_name.delete(0,'end')
+		# self.village_name.delete(0,'end')
+		# self.house_no.delete(0,'end')
+		# self.Moo_no.delete(0,'end')
+		# self.Soi_no.delete(0,'end')
+		# self.Stree_name.delete(0,'end')
+		# self.Thumbon_name.delete(0,'end')
+		# self.Aumper_name.delete(0,'end')
+		# self.Province_name.delete(0,'end')
+		# self.Postcode.delete(0,'end')
+		#
+		# con = sqlite3.connect('MyDatabase.db')
+		# cur = con.cursor()
+		# cur.execute('SELECT Name FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		# self.comp_name.insert(END,cur.fetchone())
+		#
+		# cur2 = con.cursor()
+		# cur2.execute('SELECT BranchNumber FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		# self.branch_num.insert(END,cur2.fetchall())
+		#
+		# cur3 = con.cursor()
+		# cur3.execute('SELECT BuildingName FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		# self.building_name.insert(END, cur3.fetchall())
+		#
+		# cur4 = con.cursor()
+		# cur4.execute('SELECT FloorNumber FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		# self.branch_floor.insert(END, cur4.fetchall())
+		#
+		# cur5 = con.cursor()
+		# cur5.execute('SELECT VillageName FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		# self.village_name.insert(END, cur5.fetchall())
+		#
+		# cur6 = con.cursor()
+		# cur6.execute('SELECT HouseNumber FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		# self.house_no.insert(END, cur6.fetchall())
+		#
+		# cur7 = con.cursor()
+		# cur7.execute('SELECT MooNumber FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		# self.Moo_no.insert(END, cur7.fetchall())
+		#
+		# cur8 = con.cursor()
+		# cur8.execute('SELECT SoiName FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		# self.Soi_no.insert(END, cur8.fetchone())
+		#
+		# cur9 = con.cursor()
+		# cur9.execute('SELECT StreetName FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		# self.Stree_name.insert(END, cur9.fetchall())
+		#
+		# cur10 = con.cursor()
+		# cur10.execute('SELECT Thambol FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		# self.Thumbon_name.insert(END, cur10.fetchall())
+		#
+		# cur11 = con.cursor()
+		# cur11.execute('SELECT Amphur FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		# self.Aumper_name.insert(END, cur11.fetchall())
+		#
+		# cur12 = con.cursor()
+		# cur12.execute('SELECT Province FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		# self.Province_name.insert(END, cur12.fetchall())
+		#
+		# cur13 = con.cursor()
+		# cur13.execute('SELECT PostCode FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
+		# self.Postcode.insert(END, cur13.fetchall())
 
 
 	def ShowG95(self):

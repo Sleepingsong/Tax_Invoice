@@ -4,6 +4,8 @@
     <list default="true" id="01fef1f8-0460-44d2-9a11-1f49b52f8b0b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyDatabase.db" beforeDir="false" afterPath="$PROJECT_DIR$/MyDatabase.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SProject2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SProject2.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test.py" afterDir="false" />
     </list>
@@ -16,11 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MainWindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="554" lean-forward="true" selection-end-line="865" />
+            <state relative-caret-position="370">
+              <caret line="59" column="39" selection-start-line="59" selection-start-column="39" selection-end-line="59" selection-end-column="39" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -28,11 +30,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="197" column="41" selection-start-line="197" selection-start-column="41" selection-end-line="197" selection-end-column="41" />
+            <state relative-caret-position="559">
+              <caret line="288" column="26" lean-forward="true" selection-start-line="288" selection-start-column="26" selection-end-line="288" selection-end-column="26" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -43,8 +45,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test02.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="41" selection-start-line="41" selection-end-line="41" />
+            <state relative-caret-position="238">
+              <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -62,9 +64,9 @@
     </option>
   </component>
   <component name="FindInProjectRecents">
-    <dirStrings>
-      <dir>C:\Users\Woranat.S\Desktop\Tax_Invoice</dir>
-    </dirStrings>
+    <findStrings>
+      <find>chk5</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -72,15 +74,15 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/MainWindow.py" />
         <option value="$PROJECT_DIR$/Test02.py" />
         <option value="$PROJECT_DIR$/Test.py" />
+        <option value="$PROJECT_DIR$/MainWindow.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="812" />
-    <option name="y" value="40" />
+    <option name="x" value="61" />
+    <option name="y" value="98" />
     <option name="width" value="974" />
     <option name="height" value="1048" />
   </component>
@@ -88,15 +90,19 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="ProjectPane" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550426844404" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552843753437" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="SDKs" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -110,7 +116,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Test">
+  <component name="RunManager" selected="Python.MainWindow">
     <configuration name="MainWindow" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="SProject2" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -139,7 +145,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\Users\Woranat.S\AppData\Local\Programs\Python\Python37-32\python.exe" />
+      <option name="SDK_HOME" value="C:\Users\prang\Tax_Invoice\Scripts\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -176,8 +182,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Test" />
         <item itemvalue="Python.MainWindow" />
+        <item itemvalue="Python.Test" />
         <item itemvalue="Python.Test02" />
       </list>
     </recent_temporary>
@@ -228,51 +234,42 @@
       <option name="project" value="LOCAL" />
       <updated>1550390243256</updated>
     </task>
-    <task id="LOCAL-00006" summary="- Re-arrange button&#10;- Adjust button&#10;- Add product select">
-      <created>1550470086755</created>
+    <task id="LOCAL-00006" summary="- Add image button&#10;- Can both calculate liter and price">
+      <created>1551009210484</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1550470086755</updated>
+      <updated>1551009210484</updated>
     </task>
-    <task id="LOCAL-00007" summary="- Re-arrange button&#10;- Adjust button&#10;- Add product select">
-      <created>1550471815084</created>
+    <task id="LOCAL-00007" summary="- Search Tax_ID and Branch_number">
+      <created>1552229659700</created>
       <option name="number" value="00007" />
       <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
-      <updated>1550471815084</updated>
+      <updated>1552229659700</updated>
     </task>
-    <task id="LOCAL-00008" summary="- Search for Tax invoice">
-      <created>1551067158051</created>
+    <task id="LOCAL-00008" summary="- Add record to database">
+      <created>1552240964778</created>
       <option name="number" value="00008" />
       <option name="presentableId" value="LOCAL-00008" />
       <option name="project" value="LOCAL" />
-      <updated>1551067158052</updated>
+      <updated>1552240964778</updated>
     </task>
-    <task id="LOCAL-00009" summary="- Show Invoice data">
-      <created>1551074843083</created>
+    <task id="LOCAL-00009" summary="- Add record to database">
+      <created>1552245728685</created>
       <option name="number" value="00009" />
       <option name="presentableId" value="LOCAL-00009" />
       <option name="project" value="LOCAL" />
-      <updated>1551074843083</updated>
+      <updated>1552245728685</updated>
     </task>
     <option name="localTasksCounter" value="10" />
     <servers />
   </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-  </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.21710037" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.21748401" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -281,16 +278,17 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32980132" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33044422" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32980132" />
+      <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32936078" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32936078" />
+      <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32936078" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -335,33 +333,30 @@
     <MESSAGE value="- Calculate price function&#10;- Retrieve oil price to Entry&#10;- Modify Database" />
     <MESSAGE value="Add product name combobox" />
     <MESSAGE value="- Adjust button" />
-    <MESSAGE value="- Re-arrange button&#10;- Adjust button&#10;- Add product select" />
-    <MESSAGE value="- Search for Tax invoice" />
-    <MESSAGE value="- Show Invoice data" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Show Invoice data" />
+    <MESSAGE value="- Add image button&#10;- Can both calculate liter and price" />
+    <MESSAGE value="- Search Tax_ID and Branch_number" />
+    <MESSAGE value="- Add record to database" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Add record to database" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py">
+    <entry file="file://$APPLICATION_PLUGINS_DIR$/python-ce/helpers/pydev/_pydev_imps/_pydev_execfile.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="2688" selection-start-line="2688" selection-end-line="2688" />
+        <state relative-caret-position="289">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MainWindow.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="554" lean-forward="true" selection-end-line="865" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="197">
+          <caret line="2222" selection-start-line="2222" selection-end-line="2222" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test02.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="41" selection-start-line="41" selection-end-line="41" />
+        <state relative-caret-position="238">
+          <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
@@ -370,8 +365,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="197" column="41" selection-start-line="197" selection-start-column="41" selection-end-line="197" selection-end-column="41" />
+        <state relative-caret-position="559">
+          <caret line="288" column="26" lean-forward="true" selection-start-line="288" selection-start-column="26" selection-end-line="288" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MainWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="59" column="39" selection-start-line="59" selection-start-column="39" selection-end-line="59" selection-end-column="39" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
@@ -381,8 +386,33 @@
   </component>
   <component name="masterDetails">
     <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
       <state key="GlobalLibrariesConfigurable.UI">
         <settings>
+          <last-edited>Python 3.7 (Tax_Invoice) interpreter library</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -395,6 +425,18 @@
       <state key="JdkListConfigurable.UI">
         <settings>
           <last-edited>Python 3.7 (venv)</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>SProject2</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
