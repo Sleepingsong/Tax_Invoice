@@ -9,6 +9,7 @@ import zeep
 from zeep import Client
 from zeep.transports import Transport
 import urllib3
+import time
 
 LARGE_FONT = ("Verdana",12)
 
@@ -46,17 +47,21 @@ class StartPage( tk.Frame ):  # Calculate Price
 
 		AFont = font.Font( family = 'Helvetica',size = 12,weight = 'bold' )
 		BFont = font.Font( family = 'Helvetica',size = 11,)
+		self.on_color = 'red'
+		self.off_color = 'black'
 
 		frame = ttk.LabelFrame( self,text = 'สินค้า' )
 		frame.grid( row = 0,column = 0,sticky = W )
 		frame7 = ttk.LabelFrame( self,text = 'ราคาน้ำมัน ณ ปัจจุบัน' )
-		frame7.grid( row = 3,columnspan = 4,sticky = "nsw" )
+		frame7.grid( row = 1,sticky = NW )
 		frame8 = ttk.LabelFrame( self,text = 'ชุดคำสั่ง' )
-		frame8.grid( row = 0,column = 0,sticky = NE )
+		frame8.grid( row = 0,column = 1,sticky = NW )
 		frame9 = ttk.LabelFrame( self,text = "คำนวณเงิน" )
-		frame9.grid( row = 3,column = 0,columnspan = 2,sticky = N )
+		frame9.grid( row = 1,column = 0,sticky = NE )
 		frame10 = ttk.LabelFrame( self,text = "ผู้ซื้อ" )
-		frame10.grid( row = 4,column = 0,sticky = W )
+		frame10.grid( row = 2,column = 0,sticky = W )
+		frame11 = ttk.LabelFrame(self, text = "รหัสประจำตัวผู้เสียภาษี")
+		frame11.grid(row = 2, column = 1,sticky = W)
 
 		self.chk1 = BooleanVar()
 		self.chk2 = BooleanVar()
@@ -77,8 +82,8 @@ class StartPage( tk.Frame ):  # Calculate Price
 		self.G95_button = tk.Button( frame,image = self.photo1,height = 60,width = 150,command = self.checkG95 )
 		self.G95_button.grid( row = 0 )
 
-		Product1 = Checkbutton( frame,text = "Supreme Gasohol 95",font = AFont,variable = self.chk1 )
-		Product1.grid( row = 1,column = 0 )
+		self.Product1 = Checkbutton( frame,text = "Supreme Gasohol 95",font = AFont, variable = self.chk1 , fg = self.off_color)
+		self.Product1.grid( row = 1,column = 0 )
 
 		# load2 = Image.open("Gasohol95_Plus.jpg")
 		# load2 = load2.resize((150,60), Image.ANTIALIAS)
@@ -91,8 +96,8 @@ class StartPage( tk.Frame ):  # Calculate Price
 		self.photo2 = ImageTk.PhotoImage( self.image2 )
 		self.GP95_button = tk.Button( frame,image = self.photo2,height = 60,width = 150,command = self.checkGP95 )
 		self.GP95_button.grid( row = 0,column = 1 )
-		Product2 = Checkbutton( frame,text = "Supreme Plus Gasohol 95",font = AFont,variable = self.chk2 )
-		Product2.grid( row = 1,column = 1 )
+		self.Product2 = Checkbutton( frame,text = "Supreme Plus Gasohol 95",font = AFont,variable = self.chk2, fg = self.off_color)
+		self.Product2.grid( row = 1,column = 1 )
 
 		# load3 = Image.open("Gasohol_E20.jpg")
 		# load3 = load3.resize((150,60), Image.ANTIALIAS)
@@ -105,8 +110,8 @@ class StartPage( tk.Frame ):  # Calculate Price
 		self.photo3 = ImageTk.PhotoImage( self.image3 )
 		self.E20_button = tk.Button( frame,image = self.photo3,height = 60,width = 150,command = self.checkE20 )
 		self.E20_button.grid( row = 0,column = 2 )
-		Product3 = Checkbutton( frame,text = "Supreme E20",font = AFont,variable = self.chk3 )
-		Product3.grid( row = 1,column = 2 )
+		self.Product3 = Checkbutton( frame,text = "Supreme E20",font = AFont,variable = self.chk3 , fg = self.off_color)
+		self.Product3.grid( row = 1,column = 2 )
 
 		# load4 = Image.open("Gasohol_91.jpg")
 		# load4 = load4.resize((150,60), Image.ANTIALIAS)
@@ -119,8 +124,8 @@ class StartPage( tk.Frame ):  # Calculate Price
 		self.photo4 = ImageTk.PhotoImage( self.image4 )
 		self.G91_button = tk.Button( frame,image = self.photo4,height = 60,width = 150,command = self.checkG91 )
 		self.G91_button.grid( row = 2,column = 0 )
-		Product4 = Checkbutton( frame,text = "Supreme Gasohol 91",font = AFont,variable = self.chk4 )
-		Product4.grid( row = 3,column = 0 )
+		self.Product4 = Checkbutton( frame,text = "Supreme Gasohol 91",font = AFont,variable = self.chk4 , fg = self.off_color)
+		self.Product4.grid( row = 3,column = 0 )
 
 		# load5 = Image.open("Diesel_Plus.jpg")
 		# load5 = load5.resize((150,60), Image.ANTIALIAS)
@@ -133,8 +138,8 @@ class StartPage( tk.Frame ):  # Calculate Price
 		self.photo5 = ImageTk.PhotoImage( self.image5 )
 		self.DSP_button = tk.Button( frame,image = self.photo5,height = 60,width = 150,command = self.checkDSP )
 		self.DSP_button.grid( row = 2,column = 1 )
-		Product5 = Checkbutton( frame,text = "Supreme Plus Diesel",font = AFont,variable = self.chk5 )
-		Product5.grid( row = 3,column = 1 )
+		self.Product5 = Checkbutton( frame,text = "Supreme Plus Diesel",font = AFont,variable = self.chk5 , fg = self.off_color)
+		self.Product5.grid( row = 3,column = 1 )
 
 		# load6 = Image.open("Diesel.jpg")
 		# load6 = load6.resize((150,60), Image.ANTIALIAS)
@@ -147,8 +152,8 @@ class StartPage( tk.Frame ):  # Calculate Price
 		self.photo6 = ImageTk.PhotoImage( self.image6 )
 		self.DS_button = tk.Button( frame,image = self.photo6,height = 60,width = 150,command = self.checkDS )
 		self.DS_button.grid( row = 2,column = 2 )
-		Product6 = Checkbutton( frame,text = "Supreme Diesel",font = AFont,variable = self.chk6 )
-		Product6.grid( row = 3,column = 2 )
+		self.Product6 = Checkbutton( frame,text = "Supreme Diesel",font = AFont,variable = self.chk6 , fg = self.off_color)
+		self.Product6.grid( row = 3,column = 2 )
 
 		Label( frame7,text = 'Supreme Gasohol 95 :',font = BFont ).grid( row = 0,column = 0,sticky = E )
 		Label( frame7,text = 'บาท',font = BFont ).grid( row = 0,column = 2 )
@@ -190,54 +195,60 @@ class StartPage( tk.Frame ):  # Calculate Price
 		self.total_price = Entry( frame9,justify = 'right' )
 		self.total_price.grid( row = 1,column = 1 )
 
-		Label( frame10,text = "รหัสประจำตัวผู้เสียภาษี",font = BFont ).grid( row = 0 )
-		self.product_name = ttk.Combobox( frame10,width = 20,justify = 'right',state = 'readonly' )
-		self.product_name['values'] = self.combo_customer()
-		self.product_name.grid( row = 0,column = 1 )
-		button5 = tk.Button(frame10,text = "ค้นหา", command = self.show_data)
-		button5.grid(row = 0 , column = 2)
-		Label(frame10, text = "ชื่อบริษัท").grid(row=1,sticky = E)
+
+		# Label( frame11,text = "รหัสประจำตัวผู้เสียภาษี",font = BFont ).grid( row = 0 )
+		Label(frame10, text = "ชื่อบริษัท").grid(row=1,column = 0,sticky = E)
 		self.comp_name = Entry(frame10,justify = 'right',width = 17)
 		self.comp_name.grid(row =1 , column = 1,sticky = W)
-		Label(frame10,text= "สาขา").grid(row =1 , column = 2)
+		Label(frame10,text= "สาขา").grid(row =1 , column = 2,sticky = E)
 		self.branch_num = Entry(frame10,justify = 'right',width = 5)
 		self.branch_num.grid(row =1 , column = 3,sticky = W)
-		Label(frame10,text="ชื่อตึก").grid(row =1 , column = 4)
+		Label(frame10,text="ชื่อตึก").grid(row =1 , column = 4,sticky = E)
 		self.building_name = Entry(frame10, justify='right',width =17)
 		self.building_name.grid(row=1, column=5,sticky = W)
 		Label(frame10,text= "ชั้น").grid(row=1, column = 6,sticky = E)
-		self.branch_floor = Entry(frame10, justify='right',width = 5)
+		self.branch_floor = Entry(frame10, justify='right',width = 8)
 		self.branch_floor.grid(row=1, column=7,sticky = W)
-		Label(frame10, text="หมู่บ้าน").grid(row=1,column=8)
+		Label(frame10, text="หมู่บ้าน").grid(row=2,column=0,sticky = E)
 		self.village_name = Entry(frame10, justify='right',width = 17)
-		self.village_name.grid(row=1, column=9,sticky = W)
-		Label(frame10, text="เลขห้อง").grid(row=2,sticky = E)
+		self.village_name.grid(row=2, column=1,sticky = W)
+		Label(frame10, text="เลขห้อง").grid(row=2,column = 2 ,sticky = E)
 		self.room_no = Entry(frame10, justify='right', width=5)
-		self.room_no.grid(row=2, column=1,sticky =W)
-		Label(frame10, text="เลขที่บ้าน").grid(row=2, column=2)
+		self.room_no.grid(row=2, column=3,sticky =W)
+		Label(frame10, text="เลขที่บ้าน").grid(row=2, column=4,sticky = E)
 		self.house_no = Entry(frame10, justify='right', width=5)
-		self.house_no.grid(row=2, column=3,sticky = W)
-		Label(frame10, text="หมู่").grid(row=2, column=4)
-		self.Moo_no = Entry(frame10, justify='right', width=4)
-		self.Moo_no.grid(row=2, column=5,sticky = W)
-		Label(frame10, text="ซอย").grid(row=2,column = 6,sticky = E)
+		self.house_no.grid(row=2, column=5,sticky = W)
+		Label(frame10, text="หมู่").grid(row=2, column=6, sticky = E)
+		self.Moo_no = Entry(frame10, justify='right', width=8)
+		self.Moo_no.grid(row=2, column=7,sticky = W)
+		Label(frame10, text="ซอย").grid(row=3,column = 0,sticky = E)
 		self.Soi_no = Entry(frame10, justify='right',width = 10)
-		self.Soi_no.grid(row=2, column=7,sticky =W)
-		Label(frame10, text="ถนน").grid(row=2, column=8)
+		self.Soi_no.grid(row=3, column=1,sticky =W)
+		Label(frame10, text="ถนน").grid(row=3, column=2,sticky = E)
 		self.Stree_name = Entry(frame10, justify='right',width = 17)
-		self.Stree_name.grid(row=2, column=9,sticky =W)
-		Label(frame10, text="ตำบล").grid(row=3, sticky = E)
+		self.Stree_name.grid(row=3, column=3,sticky =W)
+		Label(frame10, text="ตำบล").grid(row=3, column = 4,sticky = E)
 		self.Thumbon_name = Entry(frame10, justify='right', width=17)
-		self.Thumbon_name.grid(row=3, column=1, sticky=W)
-		Label(frame10, text="อำเภอ").grid(row=3, column = 2, sticky=E)
+		self.Thumbon_name.grid(row=3, column=5, sticky=W)
+		Label(frame10, text="อำเภอ").grid(row=3, column = 6, sticky=E)
 		self.Aumper_name = Entry(frame10, justify='right', width=8)
-		self.Aumper_name.grid(row=3, column=3, sticky=W)
-		Label(frame10, text="จังหวัด").grid(row=3, column=4,sticky=E)
+		self.Aumper_name.grid(row=3, column=7, sticky=W)
+		Label(frame10, text="จังหวัด").grid(row=4, column=0,sticky=E)
 		self.Province_name = Entry(frame10, justify='right', width=17)
-		self.Province_name.grid(row=3, column=5, sticky=W)
-		Label(frame10, text="รหัสไปษณีย์").grid(row=3, column = 6,sticky=E)
+		self.Province_name.grid(row=4, column=1, sticky=W)
+		Label(frame10, text="รหัสไปษณีย์").grid(row=4, column = 2,sticky=E)
 		self.Postcode = Entry(frame10, justify='right', width=5)
-		self.Postcode.grid(row=3, column=7, sticky=W)
+		self.Postcode.grid(row=4, column=3, sticky=W)
+
+
+		self.cus_list = Listbox(frame11, height = 5, selectmode=SINGLE)
+		self.cus_list.bind('<Double-Button>', self.show_data)
+		self.cus_list.grid(row = 1)
+		db = sqlite3.connect( 'MyDatabase.db' )
+		cursor = db.execute( 'SELECT Tax_ID FROM Customer' )
+		for row in cursor.fetchall():
+			self.cus_list.insert(END, row)
+
 
 		# button1 = ttk.Button( frame10,text = "ดูข้อมูลเพิ่มเติม",width = 15,command = lambda: self.show_cus_name() )
 		# button1.grid( row = 0,column = 2 )
@@ -257,30 +268,21 @@ class StartPage( tk.Frame ):  # Calculate Price
 		button4 = ttk.Button( frame9,text = "ยกเลิก",command = self.Clear )
 		button4.grid( row = 3,columnspan = 3 )
 
-		button3 = ttk.Button( frame8,text = "หน้าข้อมูลลูกค้า",command = lambda: controller.show_frame( PageTwo ),
+		button3 = ttk.Button( frame8,text = "ข้อมูลลูกค้า",command = lambda: controller.show_frame( PageTwo ),
 							  width = 15 )
 		button3.grid( row = 2,column = 0,)
-		button3 = ttk.Button( frame8,text = "หน้าข้อมูลสินค้า",command = lambda: controller.show_frame( PageOne ),
+		button3 = ttk.Button( frame8,text = "ข้อมูลสินค้า",command = lambda: controller.show_frame( PageOne ),
 							  width = 15 )
 		button3.grid( row = 1,column = 0,)
 		button3 = ttk.Button( frame8,text = "คำนวณสินค้าเพิ่มเติม",command = lambda: controller.show_frame( PageThree ),
 							  width = 15 )
 		button3.grid( row = 0,column = 0,)
 
-		self.ShowG95()
-		self.ShowGP95()
-		self.ShowDS()
-		self.ShowDSP()
-		self.ShowE20()
-		self.ShowG91()
+		self.Show_gas_price()
 
 
-		self.G95_price.config( state = 'readonly' )
-		self.GP95_price.config( state = 'readonly' )
-		self.E20_price.config( state = 'readonly' )
-		self.G91_price.config( state = 'readonly' )
-		self.DS_price.config( state = 'readonly' )
-		self.DSP_price.config( state = 'readonly' )
+
+
 
 
 	# def show_cus_name(self):
@@ -291,219 +293,217 @@ class StartPage( tk.Frame ):  # Calculate Price
 	# 	# self.c_name.insert(END,cur.fetchall())
 	# 	print( cur.fetchall() )
 
-	def show_data(self):
 
-		print(self.product_name.get())
-		# self.comp_name.delete(0,'end')
-		# self.branch_num.delete(0,'end')
-		# self.branch_floor.delete(0,'end')
-		# self.building_name.delete(0,'end')
-		# self.village_name.delete(0,'end')
-		# self.house_no.delete(0,'end')
-		# self.Moo_no.delete(0,'end')
-		# self.Soi_no.delete(0,'end')
-		# self.Stree_name.delete(0,'end')
-		# self.Thumbon_name.delete(0,'end')
-		# self.Aumper_name.delete(0,'end')
-		# self.Province_name.delete(0,'end')
-		# self.Postcode.delete(0,'end')
-		#
-		# con = sqlite3.connect('MyDatabase.db')
-		# cur = con.cursor()
-		# cur.execute('SELECT Name FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		# self.comp_name.insert(END,cur.fetchone())
-		#
-		# cur2 = con.cursor()
-		# cur2.execute('SELECT BranchNumber FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		# self.branch_num.insert(END,cur2.fetchall())
-		#
-		# cur3 = con.cursor()
-		# cur3.execute('SELECT BuildingName FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		# self.building_name.insert(END, cur3.fetchall())
-		#
-		# cur4 = con.cursor()
-		# cur4.execute('SELECT FloorNumber FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		# self.branch_floor.insert(END, cur4.fetchall())
-		#
-		# cur5 = con.cursor()
-		# cur5.execute('SELECT VillageName FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		# self.village_name.insert(END, cur5.fetchall())
-		#
-		# cur6 = con.cursor()
-		# cur6.execute('SELECT HouseNumber FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		# self.house_no.insert(END, cur6.fetchall())
-		#
-		# cur7 = con.cursor()
-		# cur7.execute('SELECT MooNumber FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		# self.Moo_no.insert(END, cur7.fetchall())
-		#
-		# cur8 = con.cursor()
-		# cur8.execute('SELECT SoiName FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		# self.Soi_no.insert(END, cur8.fetchone())
-		#
-		# cur9 = con.cursor()
-		# cur9.execute('SELECT StreetName FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		# self.Stree_name.insert(END, cur9.fetchall())
-		#
-		# cur10 = con.cursor()
-		# cur10.execute('SELECT Thambol FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		# self.Thumbon_name.insert(END, cur10.fetchall())
-		#
-		# cur11 = con.cursor()
-		# cur11.execute('SELECT Amphur FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		# self.Aumper_name.insert(END, cur11.fetchall())
-		#
-		# cur12 = con.cursor()
-		# cur12.execute('SELECT Province FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		# self.Province_name.insert(END, cur12.fetchall())
-		#
-		# cur13 = con.cursor()
-		# cur13.execute('SELECT PostCode FROM Customer WHERE Tax_ID = ?', (self.product_name.get(),))
-		# self.Postcode.insert(END, cur13.fetchall())
+	def show_data(self,event):
 
+		self.comp_name.delete(0,'end')
+		self.branch_num.delete(0,'end')
+		self.branch_floor.delete(0,'end')
+		self.building_name.delete(0,'end')
+		self.village_name.delete(0,'end')
+		self.house_no.delete(0,'end')
+		self.Moo_no.delete(0,'end')
+		self.Soi_no.delete(0,'end')
+		self.Stree_name.delete(0,'end')
+		self.Thumbon_name.delete(0,'end')
+		self.Aumper_name.delete(0,'end')
+		self.Province_name.delete(0,'end')
+		self.Postcode.delete(0,'end')
 
-	def ShowG95(self):
-		con = sqlite3.connect( 'MyDatabase.db' )
+		self.get_selecte_value = self.cus_list.get(self.cus_list.curselection())
+		con = sqlite3.connect('MyDatabase.db')
 		cur = con.cursor()
-		cur.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 1' )
-		self.G95_price.insert(END,cur.fetchall())
+		cur.execute('SELECT Name FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+		self.comp_name.insert(END,cur.fetchone())
 
+		cur2 = con.cursor()
+		cur2.execute('SELECT BranchNumber FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+		self.branch_num.insert(END,cur2.fetchall())
 
+		cur3 = con.cursor()
+		cur3.execute('SELECT BuildingName FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+		self.building_name.insert(END, cur3.fetchall())
 
-	def ShowGP95(self):
+		cur4 = con.cursor()
+		cur4.execute('SELECT FloorNumber FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+		self.branch_floor.insert(END, cur4.fetchall())
+
+		cur5 = con.cursor()
+		cur5.execute('SELECT VillageName FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+		self.village_name.insert(END, cur5.fetchall())
+
+		cur6 = con.cursor()
+		cur6.execute('SELECT HouseNumber FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+		self.house_no.insert(END, cur6.fetchall())
+
+		cur7 = con.cursor()
+		cur7.execute('SELECT MooNumber FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+		self.Moo_no.insert(END, cur7.fetchall())
+
+		cur8 = con.cursor()
+		cur8.execute('SELECT SoiName FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+		self.Soi_no.insert(END, cur8.fetchone())
+
+		cur9 = con.cursor()
+		cur9.execute('SELECT StreetName FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+		self.Stree_name.insert(END, cur9.fetchall())
+
+		cur10 = con.cursor()
+		cur10.execute('SELECT Thambol FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+		self.Thumbon_name.insert(END, cur10.fetchall())
+
+		cur11 = con.cursor()
+		cur11.execute('SELECT Amphur FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+		self.Aumper_name.insert(END, cur11.fetchall())
+
+		cur12 = con.cursor()
+		cur12.execute('SELECT Province FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+		self.Province_name.insert(END, cur12.fetchall())
+
+		cur13 = con.cursor()
+		cur13.execute('SELECT PostCode FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+		self.Postcode.insert(END, cur13.fetchall())
+
+	def Show_gas_price(self):
+
 		con = sqlite3.connect( 'MyDatabase.db' )
-		cur = con.cursor()
-		cur.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 26' )
-		self.GP95_price.insert( END,cur.fetchall() )
+		cur1 = con.cursor()
+		cur1.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 1' )
+		self.G95_price.insert(END,cur1.fetchall())
 
-	def ShowE20(self):
-		con = sqlite3.connect( 'MyDatabase.db' )
-		cur = con.cursor()
-		cur.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 27' )
-		self.E20_price.insert( END,cur.fetchall() )
+		cur2 = con.cursor()
+		cur2.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 26' )
+		self.GP95_price.insert( END,cur2.fetchall() )
 
-	def ShowG91(self):
-		con = sqlite3.connect( 'MyDatabase.db' )
-		cur = con.cursor()
-		cur.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 28' )
-		self.G91_price.insert( END,cur.fetchall() )
+		cur3 = con.cursor()
+		cur3.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 27' )
+		self.E20_price.insert( END,cur3.fetchall() )
 
-	def ShowDS(self):
-		con = sqlite3.connect( 'MyDatabase.db' )
-		cur = con.cursor()
-		cur.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 29' )
-		self.DS_price.insert( END,cur.fetchall() )
+		cur4 = con.cursor()
+		cur4.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 28' )
+		self.G91_price.insert( END,cur4.fetchall() )
 
-	def ShowDSP(self):
-		con = sqlite3.connect( 'MyDatabase.db' )
-		cur = con.cursor()
-		cur.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 30' )
-		self.DSP_price.insert( END,cur.fetchall() )
+		cur5 = con.cursor()
+		cur5.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 29' )
+		self.DS_price.insert( END,cur5.fetchall() )
+
+		cur6 = con.cursor()
+		cur6.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 30' )
+		self.DSP_price.insert( END,cur6.fetchall() )
 
 	def checkG95(self):
 		if self.chk1.get() == False:
 			self.chk1.set( True )
+			self.Product1["fg"] = self.on_color
 		else:
 			self.chk1.set( False )
+			self.Product1["fg"] = self.off_color
 
 	def checkGP95(self):
 		if self.chk2.get() == False:
 			self.chk2.set( True )
+			self.Product2["fg"] = self.on_color
 		else:
 			self.chk2.set( False )
+			self.Product2["fg"] = self.off_color
 
 	def checkE20(self):
 		if self.chk3.get() == False:
 			self.chk3.set( True )
+			self.Product3["fg"] = self.on_color
 		else:
 			self.chk3.set( False )
+			self.Product3["fg"] = self.off_color
 
 	def checkG91(self):
 		if self.chk4.get() == False:
 			self.chk4.set( True )
+			self.Product4["fg"] = self.on_color
 		else:
 			self.chk4.set( False )
+			self.Product4["fg"] = self.off_color
 
 	def checkDSP(self):
 		if self.chk5.get() == False:
 			self.chk5.set( True )
+			self.Product5["fg"] = self.on_color
 		else:
 			self.chk5.set( False )
+			self.Product5["fg"] = self.off_color
 
 	def checkDS(self):
 		if self.chk6.get() == False:
 			self.chk6.set( True )
+			self.Product6["fg"] = self.on_color
 		else:
 			self.chk6.set( False )
+			self.Product6["fg"] = self.off_color
 
 	def CalPrice(self):
+
 		if self.chk1.get() == True:
 			if not self.total_price.get():
 				price = float( self.product_liter.get() ) * float( self.G95_price.get() )
-				self.total_price.insert( END,round( price,2 ) )
+				self.total_price.insert( END,round( price,3 ) )
 
 			else:
 				liter = float( self.total_price.get() ) / float( self.G95_price.get() )
-				self.product_liter.insert( END,round( liter,2 ) )
+				self.product_liter.insert( END,round( liter,3 ) )
 
 		if self.chk2.get() == True:
 			if not self.total_price.get():
 				price = float( self.product_liter.get() ) * float( self.GP95_price.get() )
-				self.total_price.insert( END,round( price,2 ) )
+				self.total_price.insert( END,round( price,3 ) )
 
 			else:
 				liter = float( self.total_price.get() ) / float( self.GP95_price.get() )
-				self.product_liter.insert( END,round( liter,2 ) )
+				self.product_liter.insert( END,round( liter,3 ) )
 		if self.chk3.get() == True:
 			if not self.total_price.get():
 				price = float( self.product_liter.get() ) * float( self.E20_price.get() )
-				self.total_price.insert( END,round( price,2 ) )
+				self.total_price.insert( END,round( price,3 ) )
 
 			else:
 				liter = float( self.total_price.get() ) / float( self.E20_price.get() )
-				self.product_liter.insert( END,round( liter,2 ) )
+				self.product_liter.insert( END,round( liter,3 ) )
 		if self.chk4.get() == True:
 			if not self.total_price.get():
 				price = float( self.product_liter.get() ) * float( self.G91_price.get() )
-				self.total_price.insert( END,round( price,2 ) )
+				self.total_price.insert( END,round( price,3 ) )
 
 			else:
 				liter = float( self.total_price.get() ) / float( self.G91_price.get() )
-				self.product_liter.insert( END,round( liter,2 ) )
+				self.product_liter.insert( END,round( liter,3 ) )
 		if self.chk5.get() == True:
 			if not self.total_price.get():
 				price = float( self.product_liter.get() ) * float( self.DSP_price.get() )
-				self.total_price.insert( END,round( price,2 ) )
+				self.total_price.insert( END,round( price,3 ) )
 
 			else:
 				liter = float( self.total_price.get() ) / float( self.DSP_price.get() )
-				self.product_liter.insert( END,round( liter,2 ) )
+				self.product_liter.insert( END,round( liter,3 ) )
 		if self.chk6.get() == True:
 			if not self.total_price.get():
 				price = float( self.product_liter.get() ) * float( self.DS_price.get() )
-				self.total_price.insert( END,round( price,2 ) )
+				self.total_price.insert( END,round( price,3 ) )
 
 			else:
 				liter = float( self.total_price.get() ) / float( self.DS_price.get() )
-				self.product_liter.insert( END,round( liter,2 ) )
+				self.product_liter.insert( END,round( liter,3 ) )
 
 	def Clear(self):
 		self.product_liter.delete( 0,END )
 		self.total_price.delete( 0,END )
 
-	def combo_customer(self):
+	def list_customer(self):
 		db = sqlite3.connect( 'MyDatabase.db' )
-		cursor = db.execute( 'SELECT Tax_ID FROM Customer' )
-
-		data = []
+		cursor = db.execute( 'SELECT Tax_ID FROM Customer ORDER BY Tax_ID DESC' )
 
 		for row in cursor.fetchall():
-			data.append( row[0] )
-
-		return data
+			self.cus_list.insert(END, row)
 
 
-class PageOne( tk.Frame ):  # Product Page
+class PageOne( tk.Frame):  # Product Page
 
 	db_name = 'MyDatabase.db'
 
@@ -565,6 +565,7 @@ class PageOne( tk.Frame ):  # Product Page
 		for row in db_rows:
 			self.tree.insert( '',0,text = row[1],values = (row[2],row[3]) )
 
+
 	def validation(self):
 		return len( self.name.get() ) != 0 and len( self.type.get() ) != 0 and len( self.price.get() ) != 0
 
@@ -597,25 +598,24 @@ class PageOne( tk.Frame ):  # Product Page
 		self.viewing_record()
 
 	def editing(self):
-		self.message['text'] = ''
 		try:
 			self.tree.item( self.tree.selection() )['values'][1]
 		except IndexError as e:
 			self.message['text'] = 'Please select record'
 			return
 
-		name = self.tree.item( self.tree.selection() )['text']
+		# name = self.tree.item( self.tree.selection() )['text']
 		old_price = self.tree.item( self.tree.selection() )['values'][1]
 
 		self.edit_main = Toplevel()
 		self.edit_main.title( 'Editing' )
 
-		Label( self.edit_main,text = 'Old name: ' ).grid( row = 0,column = 1 )
-		Entry( self.edit_main,textvariable = StringVar( self.edit_main,value = name ),state = 'readonly' ).grid(
-			row = 0,column = 2 )
-		Label( self.edit_main,text = 'New name: ' ).grid( row = 1,column = 1 )
-		new_name = Entry( self.edit_main )
-		new_name.grid( row = 1,column = 2 )
+		# Label( self.edit_main,text = 'Old name: ' ).grid( row = 0,column = 1 )
+		# Entry( self.edit_main,textvariable = StringVar( self.edit_main,value = name ),state = 'readonly' ).grid(
+		# 	row = 0,column = 2 )
+		# Label( self.edit_main,text = 'New name: ' ).grid( row = 1,column = 1 )
+		# new_name = Entry( self.edit_main )
+		# new_name.grid( row = 1,column = 2 )
 
 		Label( self.edit_main,text = 'Old Price: ' ).grid( row = 2,column = 1 )
 		Entry( self.edit_main,textvariable = StringVar( self.edit_main,value = old_price ),state = 'readonly' ).grid(
@@ -625,18 +625,17 @@ class PageOne( tk.Frame ):  # Product Page
 		new_price.grid( row = 3,column = 2 )
 
 		Button( self.edit_main,text = 'Save Change',
-				command = lambda: self.edit_record( new_name.get(),name,new_price.get(),old_price ) ).grid( row = 4,
+				command = lambda: self.edit_record(new_price.get(),old_price ) ).grid( row = 4,
 																											column = 2,
 																											sticky = W )
 
 		self.edit_main.mainloop()
 
-	def edit_record(self,new_name,name,new_price,old_price):
-		query = 'UPDATE Product SET Product_Name = ?, Product_Price = ? WHERE Product_Name = ? AND Product_Price = ?'
-		paremeters = (new_name,new_price,name,old_price)
+	def edit_record(self,new_price,old_price):
+		query = 'UPDATE Product SET Product_Price = ? WHERE Product_Price = ?'
+		paremeters = (new_price,old_price)
 		self.run_query( query,paremeters )
 		self.edit_main.destroy()
-		self.message['text'] = 'Record {} changed'.format( name )
 		self.viewing_record()
 
 
@@ -750,10 +749,13 @@ class PageTwo( tk.Frame ):  # Customer Page
 						v = result[k].get( 'anyType',None )[0]
 						self.tree.insert( '','end',text = k,value = v )
 						self.my_list.append(v)
+
 			except:
+				time.sleep(3)
 				print("Try Again")
 			else:
 				count = False
+
 
 
 	def save_data(self):
@@ -899,7 +901,7 @@ class PageThree( tk.Frame ):  # CalPrice
 		self.product_number6 = Entry( frame,width = 10,justify = 'right' )
 		self.product_number6.grid( row = 7,column = 2 )
 
-		Label( frame,text = "ราคาทั้งหมด(บาท)" ).grid( row = 1,column = 3,sticky = W )
+		Label( frame,text = "ราคาทั้งหมด" ).grid( row = 1,column = 3,sticky = W )
 		self.product_total = Text( frame,height = 1,width = 10 )
 		self.product_total.grid( row = 2,column = 3 )
 		self.product_total2 = Text( frame,height = 1,width = 10,)

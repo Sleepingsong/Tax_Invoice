@@ -278,12 +278,7 @@ class StartPage( tk.Frame ):  # Calculate Price
 							  width = 15 )
 		button3.grid( row = 0,column = 0,)
 
-		self.ShowG95()
-		self.ShowGP95()
-		self.ShowDS()
-		self.ShowDSP()
-		self.ShowE20()
-		self.ShowG91()
+		self.Show_gas_price()
 
 
 
@@ -369,43 +364,32 @@ class StartPage( tk.Frame ):  # Calculate Price
 		cur13.execute('SELECT PostCode FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
 		self.Postcode.insert(END, cur13.fetchall())
 
+	def Show_gas_price(self):
 
-	def ShowG95(self):
-		self.G95_price.delete(0,'end')
 		con = sqlite3.connect( 'MyDatabase.db' )
-		cur = con.cursor()
-		cur.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 1' )
-		self.G95_price.insert(END,cur.fetchall())
+		cur1 = con.cursor()
+		cur1.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 1' )
+		self.G95_price.insert(END,cur1.fetchall())
 
-	def ShowGP95(self):
-		con = sqlite3.connect( 'MyDatabase.db' )
-		cur = con.cursor()
-		cur.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 26' )
-		self.GP95_price.insert( END,cur.fetchall() )
+		cur2 = con.cursor()
+		cur2.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 26' )
+		self.GP95_price.insert( END,cur2.fetchall() )
 
-	def ShowE20(self):
-		con = sqlite3.connect( 'MyDatabase.db' )
-		cur = con.cursor()
-		cur.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 27' )
-		self.E20_price.insert( END,cur.fetchall() )
+		cur3 = con.cursor()
+		cur3.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 27' )
+		self.E20_price.insert( END,cur3.fetchall() )
 
-	def ShowG91(self):
-		con = sqlite3.connect( 'MyDatabase.db' )
-		cur = con.cursor()
-		cur.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 28' )
-		self.G91_price.insert( END,cur.fetchall() )
+		cur4 = con.cursor()
+		cur4.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 28' )
+		self.G91_price.insert( END,cur4.fetchall() )
 
-	def ShowDS(self):
-		con = sqlite3.connect( 'MyDatabase.db' )
-		cur = con.cursor()
-		cur.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 29' )
-		self.DS_price.insert( END,cur.fetchall() )
+		cur5 = con.cursor()
+		cur5.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 29' )
+		self.DS_price.insert( END,cur5.fetchall() )
 
-	def ShowDSP(self):
-		con = sqlite3.connect( 'MyDatabase.db' )
-		cur = con.cursor()
-		cur.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 30' )
-		self.DSP_price.insert( END,cur.fetchall() )
+		cur6 = con.cursor()
+		cur6.execute( 'SELECT Product_Price FROM Product WHERE Product_ID = 30' )
+		self.DSP_price.insert( END,cur6.fetchall() )
 
 	def checkG95(self):
 		if self.chk1.get() == False:
@@ -519,7 +503,7 @@ class StartPage( tk.Frame ):  # Calculate Price
 			self.cus_list.insert(END, row)
 
 
-class PageOne( tk.Frame ):  # Product Page
+class PageOne( tk.Frame):  # Product Page
 
 	db_name = 'MyDatabase.db'
 
@@ -653,6 +637,7 @@ class PageOne( tk.Frame ):  # Product Page
 		self.run_query( query,paremeters )
 		self.edit_main.destroy()
 		self.viewing_record()
+		StartPage.Show_gas_price()
 
 
 class PageTwo( tk.Frame ):  # Customer Page
