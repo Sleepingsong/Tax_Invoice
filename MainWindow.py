@@ -192,10 +192,12 @@ class StartPage(tk.Frame):  # Calculate Price
         Label(frame9, text='จำนวนลิตร', font=BFont).grid(row=0, column=0)
         Label(frame9, text='ลิตร', font=BFont).grid(row=0, column=2)
         self.product_liter = Entry(frame9, justify='right')
+        self.product_liter.bind("<KeyRelease>", self.livePriceCal)
         self.product_liter.grid(row=0, column=1)
         Label(frame9, text='ยอดทั้งหมด', font=BFont).grid(row=1, column=0)
         Label(frame9, text='บาท', font=BFont).grid(row=1, column=2)
         self.total_price = Entry(frame9, justify='right')
+        self.total_price.bind("<KeyRelease>", self.liveLiterCal)
         self.total_price.grid(row=1, column=1)
 
         # Label( frame11,text = "รหัสประจำตัวผู้เสียภาษี",font = BFont ).grid( row = 0 )
@@ -203,7 +205,7 @@ class StartPage(tk.Frame):  # Calculate Price
         self.comp_name = Entry(frame10, justify='right', width=17)
         self.comp_name.grid(row=1, column=1, sticky=W)
         Label(frame10, text="สาขา").grid(row=1, column=2, sticky=E)
-        self.branch_num = Entry(frame10, justify='right', width=5)
+        self.branch_num = Entry(frame10, justify='right', width=17)
         self.branch_num.grid(row=1, column=3, sticky=W)
         Label(frame10, text="ชื่อตึก").grid(row=1, column=4, sticky=E)
         self.building_name = Entry(frame10, justify='right', width=17)
@@ -215,16 +217,16 @@ class StartPage(tk.Frame):  # Calculate Price
         self.village_name = Entry(frame10, justify='right', width=17)
         self.village_name.grid(row=2, column=1, sticky=W)
         Label(frame10, text="เลขห้อง").grid(row=2, column=2, sticky=E)
-        self.room_no = Entry(frame10, justify='right', width=5)
+        self.room_no = Entry(frame10, justify='right', width=17)
         self.room_no.grid(row=2, column=3, sticky=W)
         Label(frame10, text="เลขที่บ้าน").grid(row=2, column=4, sticky=E)
-        self.house_no = Entry(frame10, justify='right', width=5)
+        self.house_no = Entry(frame10, justify='right', width=17)
         self.house_no.grid(row=2, column=5, sticky=W)
         Label(frame10, text="หมู่").grid(row=2, column=6, sticky=E)
         self.Moo_no = Entry(frame10, justify='right', width=8)
         self.Moo_no.grid(row=2, column=7, sticky=W)
         Label(frame10, text="ซอย").grid(row=3, column=0, sticky=E)
-        self.Soi_no = Entry(frame10, justify='right', width=10)
+        self.Soi_no = Entry(frame10, justify='right', width=17)
         self.Soi_no.grid(row=3, column=1, sticky=W)
         Label(frame10, text="ถนน").grid(row=3, column=2, sticky=E)
         self.Stree_name = Entry(frame10, justify='right', width=17)
@@ -239,7 +241,7 @@ class StartPage(tk.Frame):  # Calculate Price
         self.Province_name = Entry(frame10, justify='right', width=17)
         self.Province_name.grid(row=4, column=1, sticky=W)
         Label(frame10, text="รหัสไปษณีย์").grid(row=4, column=2, sticky=E)
-        self.Postcode = Entry(frame10, justify='right', width=5)
+        self.Postcode = Entry(frame10, justify='right', width=17)
         self.Postcode.grid(row=4, column=3, sticky=W)
 
         self.cus_list = Listbox(frame11, height=5, selectmode=SINGLE)
@@ -288,6 +290,71 @@ class StartPage(tk.Frame):  # Calculate Price
     # 	# self.c_name.insert(END,cur.fetchall())
     # 	print( cur.fetchall() )
 
+    def livePriceCal(self,event):
+
+        if self.chk1.get() == True:
+            self.total_price.delete(0,'end')
+            price = float(self.product_liter.get()) * float(self.G95_price.get())
+            self.total_price.insert(END, round(price, 3))
+
+        if self.chk2.get() == True:
+            self.total_price.delete(0, 'end')
+            price = float(self.product_liter.get()) * float(self.GP95_price.get())
+            self.total_price.insert(END, round(price, 3))
+
+
+        if self.chk3.get() == True:
+            self.total_price.delete(0, 'end')
+            price = float(self.product_liter.get()) * float(self.E20_price.get())
+            self.total_price.insert(END, round(price, 3))
+
+
+        if self.chk4.get() == True:
+            self.total_price.delete(0,'end')
+            price = float(self.product_liter.get()) * float(self.G91_price.get())
+            self.total_price.insert(END, round(price, 3))
+
+
+        if self.chk5.get() == True:
+            self.total_price.delete(0,'end')
+            price = float(self.product_liter.get()) * float(self.DSP_price.get())
+            self.total_price.insert(END, round(price, 3))
+
+
+        if self.chk6.get() == True:
+            self.total_price.delete(0,'end')
+            price = float(self.product_liter.get()) * float(self.DS_price.get())
+            self.total_price.insert(END, round(price, 3))
+
+    def liveLiterCal(self,event):
+
+        if self.chk1.get() == True:
+                self.product_liter.delete(0,'end')
+                liter = float(self.total_price.get()) / float(self.G95_price.get())
+                self.product_liter.insert(END, round(liter, 3))
+
+        if self.chk2.get() == True:
+                self.product_liter.delete(0, 'end')
+                liter = float(self.total_price.get()) / float(self.GP95_price.get())
+                self.product_liter.insert(END, round(liter, 3))
+        if self.chk3.get() == True:
+                self.product_liter.delete(0, 'end')
+                liter = float(self.total_price.get()) / float(self.E20_price.get())
+                self.product_liter.insert(END, round(liter, 3))
+        if self.chk4.get() == True:
+                self.product_liter.delete(0, 'end')
+                liter = float(self.total_price.get()) / float(self.G91_price.get())
+                self.product_liter.insert(END, round(liter, 3))
+        if self.chk5.get() == True:
+                self.product_liter.delete(0, 'end')
+                liter = float(self.total_price.get()) / float(self.DSP_price.get())
+                self.product_liter.insert(END, round(liter, 3))
+        if self.chk6.get() == True:
+                self.product_liter.delete(0, 'end')
+                liter = float(self.total_price.get()) / float(self.DS_price.get())
+                self.product_liter.insert(END, round(liter, 3))
+
+
     def refresh_price(self):
         self.GP95_price.delete(0,'end')
         self.G95_price.delete(0,'end')
@@ -314,18 +381,20 @@ class StartPage(tk.Frame):  # Calculate Price
         self.Postcode.delete(0, 'end')
 
         self.get_selecte_value = self.cus_list.get(self.cus_list.curselection())
+
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
         cur.execute('SELECT Name FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
         self.comp_name.insert(END, cur.fetchone())
 
+
         cur2 = con.cursor()
         cur2.execute('SELECT BranchNumber FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
-        self.branch_num.insert(END, cur2.fetchall())
+        self.branch_num.insert(END, cur2.fetchone())
 
         cur3 = con.cursor()
         cur3.execute('SELECT BuildingName FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
-        self.building_name.insert(END, cur3.fetchall())
+        self.building_name.insert(END, cur3.fetchone())
 
         cur4 = con.cursor()
         cur4.execute('SELECT FloorNumber FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
@@ -720,8 +789,8 @@ class PageTwo(tk.Frame):  # Customer Page
 
     def tax_search(self):
 
-        count = True
-        while count:
+        count = 0
+        while count <= 5:
             try:
                 for i in self.tree.get_children():
                     self.tree.delete(i)
@@ -753,10 +822,12 @@ class PageTwo(tk.Frame):  # Customer Page
                         self.my_list.append(v)
 
             except:
-                time.sleep(3)
-                print("Try Again")
-            else:
-                count = False
+                print("TRY AGAIN")
+                count = count + 1
+                print(count)
+                time.sleep(1)
+
+
 
     def save_data(self):
         try:
