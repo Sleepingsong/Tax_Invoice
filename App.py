@@ -203,6 +203,7 @@ class StartPage(tk.Frame):  # Calculate Price
         # Label( frame11,text = "รหัสประจำตัวผู้เสียภาษี",font = BFont ).grid( row = 0 )
         Label(frame10, text="ชื่อบริษัท").grid(row=1, column=0, sticky=E)
         self.comp_name = Entry(frame10, justify='right', width=17)
+        self.comp_name.bind('<Return>', self.searchCompName)
         self.comp_name.grid(row=1, column=1, sticky=W)
         Label(frame10, text="สาขา").grid(row=1, column=2, sticky=E)
         self.branch_num = Entry(frame10, justify='right', width=17)
@@ -289,6 +290,18 @@ class StartPage(tk.Frame):  # Calculate Price
     # 	cur.execute( 'SELECT Customer_Name FROM Customer WHERE Customer_Name = ?',self.product_name.get() )
     # 	# self.c_name.insert(END,cur.fetchall())
     # 	print( cur.fetchall() )
+
+    def searchCompName(self, event):
+        try:
+            con = sqlite3.connect('MyDatabase.db')
+            cur = con.cursor()
+            cur.execute('SELECT * FROM Customer WHERE Name like ?',('%'+self.comp_name.get()+'%',) )
+            print(cur.fetchall())
+
+        except:
+
+            print("Not found")
+
 
     def livePriceCal(self,event):
 
