@@ -292,80 +292,104 @@ class StartPage(tk.Frame):  # Calculate Price
     # 	print( cur.fetchall() )
 
     def searchCompName(self, event):
-        try:
+
             con = sqlite3.connect('MyDatabase.db')
             cur = con.cursor()
-            cur.execute('SELECT * FROM Customer WHERE Name like ?',('%'+self.comp_name.get()+'%',) )
-            print(cur.fetchall())
+            cur.execute('SELECT Name FROM Customer WHERE Name like ?',('%'+self.comp_name.get()+'%',) )
+            self.tax_list = Toplevel()
+            self.tax_list.title("Result")
+            self.tax_list.geometry("500x200")
+            Label(self.tax_list, text = "รายชื่อบริษัท").grid(row=0)
+            self.tax = Listbox(self.tax_list, height=10,width = 40, selectmode=SINGLE)
+            self.tax.bind("<Double-Button>", self.show_tax_id)
+            self.tax.grid(row=1)
+            for row in cur.fetchall():
+                self.tax.insert(END, row)
+            Label(self.tax_list, text = "รหัสภาษี").grid(row = 0 , column = 1)
+            self.tax_id = Listbox(self.tax_list, height = 10 , width = 40, selectmode = SINGLE)
+            self.tax_id.bind('<Double-Button>', self.show_data2)
+            self.tax_id.grid(row = 1 , column = 1)
 
-        except:
 
-            print("Not found")
+            self.tax_list.mainloop()
 
+    def show_tax_id(self,event):
+
+        self.tax_id.delete(0,'end')
+        self.get_tax_value = self.tax.get(self.tax.curselection())
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute('SELECT Tax_ID FROM Customer WHERE Name = ? ',self.get_tax_value)
+        for row in cur.fetchone():
+            self.tax_id.insert(END, row)
 
     def livePriceCal(self,event):
+        try:
+            if self.chk1.get() == True:
+                self.total_price.delete(0,'end')
+                price = float(self.product_liter.get()) * float(self.G95_price.get())
+                self.total_price.insert(END, round(price, 3))
 
-        if self.chk1.get() == True:
-            self.total_price.delete(0,'end')
-            price = float(self.product_liter.get()) * float(self.G95_price.get())
-            self.total_price.insert(END, round(price, 3))
-
-        if self.chk2.get() == True:
-            self.total_price.delete(0, 'end')
-            price = float(self.product_liter.get()) * float(self.GP95_price.get())
-            self.total_price.insert(END, round(price, 3))
-
-
-        if self.chk3.get() == True:
-            self.total_price.delete(0, 'end')
-            price = float(self.product_liter.get()) * float(self.E20_price.get())
-            self.total_price.insert(END, round(price, 3))
+            if self.chk2.get() == True:
+                self.total_price.delete(0, 'end')
+                price = float(self.product_liter.get()) * float(self.GP95_price.get())
+                self.total_price.insert(END, round(price, 3))
 
 
-        if self.chk4.get() == True:
-            self.total_price.delete(0,'end')
-            price = float(self.product_liter.get()) * float(self.G91_price.get())
-            self.total_price.insert(END, round(price, 3))
+            if self.chk3.get() == True:
+                self.total_price.delete(0, 'end')
+                price = float(self.product_liter.get()) * float(self.E20_price.get())
+                self.total_price.insert(END, round(price, 3))
 
 
-        if self.chk5.get() == True:
-            self.total_price.delete(0,'end')
-            price = float(self.product_liter.get()) * float(self.DSP_price.get())
-            self.total_price.insert(END, round(price, 3))
+            if self.chk4.get() == True:
+                self.total_price.delete(0,'end')
+                price = float(self.product_liter.get()) * float(self.G91_price.get())
+                self.total_price.insert(END, round(price, 3))
 
 
-        if self.chk6.get() == True:
-            self.total_price.delete(0,'end')
-            price = float(self.product_liter.get()) * float(self.DS_price.get())
-            self.total_price.insert(END, round(price, 3))
+            if self.chk5.get() == True:
+                self.total_price.delete(0,'end')
+                price = float(self.product_liter.get()) * float(self.DSP_price.get())
+                self.total_price.insert(END, round(price, 3))
+
+
+            if self.chk6.get() == True:
+                self.total_price.delete(0,'end')
+                price = float(self.product_liter.get()) * float(self.DS_price.get())
+                self.total_price.insert(END, round(price, 3))
+        except:
+            print("ERROR")
 
     def liveLiterCal(self,event):
+        try:
+            if self.chk1.get() == True:
+                    self.product_liter.delete(0,'end')
+                    liter = float(self.total_price.get()) / float(self.G95_price.get())
+                    self.product_liter.insert(END, round(liter, 3))
 
-        if self.chk1.get() == True:
-                self.product_liter.delete(0,'end')
-                liter = float(self.total_price.get()) / float(self.G95_price.get())
-                self.product_liter.insert(END, round(liter, 3))
-
-        if self.chk2.get() == True:
-                self.product_liter.delete(0, 'end')
-                liter = float(self.total_price.get()) / float(self.GP95_price.get())
-                self.product_liter.insert(END, round(liter, 3))
-        if self.chk3.get() == True:
-                self.product_liter.delete(0, 'end')
-                liter = float(self.total_price.get()) / float(self.E20_price.get())
-                self.product_liter.insert(END, round(liter, 3))
-        if self.chk4.get() == True:
-                self.product_liter.delete(0, 'end')
-                liter = float(self.total_price.get()) / float(self.G91_price.get())
-                self.product_liter.insert(END, round(liter, 3))
-        if self.chk5.get() == True:
-                self.product_liter.delete(0, 'end')
-                liter = float(self.total_price.get()) / float(self.DSP_price.get())
-                self.product_liter.insert(END, round(liter, 3))
-        if self.chk6.get() == True:
-                self.product_liter.delete(0, 'end')
-                liter = float(self.total_price.get()) / float(self.DS_price.get())
-                self.product_liter.insert(END, round(liter, 3))
+            if self.chk2.get() == True:
+                    self.product_liter.delete(0, 'end')
+                    liter = float(self.total_price.get()) / float(self.GP95_price.get())
+                    self.product_liter.insert(END, round(liter, 3))
+            if self.chk3.get() == True:
+                    self.product_liter.delete(0, 'end')
+                    liter = float(self.total_price.get()) / float(self.E20_price.get())
+                    self.product_liter.insert(END, round(liter, 3))
+            if self.chk4.get() == True:
+                    self.product_liter.delete(0, 'end')
+                    liter = float(self.total_price.get()) / float(self.G91_price.get())
+                    self.product_liter.insert(END, round(liter, 3))
+            if self.chk5.get() == True:
+                    self.product_liter.delete(0, 'end')
+                    liter = float(self.total_price.get()) / float(self.DSP_price.get())
+                    self.product_liter.insert(END, round(liter, 3))
+            if self.chk6.get() == True:
+                    self.product_liter.delete(0, 'end')
+                    liter = float(self.total_price.get()) / float(self.DS_price.get())
+                    self.product_liter.insert(END, round(liter, 3))
+        except:
+            print("ERROR")
 
 
     def refresh_price(self):
@@ -376,6 +400,7 @@ class StartPage(tk.Frame):  # Calculate Price
         self.DS_price.delete(0,'end')
         self.DSP_price.delete(0,'end')
         self.Show_gas_price()
+
 
     def show_data(self, event):
 
@@ -449,6 +474,79 @@ class StartPage(tk.Frame):  # Calculate Price
         cur13.execute('SELECT PostCode FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
         self.Postcode.insert(END, cur13.fetchall())
 
+    def show_data2(self, event):
+
+
+        self.comp_name.delete(0, 'end')
+        self.branch_num.delete(0, 'end')
+        self.branch_floor.delete(0, 'end')
+        self.building_name.delete(0, 'end')
+        self.village_name.delete(0, 'end')
+        self.house_no.delete(0, 'end')
+        self.Moo_no.delete(0, 'end')
+        self.Soi_no.delete(0, 'end')
+        self.Stree_name.delete(0, 'end')
+        self.Thumbon_name.delete(0, 'end')
+        self.Aumper_name.delete(0, 'end')
+        self.Province_name.delete(0, 'end')
+        self.Postcode.delete(0, 'end')
+
+        self.get_value = self.tax_id.get(self.tax_id.curselection())
+
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute('SELECT Name FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        self.comp_name.insert(END, cur.fetchone())
+
+        cur2 = con.cursor()
+        cur2.execute('SELECT BranchNumber FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        self.branch_num.insert(END, cur2.fetchone())
+
+        cur3 = con.cursor()
+        cur3.execute('SELECT BuildingName FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        self.building_name.insert(END, cur3.fetchone())
+
+        cur4 = con.cursor()
+        cur4.execute('SELECT FloorNumber FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        self.branch_floor.insert(END, cur4.fetchall())
+
+        cur5 = con.cursor()
+        cur5.execute('SELECT VillageName FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        self.village_name.insert(END, cur5.fetchall())
+
+        cur6 = con.cursor()
+        cur6.execute('SELECT HouseNumber FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        self.house_no.insert(END, cur6.fetchall())
+
+        cur7 = con.cursor()
+        cur7.execute('SELECT MooNumber FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        self.Moo_no.insert(END, cur7.fetchall())
+
+        cur8 = con.cursor()
+        cur8.execute('SELECT SoiName FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        self.Soi_no.insert(END, cur8.fetchone())
+
+        cur9 = con.cursor()
+        cur9.execute('SELECT StreetName FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        self.Stree_name.insert(END, cur9.fetchall())
+
+        cur10 = con.cursor()
+        cur10.execute('SELECT Thambol FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        self.Thumbon_name.insert(END, cur10.fetchall())
+
+        cur11 = con.cursor()
+        cur11.execute('SELECT Amphur FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        self.Aumper_name.insert(END, cur11.fetchall())
+
+        cur12 = con.cursor()
+        cur12.execute('SELECT Province FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        self.Province_name.insert(END, cur12.fetchall())
+
+        cur13 = con.cursor()
+        cur13.execute('SELECT PostCode FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        self.Postcode.insert(END, cur13.fetchall())
+
+        self.tax_list.destroy()
     def Show_gas_price(self):
 
         con = sqlite3.connect('MyDatabase.db')
