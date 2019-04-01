@@ -1169,10 +1169,21 @@ class PageThree(tk.Frame):  # CalPrice
 
     def CalProduct(self):
 
-        # if float(self.product_total.get(1.0, END)) > 1 and float(self.product_total2.get(1.0, END)) > 1:
-        #     price = float(self.product_total.get(1.0, END)) + float(self.product_total2.get(1.0, END))
-        #     self.product_grand_total.insert(END, round(price,2))
-        print(self.product_total.search("0", 1.0 , stopindex= END))
+        price_total = [
+            self.product_total.get(1.0, END),
+            self.product_total2.get(1.0, END),
+            self.product_total3.get(1.0, END),
+            self.product_total4.get(1.0, END),
+            self.product_total5.get(1.0, END),
+            self.product_total6.get(1.0, END)
+        ]
+        sum = 0
+        for x in price_total:
+            try:
+                sum += float(x)
+            except:
+                pass
+        self.product_grand_total.insert(END,round(sum,2))
 
     def show_price(self, event):
         con = sqlite3.connect('MyDatabase.db')
@@ -1284,6 +1295,8 @@ class PageThree(tk.Frame):  # CalPrice
         self.product_total4.delete(1.0, END)
         self.product_total5.delete(1.0, END)
         self.product_total6.delete(1.0, END)
+
+        self.product_grand_total.delete(1.0,END)
 
 class PageFour(tk.Frame):
 
