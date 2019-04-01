@@ -33,6 +33,8 @@ class Invoice(tk.Tk):
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="NSEW")
 
+        self.frames[PageOne].setStartPageRef(self.frames[StartPage])
+
         self.show_frame(StartPage)
 
     def show_frame(self, cont):
@@ -571,6 +573,19 @@ class StartPage(tk.Frame):  # Calculate Price
         self.tax_list.destroy()
 
     def Show_gas_price(self):
+        self.G95_price.config(state='normal')
+        self.GP95_price.config(state='normal')
+        self.E20_price.config(state='normal')
+        self.G91_price.config(state='normal')
+        self.E20_price.config(state='normal')
+        self.DS_price.config(state='normal')
+        self.DSP_price.config(state='normal')
+        self.G95_price.delete(0,END)
+        self.GP95_price.delete(0,END)
+        self.E20_price.delete(0,END)
+        self.G91_price.delete(0,END)
+        self.DS_price.delete(0,END)
+        self.DSP_price.delete(0,END)
 
         con = sqlite3.connect('MyDatabase.db')
         cur1 = con.cursor()
@@ -597,6 +612,13 @@ class StartPage(tk.Frame):  # Calculate Price
         cur6.execute('SELECT Product_Price FROM Product WHERE Product_ID = 30')
         self.DSP_price.insert(END, cur6.fetchall())
 
+        self.G95_price.config(state='readonly')
+        self.GP95_price.config(state='readonly')
+        self.E20_price.config(state='readonly')
+        self.G91_price.config(state='readonly')
+        self.E20_price.config(state='readonly')
+        self.DS_price.config(state='readonly')
+        self.DSP_price.config(state='readonly')
     def checkG95(self):
         if self.chk1.get() == False:
             self.chk1.set(True)
@@ -712,7 +734,10 @@ class StartPage(tk.Frame):  # Calculate Price
 class PageOne(tk.Frame):  # Product Page
 
     db_name = 'MyDatabase.db'
-
+    
+    def setStartPageRef(self, startPageRef):
+        self.startPageRef = startPageRef
+    
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         frame = ttk.LabelFrame(self, text='เพิ่มสินค้า')
@@ -842,6 +867,7 @@ class PageOne(tk.Frame):  # Product Page
         self.run_query(query, paremeters)
         self.edit_main.destroy()
         self.viewing_record()
+        self.startPageRef.Show_gas_price()
 
 
 class PageTwo(tk.Frame):  # Customer Page
