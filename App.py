@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 import tkinter as tk
 import sqlite3
 from tkinter import font
@@ -10,6 +11,7 @@ from zeep import Client
 from zeep.transports import Transport
 import urllib3
 import time
+import threading
 
 LARGE_FONT = ("Verdana", 12)
 
@@ -316,7 +318,7 @@ class StartPage(tk.Frame):  # Calculate Price
         self.tax = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
         self.tax.bind("<Double-Button>", self.show_tax_id)
         self.tax.grid(row=1)
-        for row in cur.fetchall():
+        for row in cur.fetchone():
             self.tax.insert(END, row)
         Label(self.tax_list, text="รหัสภาษี").grid(row=0, column=1)
         self.tax_id = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
@@ -333,7 +335,7 @@ class StartPage(tk.Frame):  # Calculate Price
         self.get_tax_value = self.tax.get(self.tax.curselection())
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
-        cur.execute('SELECT Tax_ID FROM Customer WHERE Name = ? ', self.get_tax_value)
+        cur.execute('SELECT Tax_ID FROM Customer WHERE Name = ? ', (self.get_tax_value,))
         for row in cur.fetchone():
             self.tax_id.insert(END, row)
 
@@ -445,7 +447,7 @@ class StartPage(tk.Frame):  # Calculate Price
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
         cur.execute('SELECT Name FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
-        self.comp_name.insert(END, cur.fetchone())
+        self.comp_name.insert(END, str(cur.fetchone()).replace('(','').replace(')','').replace("'",'').replace(",",''))
 
         cur2 = con.cursor()
         cur2.execute('SELECT BranchNumber FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
@@ -453,7 +455,7 @@ class StartPage(tk.Frame):  # Calculate Price
 
         cur3 = con.cursor()
         cur3.execute('SELECT BuildingName FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
-        self.building_name.insert(END, cur3.fetchone())
+        self.building_name.insert(END, str(cur3.fetchone()).replace('(','').replace(')','').replace("'",'').replace(",",''))
 
         cur4 = con.cursor()
         cur4.execute('SELECT FloorNumber FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
@@ -473,7 +475,7 @@ class StartPage(tk.Frame):  # Calculate Price
 
         cur8 = con.cursor()
         cur8.execute('SELECT SoiName FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
-        self.Soi_no.insert(END, cur8.fetchone())
+        self.Soi_no.insert(END, str(cur8.fetchone()).replace('(','').replace(')','').replace("'",'').replace(",",''))
 
         cur9 = con.cursor()
         cur9.execute('SELECT StreetName FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
@@ -516,7 +518,7 @@ class StartPage(tk.Frame):  # Calculate Price
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
         cur.execute('SELECT Name FROM Customer WHERE Tax_ID = ?', (self.get_value,))
-        self.comp_name.insert(END, cur.fetchone())
+        self.comp_name.insert(END, str(cur.fetchone()).replace('(','').replace(')','').replace("'",'').replace(",",''))
 
         cur2 = con.cursor()
         cur2.execute('SELECT BranchNumber FROM Customer WHERE Tax_ID = ?', (self.get_value,))
@@ -524,7 +526,7 @@ class StartPage(tk.Frame):  # Calculate Price
 
         cur3 = con.cursor()
         cur3.execute('SELECT BuildingName FROM Customer WHERE Tax_ID = ?', (self.get_value,))
-        self.building_name.insert(END, cur3.fetchone())
+        self.building_name.insert(END, str(cur3.fetchone()).replace('(','').replace(')','').replace("'",'').replace(",",''))
 
         cur4 = con.cursor()
         cur4.execute('SELECT FloorNumber FROM Customer WHERE Tax_ID = ?', (self.get_value,))
@@ -544,7 +546,7 @@ class StartPage(tk.Frame):  # Calculate Price
 
         cur8 = con.cursor()
         cur8.execute('SELECT SoiName FROM Customer WHERE Tax_ID = ?', (self.get_value,))
-        self.Soi_no.insert(END, cur8.fetchone())
+        self.Soi_no.insert(END, str(cur8.fetchone()).replace('(','').replace(')','').replace("'",'').replace(",",''))
 
         cur9 = con.cursor()
         cur9.execute('SELECT StreetName FROM Customer WHERE Tax_ID = ?', (self.get_value,))
@@ -848,6 +850,8 @@ class PageTwo(tk.Frame):  # Customer Page
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+
+
         AFont = font.Font(family='Helvetica', size=12, weight='bold')
         BFont = font.Font(family='Helvetica', size=11, )
         frame = LabelFrame(self, text="ค้นหา")
@@ -921,8 +925,9 @@ class PageTwo(tk.Frame):  # Customer Page
 
     def tax_search(self):
 
+        check = True
         count = 0
-        while count <= 5:
+        while check:
             try:
                 for i in self.tree.get_children():
                     self.tree.delete(i)
@@ -952,12 +957,14 @@ class PageTwo(tk.Frame):  # Customer Page
                         v = result[k].get('anyType', None)[0]
                         self.tree.insert('', 'end', text=k, value=v)
                         self.my_list.append(v)
-
             except:
-                print("TRY AGAIN")
                 count = count + 1
                 print(count)
-                time.sleep(1)
+            else:
+                check = False
+                messagebox.showinfo("ค้นหาข้อมูล", "ค้นหาเสร็จสิ้น")
+
+
 
     def save_data(self):
         try:
@@ -966,7 +973,7 @@ class PageTwo(tk.Frame):  # Customer Page
             c.execute('INSERT INTO Customer VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', self.my_list)
             conn.commit()
         except:
-            print('Something wrong')
+            messagebox.showwarning("คำเตือน!", "ข้อมูลนี้มีอยู่ในระบบแล้ว")
 
 
 # def run_query(self,query,parameters=()):
