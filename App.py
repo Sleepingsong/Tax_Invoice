@@ -26,7 +26,7 @@ class Invoice(tk.Tk):
 
         self.frames = {}
 
-        for F in (StartPage, PageOne, PageTwo, PageThree):
+        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="NSEW")
@@ -53,15 +53,17 @@ class StartPage(tk.Frame):  # Calculate Price
         frame = ttk.LabelFrame(self, text='สินค้า')
         frame.grid(row=0, column=0, sticky=W)
         frame7 = ttk.LabelFrame(self, text='ราคาน้ำมัน ณ ปัจจุบัน')
-        frame7.grid(row=1, sticky=NW)
+        frame7.grid(row=1, sticky=NE)
         frame8 = ttk.LabelFrame(self, text='ชุดคำสั่ง')
         frame8.grid(row=0, column=1, sticky=NW)
         frame9 = ttk.LabelFrame(self, text="คำนวณเงิน")
-        frame9.grid(row=1, column=0, sticky=NE)
+        frame9.grid(row=1 , sticky=NW)
         frame10 = ttk.LabelFrame(self, text="ผู้ซื้อ")
         frame10.grid(row=2, column=0, sticky=W)
         frame11 = ttk.LabelFrame(self, text="รหัสประจำตัวผู้เสียภาษี")
         frame11.grid(row=2, column=1, sticky=W)
+        frame12 = ttk.LabelFrame(self, text = "ค้นหาชื่อบริษัท")
+        frame12.grid(row = 1 , sticky = SW)
 
         self.chk1 = BooleanVar()
         self.chk2 = BooleanVar()
@@ -200,10 +202,13 @@ class StartPage(tk.Frame):  # Calculate Price
         self.total_price.bind("<KeyRelease>", self.liveLiterCal)
         self.total_price.grid(row=1, column=1)
 
-        # Label( frame11,text = "รหัสประจำตัวผู้เสียภาษี",font = BFont ).grid( row = 0 )
+        Label(frame12, text="ชื่อบริษัท", font = BFont).grid(row=1, column=0, sticky=E)
+        self.search_comp_name = Entry(frame12, justify='right', width=27)
+        self.search_comp_name.bind('<Return>', self.searchCompName)
+        self.search_comp_name.grid(row=1, column=1, sticky=W)
+
         Label(frame10, text="ชื่อบริษัท").grid(row=1, column=0, sticky=E)
         self.comp_name = Entry(frame10, justify='right', width=17)
-        self.comp_name.bind('<Return>', self.searchCompName)
         self.comp_name.grid(row=1, column=1, sticky=W)
         Label(frame10, text="สาขา").grid(row=1, column=2, sticky=E)
         self.branch_num = Entry(frame10, justify='right', width=17)
@@ -300,9 +305,10 @@ class StartPage(tk.Frame):  # Calculate Price
 
     def searchCompName(self, event):
 
+
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
-        cur.execute('SELECT Name FROM Customer WHERE Name like ?', ('%' + self.comp_name.get() + '%',))
+        cur.execute('SELECT Name FROM Customer WHERE Name like ?', ('%' + self.search_comp_name.get() + '%',))
         self.tax_list = Toplevel()
         self.tax_list.title("Result")
         self.tax_list.geometry("500x200")
@@ -317,6 +323,8 @@ class StartPage(tk.Frame):  # Calculate Price
         self.tax_id.bind('<Double-Button>', self.show_data2)
         self.tax_id.grid(row=1, column=1)
 
+        self.tax_list.focus_set()
+        self.tax_list.grab_set()
         self.tax_list.mainloop()
 
     def show_tax_id(self, event):
@@ -1023,28 +1031,28 @@ class PageThree(tk.Frame):  # CalPrice
         frame = ttk.LabelFrame(self, text='สินค้าทั้งหมด')
         frame.grid(row=0, column=0, sticky=NW)
 
-        Label(frame, text="ชื่อสินค้า").grid(row=1, sticky=W)
-        self.product_name = ttk.Combobox(frame, width=40, justify='right')
+        Label(frame, text="ชื่อสินค้า",font=("Helvetica", 10)).grid(row=1, sticky=W)
+        self.product_name = ttk.Combobox(frame, width=25, justify='right',font=("Helvetica", 15), state = 'readonly')
         self.product_name['values'] = self.combo_product()
         self.product_name.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name.grid(row=2, column=0)
-        self.product_name2 = ttk.Combobox(frame, width=40, justify='right')
+        self.product_name2 = ttk.Combobox(frame, width=25, justify='right',font=("Helvetica", 15), state = 'readonly')
         self.product_name2['values'] = self.combo_product()
         self.product_name2.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name2.grid(row=3, column=0)
-        self.product_name3 = ttk.Combobox(frame, width=40, justify='right')
+        self.product_name3 = ttk.Combobox(frame, width=25, justify='right',font=("Helvetica", 15), state = 'readonly')
         self.product_name3['values'] = self.combo_product()
         self.product_name3.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name3.grid(row=4, column=0)
-        self.product_name4 = ttk.Combobox(frame, width=40, justify='right')
+        self.product_name4 = ttk.Combobox(frame, width=25, justify='right',font=("Helvetica", 15), state = 'readonly')
         self.product_name4['values'] = self.combo_product()
         self.product_name4.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name4.grid(row=5, column=0)
-        self.product_name5 = ttk.Combobox(frame, width=40, justify='right')
+        self.product_name5 = ttk.Combobox(frame, width=25, justify='right',font=("Helvetica", 15), state = 'readonly')
         self.product_name5['values'] = self.combo_product()
         self.product_name5.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name5.grid(row=6, column=0)
-        self.product_name6 = ttk.Combobox(frame, width=40, justify='right')
+        self.product_name6 = ttk.Combobox(frame, width=25, justify='right',font=("Helvetica", 15), state = 'readonly')
         self.product_name6['values'] = self.combo_product()
         self.product_name6.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name6.grid(row=7, column=0)
@@ -1069,52 +1077,53 @@ class PageThree(tk.Frame):  # CalPrice
         # self.product_type6['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
         # self.product_type6.grid( row = 7,column = 1 )
 
-        Label(frame, text="ราคา(บาท)").grid(row=1, column=1, sticky=W)
-        self.product_price = Entry(frame, width=10, justify='right')
+        Label(frame, text="ราคา(บาท)",font=("Helvetica", 10)).grid(row=1, column=1, sticky=W)
+        self.product_price = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
         self.product_price.grid(row=2, column=1)
-        self.product_price2 = Entry(frame, width=10, justify='right')
+        self.product_price2 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
         self.product_price2.grid(row=3, column=1)
-        self.product_price3 = Entry(frame, width=10, justify='right')
+        self.product_price3 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
         self.product_price3.grid(row=4, column=1)
-        self.product_price4 = Entry(frame, width=10, justify='right')
+        self.product_price4 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
         self.product_price4.grid(row=5, column=1)
-        self.product_price5 = Entry(frame, width=10, justify='right')
+        self.product_price5 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
         self.product_price5.grid(row=6, column=1)
-        self.product_price6 = Entry(frame, width=10, justify='right')
+        self.product_price6 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
         self.product_price6.grid(row=7, column=1)
 
-        Label(frame, text="จำนวน").grid(row=1, column=2, sticky=W)
-        self.product_number = Entry(frame, width=10, justify='right')
+        Label(frame, text="จำนวน",font=("Helvetica", 10)).grid(row=1, column=2, sticky=W)
+        self.product_number = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
         self.product_number.bind("<KeyRelease>", self.LiveCal)
         self.product_number.grid(row=2, column=2)
-        self.product_number2 = Entry(frame, width=10, justify='right')
+        self.product_number2 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
         self.product_number2.bind("<KeyRelease>", self.LiveCal2)
         self.product_number2.grid(row=3, column=2)
-        self.product_number3 = Entry(frame, width=10, justify='right')
+        self.product_number3 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
         self.product_number3.bind("<KeyRelease>", self.LiveCal3)
         self.product_number3.grid(row=4, column=2)
-        self.product_number4 = Entry(frame, width=10, justify='right')
+        self.product_number4 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
         self.product_number4.bind("<KeyRelease>",self.LiveCal4)
         self.product_number4.grid(row=5, column=2)
-        self.product_number5 = Entry(frame, width=10, justify='right')
+        self.product_number5 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
         self.product_number5.bind("<KeyRelease>", self.LiveCa15 )
         self.product_number5.grid(row=6, column=2)
-        self.product_number6 = Entry(frame, width=10, justify='right')
+        self.product_number6 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
         self.product_number6.bind("<KeyRelease>", self.LiveCa16 )
         self.product_number6.grid(row=7, column=2)
 
-        Label(frame, text="ราคาทั้งหมด").grid(row=1, column=3, sticky=W)
-        self.product_total = Entry(frame,justify='right' )
+
+        Label(frame, text="ราคาทั้งหมด",font=("Helvetica", 10)).grid(row=1, column=3, sticky=W)
+        self.product_total = Text(frame, height = 1,width = 8 ,font=("Helvetica", 20))
         self.product_total.grid(row=2, column=3)
-        self.product_total2 = Entry(frame,justify='right' )
+        self.product_total2 = Text(frame,height = 1,width = 8 ,font=("Helvetica", 20))
         self.product_total2.grid(row=3, column=3)
-        self.product_total3 = Entry(frame, justify='right' )
+        self.product_total3 = Text(frame, height = 1,width = 8 ,font=("Helvetica", 20))
         self.product_total3.grid(row=4, column=3)
-        self.product_total4 = Entry(frame, justify='right' )
+        self.product_total4 = Text(frame, height = 1,width = 8 ,font=("Helvetica", 20))
         self.product_total4.grid(row=5, column=3)
-        self.product_total5 = Entry(frame,justify='right' )
+        self.product_total5 = Text(frame, height = 1,width = 8 ,font=("Helvetica", 20))
         self.product_total5.grid(row=6, column=3)
-        self.product_total6 = Entry(frame,justify='right' )
+        self.product_total6 = Text(frame, height = 1,width = 8 ,font=("Helvetica", 20))
         self.product_total6.grid(row=7, column=3)
 
         frame2 = ttk.LabelFrame(self, text='คำนวณราคา')
@@ -1128,12 +1137,12 @@ class PageThree(tk.Frame):  # CalPrice
         # self.Invoice = Entry(frame2, textvariable=v, width=15, justify='right', state='readonly')
         # self.Invoice.grid(row=2, column=1)
 
-        Label(frame2, text="ราคาทั้งหมด(รวม Vat) :").grid(row=1, column=0)
-        self.product_grand_total = Entry(frame2, width=15, justify='right')
-        self.product_grand_total.grid(row=1, column=1)
+        Label(frame2, text="ราคารวมทั้งหมด",font=("Helvetica", 15)).grid(row=0, column=0)
+        self.product_grand_total = Text(frame2, height = 1,width = 10 ,font=("Helvetica", 25))
+        self.product_grand_total.grid(row=1, column=0)
         button1 = ttk.Button(frame2, text='คำนวณสินค้าทั้งหมด', command=self.CalProduct, width=15)
         button1.grid(row=2,  columnspan=2)
-        button2 = ttk.Button(frame2, text='ล้างข้อมูล', width=15)
+        button2 = ttk.Button(frame2, text='ล้างข้อมูล', width=15, command = self.clear_data)
         button2.grid(row=3, columnspan=2)
 
         frame3 = ttk.LabelFrame(self, text="ปุ่มคำสั่งต่างๆ")
@@ -1152,92 +1161,79 @@ class PageThree(tk.Frame):  # CalPrice
         button5.grid(row=0, column=0)
 
     def CalProduct(self):
-        self.product1 = int(self.product_number.get()) * int(self.product_price.get())
-        self.product_total.insert(END, self.product1)
-        self.product2 = int(self.product_number2.get()) * int(self.product_price2.get())
-        self.product_total2.insert(END, self.product2)
-        self.product3 = int(self.product_number3.get()) * int(self.product_price3.get())
-        self.product_total3.insert(END, self.product3)
-        self.product4 = int(self.product_number4.get()) * int(self.product_price4.get())
-        self.product_total4.insert(END, self.product4)
-        self.product5 = int(self.product_number5.get()) * int(self.product_price5.get())
-        self.product_total5.insert(END, self.product5)
-        self.product6 = int(self.product_number6.get()) * int(self.product_price6.get())
-        self.product_total6.insert(END, self.product6)
 
-        self.productTotal = self.product1 + self.product2 + self.product3 + self.product4 + self.product5 + self.product6
-        self.product_total_no.insert(END, self.productTotal)
-
-        self.productVat = self.productTotal * 0.7 + self.productTotal
-        self.product_grand_total.insert(END, self.productVat)
+        # if float(self.product_total.get(1.0, END)) > 1 and float(self.product_total2.get(1.0, END)) > 1:
+        #     price = float(self.product_total.get(1.0, END)) + float(self.product_total2.get(1.0, END))
+        #     self.product_grand_total.insert(END, round(price,2))
+        print(self.product_total.search("0", 1.0 , stopindex= END))
 
     def show_price(self, event):
         con = sqlite3.connect('MyDatabase.db')
 
-        self.product_price.delete('0', END)
+        self.product_price.delete(1.0, END)
         cur = con.cursor()
         cur.execute('SELECT Product_Price FROM Product WHERE Product_Name = ?', (self.product_name.get(),))
         self.product_price.insert(END, cur.fetchall())
 
-        self.product_price2.delete('0', END)
+        self.product_price2.delete(1.0, END)
         cur2 = con.cursor()
         cur2.execute('SELECT Product_Price FROM Product WHERE Product_Name = ?', (self.product_name2.get(),))
         self.product_price2.insert(END, cur2.fetchall())
 
-        self.product_price3.delete('0', END)
+        self.product_price3.delete(1.0, END)
         cur3 = con.cursor()
         cur3.execute('SELECT Product_Price FROM Product WHERE Product_Name = ?', (self.product_name3.get(),))
         self.product_price3.insert(END, cur3.fetchall())
 
-        self.product_price4.delete('0', END)
+        self.product_price4.delete(1.0, END)
         cur4 = con.cursor()
         cur4.execute('SELECT Product_Price FROM Product WHERE Product_Name = ?', (self.product_name4.get(),))
         self.product_price4.insert(END, cur4.fetchall())
 
-        self.product_price5.delete('0', END)
+        self.product_price5.delete(1.0, END)
         cur5 = con.cursor()
         cur5.execute('SELECT Product_Price FROM Product WHERE Product_Name = ?', (self.product_name5.get(),))
         self.product_price5.insert(END, cur5.fetchall())
 
-        self.product_price6.delete('0', END)
+        self.product_price6.delete(1.0, END)
         cur6 = con.cursor()
         cur6.execute('SELECT Product_Price FROM Product WHERE Product_Name = ?', (self.product_name6.get(),))
         self.product_price6.insert(END, cur6.fetchall())
 
     def LiveCal(self, event):
 
-            self.product_total.delete(0,END)
-            price = int(self.product_number.get()) * float(self.product_price.get())
+            self.product_total.delete(1.0,END)
+            price = int(self.product_number.get(1.0, END)) * float(self.product_price.get(1.0, END))
             self.product_total.insert(END, round(price, 2))
 
     def LiveCal2(self, event):
 
-            self.product_total2.delete(0, END)
-            price2 = int(self.product_number2.get()) * float(self.product_price2.get())
+            self.product_total2.delete(1.0, END)
+            price2 = int(self.product_number2.get(1.0, END)) * float(self.product_price2.get(1.0, END))
             self.product_total2.insert(END, round(price2, 2))
 
     def LiveCal3(self, event):
 
-            self.product_total3.delete(0, END)
-            price3 = int(self.product_number3.get()) * float(self.product_price3.get())
+            self.product_total3.delete(1.0, END)
+            price3 = int(self.product_number3.get(1.0, END)) * float(self.product_price3.get(1.0, END))
             self.product_total3.insert(END, round(price3, 2))
 
     def LiveCal4(self, event):
 
-            self.product_total4.delete(0, END)
-            price4 = int(self.product_number4.get()) * float(self.product_price4.get())
+            self.product_total4.delete(1.0, END)
+            price4 = int(self.product_number4.get(1.0, END)) * float(self.product_price4.get(1.0, END))
             self.product_total4.insert(END, round(price4, 2))
 
     def LiveCa15(self, event):
 
-            self.product_total5.delete(0, END)
-            price5 = int(self.product_number5.get()) * float(self.product_price5.get())
+            self.product_total5.delete(1.0, END)
+            price5 = int(self.product_number5.get(1.0, END)) * float(self.product_price5.get(1.0, END))
             self.product_total5.insert(END, round(price5, 2))
 
     def LiveCa16(self, event):
 
-            self.product_total6.delete(0, END)
-            price6 = int(self.product_number6.get()) * float(self.product_price6.get())
+            self.product_total6.delete(1.0, END)
+            price6 = int(self.product_number6.get(1.0, END)) * float(self.product_price6.get(1.0, END))
             self.product_total6.insert(END, round(price6, 2))
 
 
@@ -1251,6 +1247,46 @@ class PageThree(tk.Frame):  # CalPrice
             data.append(row[0])
 
         return data
+
+    def clear_data(self):
+
+        self.product_name.set('')
+        self.product_name2.set('')
+        self.product_name3.set('')
+        self.product_name4.set('')
+        self.product_name5.set('')
+        self.product_name6.set('')
+
+        self.product_price.delete(1.0, END)
+        self.product_price2.delete(1.0, END)
+        self.product_price3.delete(1.0, END)
+        self.product_price4.delete(1.0, END)
+        self.product_price5.delete(1.0, END)
+        self.product_price6.delete(1.0, END)
+
+        self.product_number.delete(1.0, END)
+        self.product_number2.delete(1.0, END)
+        self.product_number3.delete(1.0, END)
+        self.product_number4.delete(1.0, END)
+        self.product_number5.delete(1.0, END)
+        self.product_number6.delete(1.0, END)
+
+        self.product_total.delete(1.0, END)
+        self.product_total2.delete(1.0, END)
+        self.product_total3.delete(1.0, END)
+        self.product_total4.delete(1.0, END)
+        self.product_total5.delete(1.0, END)
+        self.product_total6.delete(1.0, END)
+
+class PageFour(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+
+
+
+
 
 
 app = Invoice()
