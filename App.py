@@ -10,6 +10,7 @@ import zeep
 from zeep import Client
 from zeep.transports import Transport
 import urllib3
+import datetime
 import time
 import threading
 
@@ -61,13 +62,14 @@ class StartPage(tk.Frame):  # Calculate Price
         frame8 = ttk.LabelFrame(self, text='ชุดคำสั่ง')
         frame8.grid(row=0, column=1, sticky=NW)
         frame9 = ttk.LabelFrame(self, text="คำนวณเงิน")
-        frame9.grid(row=1 , sticky=NW)
+        frame9.grid(row=1, sticky=NW)
         frame10 = ttk.LabelFrame(self, text="ผู้ซื้อ")
         frame10.grid(row=2, column=0, sticky=W)
         frame11 = ttk.LabelFrame(self, text="รหัสประจำตัวผู้เสียภาษี")
         frame11.grid(row=2, column=1, sticky=W)
-        frame12 = ttk.LabelFrame(self, text = "ค้นหาชื่อบริษัท")
-        frame12.grid(row = 1 , sticky = SW)
+        frame12 = ttk.LabelFrame(self, text="ค้นหา")
+        frame12.grid(row=1, sticky=SW)
+
 
         self.chk1 = BooleanVar()
         self.chk2 = BooleanVar()
@@ -87,7 +89,7 @@ class StartPage(tk.Frame):  # Calculate Price
         self.G95_button = tk.Button(frame, image=self.photo1, height=60, width=150, command=self.checkG95)
         self.G95_button.grid(row=0)
 
-        self.Product1 = Checkbutton(frame, text="Supreme Gasohol 95", font=AFont, variable=self.chk1, fg=self.off_color)
+        self.Product1 = Checkbutton(frame, text="Supreme Gasohol 95", font=AFont, variable=self.chk1, fg=self.off_color,)
         self.Product1.grid(row=1, column=0)
 
         # load2 = Image.open("Gasohol95_Plus.jpg")
@@ -162,8 +164,7 @@ class StartPage(tk.Frame):  # Calculate Price
         self.Product6 = Checkbutton(frame, text="Supreme Diesel", font=AFont, variable=self.chk6, fg=self.off_color)
         self.Product6.grid(row=3, column=2)
 
-        self.refresh_button = ttk.Button(frame7, text="ดูอีกครั้ง", command=self.refresh_price, width=6)
-        self.refresh_button.grid(row=0, column=3)
+
         Label(frame7, text='Supreme Gasohol 95 :', font=BFont).grid(row=0, column=0, sticky=E)
         Label(frame7, text='บาท', font=BFont).grid(row=0, column=2)
         self.G95_price = Entry(frame7, width=8, justify='right')
@@ -206,10 +207,14 @@ class StartPage(tk.Frame):  # Calculate Price
         self.total_price.bind("<KeyRelease>", self.liveLiterCal)
         self.total_price.grid(row=1, column=1)
 
-        Label(frame12, text="ชื่อบริษัท", font = BFont).grid(row=1, column=0, sticky=E)
+        Label(frame12, text="ชื่อบริษัท", font=BFont).grid(row=1, column=0, sticky=E)
         self.search_comp_name = Entry(frame12, justify='right', width=27)
         self.search_comp_name.bind('<Return>', self.searchCompName)
         self.search_comp_name.grid(row=1, column=1, sticky=W)
+        Label(frame12, text= "รหัสภาษี", font = BFont).grid(row = 2 , column = 0 , sticky = E)
+        self.search_tax_id = Entry(frame12, justify = 'right', width = 27)
+        self.search_tax_id.bind('<Return>', self.searchTaxId)
+        self.search_tax_id.grid(row = 2, column = 1, sticky = W)
 
         Label(frame10, text="ชื่อบริษัท").grid(row=1, column=0, sticky=E)
         self.comp_name = Entry(frame10, justify='right', width=17)
@@ -256,7 +261,10 @@ class StartPage(tk.Frame):  # Calculate Price
 
         self.cus_list = Listbox(frame11, height=5, selectmode=SINGLE)
         self.cus_list.bind('<Double-Button>', self.show_data)
+        vsb = ttk.Scrollbar(frame11, orient="vertical", command = self.cus_list.yview)
+        vsb.grid(row = 1 ,column = 1 , sticky = 'ns')
         self.cus_list.grid(row=1)
+        self.cus_list.config(yscrollcommand = vsb.set)
         db = sqlite3.connect('MyDatabase.db')
         cursor = db.execute('SELECT Tax_ID FROM Customer')
         for row in cursor.fetchall():
@@ -289,6 +297,10 @@ class StartPage(tk.Frame):  # Calculate Price
         button3 = ttk.Button(frame8, text="คำนวณสินค้าเพิ่มเติม", command=lambda: controller.show_frame(PageThree),
                              width=15)
         button3.grid(row=0, column=0, )
+        button6 = ttk.Button(frame8, text="ประวัติ", command=lambda: controller.show_frame(PageFour),
+                             width=15)
+        button6.grid(row=3, column=0)
+
 
         self.Show_gas_price()
         self.G95_price.config(state='readonly')
@@ -307,8 +319,8 @@ class StartPage(tk.Frame):  # Calculate Price
     # 	# self.c_name.insert(END,cur.fetchall())
     # 	print( cur.fetchall() )
 
-    def searchCompName(self, event):
 
+    def searchCompName(self, event):
 
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
@@ -331,6 +343,26 @@ class StartPage(tk.Frame):  # Calculate Price
         self.tax_list.grab_set()
         self.tax_list.mainloop()
 
+    def searchTaxId(self, event):
+
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute("SELECT Name FROM Customer WHERE Tax_ID = ?", (self.search_tax_id.get(),) )
+        self.tax_list = Toplevel()
+        self.tax_list.title("Result")
+        self.tax_list.geometry("500x200")
+        Label(self.tax_list, text="รายชื่อบริษัท").grid(row=0)
+        self.tax = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
+        self.tax.bind("<Double-Button>", self.show_data3)
+        self.tax.grid(row=1)
+        for row in cur.fetchone():
+            self.tax.insert(END, row)
+
+        self.tax_list.focus_set()
+        self.tax_list.grab_set()
+        self.tax_list.mainloop()
+
+
     def show_tax_id(self, event):
 
         self.tax_id.delete(0, 'end')
@@ -343,6 +375,19 @@ class StartPage(tk.Frame):  # Calculate Price
 
     def livePriceCal(self, event):
         try:
+            self.checkbox_controller = [str(self.chk1.get()),
+                                          str(self.chk2.get()),
+                                          str(self.chk3.get()),
+                                          str(self.chk4.get()),
+                                          str(self.chk5.get()),
+                                          str(self.chk6.get()) ]
+            self.count = self.checkbox_controller.count('True')
+
+            if self.count >= 2:
+                messagebox.showwarning("ข้อผิดพลาด","กรุณาเลือกสินค้าเพียงชนิดเดียวเท่านั้น!")
+                self.total_price.delete(0, 'end')
+                self.product_liter.delete(0, 'end')
+
             if self.chk1.get() == True:
                 self.total_price.delete(0, 'end')
                 price = float(self.product_liter.get()) * float(self.G95_price.get())
@@ -405,28 +450,6 @@ class StartPage(tk.Frame):  # Calculate Price
         except:
             print("ERROR")
 
-    def refresh_price(self):
-        self.G95_price.config(state='normal')
-        self.GP95_price.config(state='normal')
-        self.E20_price.config(state='normal')
-        self.G91_price.config(state='normal')
-        self.E20_price.config(state='normal')
-        self.DS_price.config(state='normal')
-        self.DSP_price.config(state='normal')
-        self.GP95_price.delete(0, 'end')
-        self.G95_price.delete(0, 'end')
-        self.G91_price.delete(0, 'end')
-        self.E20_price.delete(0, 'end')
-        self.DS_price.delete(0, 'end')
-        self.DSP_price.delete(0, 'end')
-        self.Show_gas_price()
-        self.G95_price.config(state='readonly')
-        self.GP95_price.config(state='readonly')
-        self.E20_price.config(state='readonly')
-        self.G91_price.config(state='readonly')
-        self.E20_price.config(state='readonly')
-        self.DS_price.config(state='readonly')
-        self.DSP_price.config(state='readonly')
 
     def show_data(self, event):
 
@@ -449,7 +472,8 @@ class StartPage(tk.Frame):  # Calculate Price
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
         cur.execute('SELECT Name FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
-        self.comp_name.insert(END, str(cur.fetchone()).replace('(','').replace(')','').replace("'",'').replace(",",''))
+        self.comp_name.insert(END,
+                              str(cur.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
 
         cur2 = con.cursor()
         cur2.execute('SELECT BranchNumber FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
@@ -457,7 +481,9 @@ class StartPage(tk.Frame):  # Calculate Price
 
         cur3 = con.cursor()
         cur3.execute('SELECT BuildingName FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
-        self.building_name.insert(END, str(cur3.fetchone()).replace('(','').replace(')','').replace("'",'').replace(",",''))
+        self.building_name.insert(END,
+                                  str(cur3.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",",
+                                                                                                                  ''))
 
         cur4 = con.cursor()
         cur4.execute('SELECT FloorNumber FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
@@ -477,7 +503,8 @@ class StartPage(tk.Frame):  # Calculate Price
 
         cur8 = con.cursor()
         cur8.execute('SELECT SoiName FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
-        self.Soi_no.insert(END, str(cur8.fetchone()).replace('(','').replace(')','').replace("'",'').replace(",",''))
+        self.Soi_no.insert(END,
+                           str(cur8.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
 
         cur9 = con.cursor()
         cur9.execute('SELECT StreetName FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
@@ -520,7 +547,8 @@ class StartPage(tk.Frame):  # Calculate Price
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
         cur.execute('SELECT Name FROM Customer WHERE Tax_ID = ?', (self.get_value,))
-        self.comp_name.insert(END, str(cur.fetchone()).replace('(','').replace(')','').replace("'",'').replace(",",''))
+        self.comp_name.insert(END,
+                              str(cur.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
 
         cur2 = con.cursor()
         cur2.execute('SELECT BranchNumber FROM Customer WHERE Tax_ID = ?', (self.get_value,))
@@ -528,7 +556,9 @@ class StartPage(tk.Frame):  # Calculate Price
 
         cur3 = con.cursor()
         cur3.execute('SELECT BuildingName FROM Customer WHERE Tax_ID = ?', (self.get_value,))
-        self.building_name.insert(END, str(cur3.fetchone()).replace('(','').replace(')','').replace("'",'').replace(",",''))
+        self.building_name.insert(END,
+                                  str(cur3.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",",
+                                                                                                                  ''))
 
         cur4 = con.cursor()
         cur4.execute('SELECT FloorNumber FROM Customer WHERE Tax_ID = ?', (self.get_value,))
@@ -548,7 +578,8 @@ class StartPage(tk.Frame):  # Calculate Price
 
         cur8 = con.cursor()
         cur8.execute('SELECT SoiName FROM Customer WHERE Tax_ID = ?', (self.get_value,))
-        self.Soi_no.insert(END, str(cur8.fetchone()).replace('(','').replace(')','').replace("'",'').replace(",",''))
+        self.Soi_no.insert(END,
+                           str(cur8.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
 
         cur9 = con.cursor()
         cur9.execute('SELECT StreetName FROM Customer WHERE Tax_ID = ?', (self.get_value,))
@@ -572,6 +603,81 @@ class StartPage(tk.Frame):  # Calculate Price
 
         self.tax_list.destroy()
 
+    def show_data3(self, event):
+
+        self.comp_name.delete(0, 'end')
+        self.branch_num.delete(0, 'end')
+        self.branch_floor.delete(0, 'end')
+        self.building_name.delete(0, 'end')
+        self.village_name.delete(0, 'end')
+        self.house_no.delete(0, 'end')
+        self.Moo_no.delete(0, 'end')
+        self.Soi_no.delete(0, 'end')
+        self.Stree_name.delete(0, 'end')
+        self.Thumbon_name.delete(0, 'end')
+        self.Aumper_name.delete(0, 'end')
+        self.Province_name.delete(0, 'end')
+        self.Postcode.delete(0, 'end')
+
+        self.get_selecte_value = self.tax.get(self.tax.curselection())
+
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute('SELECT Name FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        self.comp_name.insert(END,
+                              str(cur.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
+
+        cur2 = con.cursor()
+        cur2.execute('SELECT BranchNumber FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        self.branch_num.insert(END, cur2.fetchone())
+
+        cur3 = con.cursor()
+        cur3.execute('SELECT BuildingName FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        self.building_name.insert(END,
+                                  str(cur3.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",",
+                                                                                                                  ''))
+
+        cur4 = con.cursor()
+        cur4.execute('SELECT FloorNumber FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        self.branch_floor.insert(END, cur4.fetchall())
+
+        cur5 = con.cursor()
+        cur5.execute('SELECT VillageName FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        self.village_name.insert(END, cur5.fetchall())
+
+        cur6 = con.cursor()
+        cur6.execute('SELECT HouseNumber FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        self.house_no.insert(END, cur6.fetchall())
+
+        cur7 = con.cursor()
+        cur7.execute('SELECT MooNumber FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        self.Moo_no.insert(END, cur7.fetchall())
+
+        cur8 = con.cursor()
+        cur8.execute('SELECT SoiName FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        self.Soi_no.insert(END,
+                           str(cur8.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
+
+        cur9 = con.cursor()
+        cur9.execute('SELECT StreetName FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        self.Stree_name.insert(END, cur9.fetchall())
+
+        cur10 = con.cursor()
+        cur10.execute('SELECT Thambol FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        self.Thumbon_name.insert(END, cur10.fetchall())
+
+        cur11 = con.cursor()
+        cur11.execute('SELECT Amphur FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        self.Aumper_name.insert(END, cur11.fetchall())
+
+        cur12 = con.cursor()
+        cur12.execute('SELECT Province FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        self.Province_name.insert(END, cur12.fetchall())
+
+        cur13 = con.cursor()
+        cur13.execute('SELECT PostCode FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        self.Postcode.insert(END, cur13.fetchall())
+
     def Show_gas_price(self):
         self.G95_price.config(state='normal')
         self.GP95_price.config(state='normal')
@@ -580,12 +686,12 @@ class StartPage(tk.Frame):  # Calculate Price
         self.E20_price.config(state='normal')
         self.DS_price.config(state='normal')
         self.DSP_price.config(state='normal')
-        self.G95_price.delete(0,END)
-        self.GP95_price.delete(0,END)
-        self.E20_price.delete(0,END)
-        self.G91_price.delete(0,END)
-        self.DS_price.delete(0,END)
-        self.DSP_price.delete(0,END)
+        self.G95_price.delete(0, END)
+        self.GP95_price.delete(0, END)
+        self.E20_price.delete(0, END)
+        self.G91_price.delete(0, END)
+        self.DS_price.delete(0, END)
+        self.DSP_price.delete(0, END)
 
         con = sqlite3.connect('MyDatabase.db')
         cur1 = con.cursor()
@@ -619,6 +725,7 @@ class StartPage(tk.Frame):  # Calculate Price
         self.E20_price.config(state='readonly')
         self.DS_price.config(state='readonly')
         self.DSP_price.config(state='readonly')
+
     def checkG95(self):
         if self.chk1.get() == False:
             self.chk1.set(True)
@@ -666,6 +773,7 @@ class StartPage(tk.Frame):  # Calculate Price
         else:
             self.chk6.set(False)
             self.Product6["fg"] = self.off_color
+
 
     # def CalPrice(self):
     #
@@ -734,10 +842,10 @@ class StartPage(tk.Frame):  # Calculate Price
 class PageOne(tk.Frame):  # Product Page
 
     db_name = 'MyDatabase.db'
-    
+
     def setStartPageRef(self, startPageRef):
         self.startPageRef = startPageRef
-    
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         frame = ttk.LabelFrame(self, text='เพิ่มสินค้า')
@@ -777,6 +885,8 @@ class PageOne(tk.Frame):  # Product Page
         button3.grid(row=1, column=0, )
         button3 = ttk.Button(frame2, text="หน้าคำนวณสินค้า", command=lambda: controller.show_frame(StartPage))
         button3.grid(row=0, column=0, )
+        button6 = ttk.Button(frame2, text="ประวัติ", command=lambda: controller.show_frame(PageFour))
+        button6.grid(row=2, column=0)
 
         self.viewing_record()
 
@@ -877,7 +987,6 @@ class PageTwo(tk.Frame):  # Customer Page
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-
         AFont = font.Font(family='Helvetica', size=12, weight='bold')
         BFont = font.Font(family='Helvetica', size=11, )
         frame = LabelFrame(self, text="ค้นหา")
@@ -946,6 +1055,8 @@ class PageTwo(tk.Frame):  # Customer Page
         button3.grid(row=1, column=0, )
         button3 = ttk.Button(frame2, text="หน้าคำนวณสินค้า", command=lambda: controller.show_frame(StartPage))
         button3.grid(row=0, column=0, )
+        button6 = ttk.Button(frame2, text="ประวัติ", command=lambda: controller.show_frame(PageFour))
+        button6.grid(row=2, column=0)
 
     # self.viewing_record2()
 
@@ -989,8 +1100,6 @@ class PageTwo(tk.Frame):  # Customer Page
             else:
                 check = False
                 messagebox.showinfo("ค้นหาข้อมูล", "ค้นหาเสร็จสิ้น")
-
-
 
     def save_data(self):
         try:
@@ -1064,28 +1173,28 @@ class PageThree(tk.Frame):  # CalPrice
         frame = ttk.LabelFrame(self, text='สินค้าทั้งหมด')
         frame.grid(row=0, column=0, sticky=NW)
 
-        Label(frame, text="ชื่อสินค้า",font=("Helvetica", 10)).grid(row=1, sticky=W)
-        self.product_name = ttk.Combobox(frame, width=25, justify='right',font=("Helvetica", 15), state = 'readonly')
+        Label(frame, text="ชื่อสินค้า", font=("Helvetica", 10)).grid(row=1, sticky=W)
+        self.product_name = ttk.Combobox(frame, width=25, justify='right', font=("Helvetica", 15), state='readonly')
         self.product_name['values'] = self.combo_product()
         self.product_name.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name.grid(row=2, column=0)
-        self.product_name2 = ttk.Combobox(frame, width=25, justify='right',font=("Helvetica", 15), state = 'readonly')
+        self.product_name2 = ttk.Combobox(frame, width=25, justify='right', font=("Helvetica", 15), state='readonly')
         self.product_name2['values'] = self.combo_product()
         self.product_name2.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name2.grid(row=3, column=0)
-        self.product_name3 = ttk.Combobox(frame, width=25, justify='right',font=("Helvetica", 15), state = 'readonly')
+        self.product_name3 = ttk.Combobox(frame, width=25, justify='right', font=("Helvetica", 15), state='readonly')
         self.product_name3['values'] = self.combo_product()
         self.product_name3.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name3.grid(row=4, column=0)
-        self.product_name4 = ttk.Combobox(frame, width=25, justify='right',font=("Helvetica", 15), state = 'readonly')
+        self.product_name4 = ttk.Combobox(frame, width=25, justify='right', font=("Helvetica", 15), state='readonly')
         self.product_name4['values'] = self.combo_product()
         self.product_name4.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name4.grid(row=5, column=0)
-        self.product_name5 = ttk.Combobox(frame, width=25, justify='right',font=("Helvetica", 15), state = 'readonly')
+        self.product_name5 = ttk.Combobox(frame, width=25, justify='right', font=("Helvetica", 15), state='readonly')
         self.product_name5['values'] = self.combo_product()
         self.product_name5.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name5.grid(row=6, column=0)
-        self.product_name6 = ttk.Combobox(frame, width=25, justify='right',font=("Helvetica", 15), state = 'readonly')
+        self.product_name6 = ttk.Combobox(frame, width=25, justify='right', font=("Helvetica", 15), state='readonly')
         self.product_name6['values'] = self.combo_product()
         self.product_name6.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name6.grid(row=7, column=0)
@@ -1110,53 +1219,52 @@ class PageThree(tk.Frame):  # CalPrice
         # self.product_type6['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
         # self.product_type6.grid( row = 7,column = 1 )
 
-        Label(frame, text="ราคา(บาท)",font=("Helvetica", 10)).grid(row=1, column=1, sticky=W)
-        self.product_price = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
+        Label(frame, text="ราคา(บาท)", font=("Helvetica", 10)).grid(row=1, column=1, sticky=W)
+        self.product_price = Text(frame, height=1, width=5, font=("Helvetica", 15))
         self.product_price.grid(row=2, column=1)
-        self.product_price2 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
+        self.product_price2 = Text(frame, height=1, width=5, font=("Helvetica", 15))
         self.product_price2.grid(row=3, column=1)
-        self.product_price3 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
+        self.product_price3 = Text(frame, height=1, width=5, font=("Helvetica", 15))
         self.product_price3.grid(row=4, column=1)
-        self.product_price4 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
+        self.product_price4 = Text(frame, height=1, width=5, font=("Helvetica", 15))
         self.product_price4.grid(row=5, column=1)
-        self.product_price5 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
+        self.product_price5 = Text(frame, height=1, width=5, font=("Helvetica", 15))
         self.product_price5.grid(row=6, column=1)
-        self.product_price6 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
+        self.product_price6 = Text(frame, height=1, width=5, font=("Helvetica", 15))
         self.product_price6.grid(row=7, column=1)
 
-        Label(frame, text="จำนวน",font=("Helvetica", 10)).grid(row=1, column=2, sticky=W)
-        self.product_number = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
+        Label(frame, text="จำนวน", font=("Helvetica", 10)).grid(row=1, column=2, sticky=W)
+        self.product_number = Text(frame, height=1, width=5, font=("Helvetica", 15))
         self.product_number.bind("<KeyRelease>", self.LiveCal)
         self.product_number.grid(row=2, column=2)
-        self.product_number2 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
+        self.product_number2 = Text(frame, height=1, width=5, font=("Helvetica", 15))
         self.product_number2.bind("<KeyRelease>", self.LiveCal2)
         self.product_number2.grid(row=3, column=2)
-        self.product_number3 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
+        self.product_number3 = Text(frame, height=1, width=5, font=("Helvetica", 15))
         self.product_number3.bind("<KeyRelease>", self.LiveCal3)
         self.product_number3.grid(row=4, column=2)
-        self.product_number4 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
-        self.product_number4.bind("<KeyRelease>",self.LiveCal4)
+        self.product_number4 = Text(frame, height=1, width=5, font=("Helvetica", 15))
+        self.product_number4.bind("<KeyRelease>", self.LiveCal4)
         self.product_number4.grid(row=5, column=2)
-        self.product_number5 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
-        self.product_number5.bind("<KeyRelease>", self.LiveCa15 )
+        self.product_number5 = Text(frame, height=1, width=5, font=("Helvetica", 15))
+        self.product_number5.bind("<KeyRelease>", self.LiveCa15)
         self.product_number5.grid(row=6, column=2)
-        self.product_number6 = Text(frame, height = 1,width = 5,font=("Helvetica", 15))
-        self.product_number6.bind("<KeyRelease>", self.LiveCa16 )
+        self.product_number6 = Text(frame, height=1, width=5, font=("Helvetica", 15))
+        self.product_number6.bind("<KeyRelease>", self.LiveCa16)
         self.product_number6.grid(row=7, column=2)
 
-
-        Label(frame, text="ราคาทั้งหมด",font=("Helvetica", 10)).grid(row=1, column=3, sticky=W)
-        self.product_total = Text(frame, height = 1,width = 8 ,font=("Helvetica", 20))
+        Label(frame, text="ราคาทั้งหมด", font=("Helvetica", 10)).grid(row=1, column=3, sticky=W)
+        self.product_total = Text(frame, height=1, width=8, font=("Helvetica", 20))
         self.product_total.grid(row=2, column=3)
-        self.product_total2 = Text(frame,height = 1,width = 8 ,font=("Helvetica", 20))
+        self.product_total2 = Text(frame, height=1, width=8, font=("Helvetica", 20))
         self.product_total2.grid(row=3, column=3)
-        self.product_total3 = Text(frame, height = 1,width = 8 ,font=("Helvetica", 20))
+        self.product_total3 = Text(frame, height=1, width=8, font=("Helvetica", 20))
         self.product_total3.grid(row=4, column=3)
-        self.product_total4 = Text(frame, height = 1,width = 8 ,font=("Helvetica", 20))
+        self.product_total4 = Text(frame, height=1, width=8, font=("Helvetica", 20))
         self.product_total4.grid(row=5, column=3)
-        self.product_total5 = Text(frame, height = 1,width = 8 ,font=("Helvetica", 20))
+        self.product_total5 = Text(frame, height=1, width=8, font=("Helvetica", 20))
         self.product_total5.grid(row=6, column=3)
-        self.product_total6 = Text(frame, height = 1,width = 8 ,font=("Helvetica", 20))
+        self.product_total6 = Text(frame, height=1, width=8, font=("Helvetica", 20))
         self.product_total6.grid(row=7, column=3)
 
         frame2 = ttk.LabelFrame(self, text='คำนวณราคา')
@@ -1170,12 +1278,12 @@ class PageThree(tk.Frame):  # CalPrice
         # self.Invoice = Entry(frame2, textvariable=v, width=15, justify='right', state='readonly')
         # self.Invoice.grid(row=2, column=1)
 
-        Label(frame2, text="ราคารวมทั้งหมด",font=("Helvetica", 15)).grid(row=0, column=0)
-        self.product_grand_total = Text(frame2, height = 1,width = 10 ,font=("Helvetica", 25))
+        Label(frame2, text="ราคารวมทั้งหมด", font=("Helvetica", 15)).grid(row=0, column=0)
+        self.product_grand_total = Text(frame2, height=1, width=10, font=("Helvetica", 25))
         self.product_grand_total.grid(row=1, column=0)
         button1 = ttk.Button(frame2, text='คำนวณสินค้าทั้งหมด', command=self.CalProduct, width=15)
-        button1.grid(row=2,  columnspan=2)
-        button2 = ttk.Button(frame2, text='ล้างข้อมูล', width=15, command = self.clear_data)
+        button1.grid(row=2, columnspan=2)
+        button2 = ttk.Button(frame2, text='ล้างข้อมูล', width=15, command=self.clear_data)
         button2.grid(row=3, columnspan=2)
 
         frame3 = ttk.LabelFrame(self, text="ปุ่มคำสั่งต่างๆ")
@@ -1193,6 +1301,10 @@ class PageThree(tk.Frame):  # CalPrice
                              command=lambda: controller.show_frame(StartPage), width=20)
         button5.grid(row=0, column=0)
 
+        button6 = ttk.Button(frame3, text="ประวัติ",
+                             command=lambda: controller.show_frame(PageFour), width=20)
+        button6.grid(row=3, column=0)
+
     def CalProduct(self):
 
         price_total = [
@@ -1209,7 +1321,7 @@ class PageThree(tk.Frame):  # CalPrice
                 sum += float(x)
             except:
                 pass
-        self.product_grand_total.insert(END,round(sum,2))
+        self.product_grand_total.insert(END, round(sum, 2))
 
     def show_price(self, event):
         con = sqlite3.connect('MyDatabase.db')
@@ -1246,40 +1358,39 @@ class PageThree(tk.Frame):  # CalPrice
 
     def LiveCal(self, event):
 
-            self.product_total.delete(1.0,END)
-            price = int(self.product_number.get(1.0, END)) * float(self.product_price.get(1.0, END))
-            self.product_total.insert(END, round(price, 2))
+        self.product_total.delete(1.0, END)
+        price = int(self.product_number.get(1.0, END)) * float(self.product_price.get(1.0, END))
+        self.product_total.insert(END, round(price, 2))
 
     def LiveCal2(self, event):
 
-            self.product_total2.delete(1.0, END)
-            price2 = int(self.product_number2.get(1.0, END)) * float(self.product_price2.get(1.0, END))
-            self.product_total2.insert(END, round(price2, 2))
+        self.product_total2.delete(1.0, END)
+        price2 = int(self.product_number2.get(1.0, END)) * float(self.product_price2.get(1.0, END))
+        self.product_total2.insert(END, round(price2, 2))
 
     def LiveCal3(self, event):
 
-            self.product_total3.delete(1.0, END)
-            price3 = int(self.product_number3.get(1.0, END)) * float(self.product_price3.get(1.0, END))
-            self.product_total3.insert(END, round(price3, 2))
+        self.product_total3.delete(1.0, END)
+        price3 = int(self.product_number3.get(1.0, END)) * float(self.product_price3.get(1.0, END))
+        self.product_total3.insert(END, round(price3, 2))
 
     def LiveCal4(self, event):
 
-            self.product_total4.delete(1.0, END)
-            price4 = int(self.product_number4.get(1.0, END)) * float(self.product_price4.get(1.0, END))
-            self.product_total4.insert(END, round(price4, 2))
+        self.product_total4.delete(1.0, END)
+        price4 = int(self.product_number4.get(1.0, END)) * float(self.product_price4.get(1.0, END))
+        self.product_total4.insert(END, round(price4, 2))
 
     def LiveCa15(self, event):
 
-            self.product_total5.delete(1.0, END)
-            price5 = int(self.product_number5.get(1.0, END)) * float(self.product_price5.get(1.0, END))
-            self.product_total5.insert(END, round(price5, 2))
+        self.product_total5.delete(1.0, END)
+        price5 = int(self.product_number5.get(1.0, END)) * float(self.product_price5.get(1.0, END))
+        self.product_total5.insert(END, round(price5, 2))
 
     def LiveCa16(self, event):
 
-            self.product_total6.delete(1.0, END)
-            price6 = int(self.product_number6.get(1.0, END)) * float(self.product_price6.get(1.0, END))
-            self.product_total6.insert(END, round(price6, 2))
-
+        self.product_total6.delete(1.0, END)
+        price6 = int(self.product_number6.get(1.0, END)) * float(self.product_price6.get(1.0, END))
+        self.product_total6.insert(END, round(price6, 2))
 
     def combo_product(self):
         db = sqlite3.connect('MyDatabase.db')
@@ -1322,17 +1433,41 @@ class PageThree(tk.Frame):  # CalPrice
         self.product_total5.delete(1.0, END)
         self.product_total6.delete(1.0, END)
 
-        self.product_grand_total.delete(1.0,END)
+        self.product_grand_total.delete(1.0, END)
+
 
 class PageFour(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
+        frame = LabelFrame(self, text = "" , height = 400, width = 200,relief="raise")
+        frame.grid(row = 1)
 
+        Label(self, text="ประวัติ", font=("Helvetica", 20)).grid(row=0, column=0, sticky=NW)
+        self.history_list = ttk.Treeview(frame, height = 18, column =('A','B','C','D','E'))
+        self.history_list.heading('#0', text = "Heading")
+        self.history_list.heading('A', text = "Test01")
+        self.history_list.heading('B', text="Test02")
+        self.history_list.heading('C', text="Test03")
+        self.history_list.heading('D', text="Test04")
+        self.history_list.heading('E', text="Test05")
+        self.history_list.column('#0', width=60)
+        self.history_list.column('A', width=110)
+        self.history_list.column('B', width=110)
+        self.history_list.column('C', width=110)
+        self.history_list.column('D', width=110)
+        self.history_list.column('E', width=150)
+        vsb = ttk.Scrollbar(frame, orient='vertical', command=self.history_list.yview)
+        hsb = ttk.Scrollbar(frame, orient = 'horizontal' , command = self.history_list.xview)
+        self.history_list.grid(row=0, sticky = 'nsew')
+        vsb.grid(row=0, column=1, sticky='ns')
+        hsb.grid(row=1, column=0, sticky='ew')
+        self.history_list.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
 
-
-
+        self.history_list.insert('', 'end', text = "TEST", value = ("TEST01","TEST02","TEST03","TEST04","TEST05dddddddddddddddddddddddddddddddddddddddd"))
+        button1 = ttk.Button(self, text="กลับหน้าแรก", command=lambda: controller.show_frame(StartPage))
+        button1.grid(row=0, column=1, )
 
 
 app = Invoice()
