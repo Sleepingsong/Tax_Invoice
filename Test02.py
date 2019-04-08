@@ -35,7 +35,7 @@ class Invoice(tk.Tk):
             frame.grid(row=0, column=0, sticky="NSEW")
 
         self.frames[PageOne].setStartPageRef(self.frames[StartPage])
-
+        self.frames[PageTwo].setStartPageRef2(self.frames[StartPage])
         self.show_frame(StartPage)
 
     def show_frame(self, cont):
@@ -260,15 +260,13 @@ class StartPage(tk.Frame):  # Calculate Price
         self.Postcode.grid(row=4, column=3, sticky=W)
 
         self.cus_list = Listbox(frame11, height=5, selectmode=SINGLE)
+        self.cus_list.bind("<Enter>", self.show_tax_list)
         self.cus_list.bind('<Double-Button>', self.show_data)
         vsb = ttk.Scrollbar(frame11, orient="vertical", command = self.cus_list.yview)
         vsb.grid(row = 1 ,column = 1 , sticky = 'ns')
         self.cus_list.grid(row=1)
         self.cus_list.config(yscrollcommand = vsb.set)
-        db = sqlite3.connect('MyDatabase.db')
-        cursor = db.execute('SELECT Tax_ID FROM Customer')
-        for row in cursor.fetchall():
-            self.cus_list.insert(END, row)
+
 
         # button1 = ttk.Button( frame10,text = "ดูข้อมูลเพิ่มเติม",width = 15,command = lambda: self.show_cus_name() )
         # button1.grid( row = 0,column = 2 )
@@ -319,6 +317,13 @@ class StartPage(tk.Frame):  # Calculate Price
     # 	# self.c_name.insert(END,cur.fetchall())
     # 	print( cur.fetchall() )
 
+    def show_tax_list(self,event):
+
+        self.cus_list.delete(0,END)
+        db = sqlite3.connect('MyDatabase.db')
+        cursor = db.execute('SELECT Tax_ID FROM Customer')
+        for row in cursor.fetchall():
+            self.cus_list.insert(END, row)
 
     def searchCompName(self, event):
 
@@ -984,6 +989,9 @@ class PageTwo(tk.Frame):  # Customer Page
 
     db_name = 'MyDatabase.db'
 
+    def setStartPageRef2(self, startPageRef):
+        self.startPageRef = startPageRef
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -1004,10 +1012,16 @@ class PageTwo(tk.Frame):  # Customer Page
         self.button2 = Button(frame, text='บันทึก', font=AFont, height=1, width=10, command=self.save_data)
         self.button2.grid(row=2, sticky=E)
 
-        self.tree = ttk.Treeview(self, height=17, column=("1"))
+        frame3 = LabelFrame(self, text = "")
+        frame3.grid(row = 1)
+        self.tree = ttk.Treeview(frame3, height=15, column=("1"))
         self.tree.heading('#0', text="ประเภท")
         self.tree.heading(0, text="ผลลัพธ์")
-        self.tree.grid(row=1)
+        self.tree.grid(row=0)
+        vsb = ttk.Scrollbar(frame3, orient='vertical', command=self.tree.yview)
+        self.tree.grid(row=0, sticky = 'nsew')
+        vsb.grid(row=0, column=1, sticky='ns')
+        self.tree.configure(yscrollcommand=vsb.set)
 
         frame2 = LabelFrame(self, text="ชุดคำสั่ง")
         frame2.grid(row=0, column=1, sticky=E)
@@ -1438,26 +1452,26 @@ class PageThree(tk.Frame):  # CalPrice
 
 class PageFour(tk.Frame):
 
+    db_name = 'MyDatabase.db'
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        frame = LabelFrame(self, text = "" , height = 400, width = 200,relief="raise")
-        frame.grid(row = 1)
+        frame = LabelFrame(self, text = "" )
+        frame.grid(row = 2)
 
-        Label(self, text="ประวัติ", font=("Helvetica", 20)).grid(row=0, column=0, sticky=NW)
-        self.history_list = ttk.Treeview(frame, height = 18, column =('A','B','C','D','E'))
-        self.history_list.heading('#0', text = "Heading")
-        self.history_list.heading('A', text = "Test01")
-        self.history_list.heading('B', text="Test02")
-        self.history_list.heading('C', text="Test03")
-        self.history_list.heading('D', text="Test04")
-        self.history_list.heading('E', text="Test05")
-        self.history_list.column('#0', width=60)
+        Label(self, text="ประวัติการออกใบกำกับภาษี", font=("Helvetica", 20)).grid(row=0, column=0, sticky=NW)
+        self.history_list = ttk.Treeview(frame, height = 18, column =('A','B','C','D'))
+        self.history_list.heading('#0', text = "วันที่เอกสาร")
+        self.history_list.heading('A', text = "เลขที่เอกสาร")
+        self.history_list.heading('B', text="ชื่อลูกค้า")
+        self.history_list.heading('C', text="จำนวนเงิน")
+        self.history_list.heading('D', text="ผู้รับผิดชอบ")
+        self.history_list.column('#0', width=110)
         self.history_list.column('A', width=110)
-        self.history_list.column('B', width=110)
+        self.history_list.column('B', width=300)
         self.history_list.column('C', width=110)
         self.history_list.column('D', width=110)
-        self.history_list.column('E', width=150)
         vsb = ttk.Scrollbar(frame, orient='vertical', command=self.history_list.yview)
         hsb = ttk.Scrollbar(frame, orient = 'horizontal' , command = self.history_list.xview)
         self.history_list.grid(row=0, sticky = 'nsew')
@@ -1465,9 +1479,30 @@ class PageFour(tk.Frame):
         hsb.grid(row=1, column=0, sticky='ew')
         self.history_list.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
 
-        self.history_list.insert('', 'end', text = "TEST", value = ("TEST01","TEST02","TEST03","TEST04","TEST05dddddddddddddddddddddddddddddddddddddddd"))
-        button1 = ttk.Button(self, text="กลับหน้าแรก", command=lambda: controller.show_frame(StartPage))
-        button1.grid(row=0, column=1, )
+        Label(self, text = "ค้นหาตามวันที่",font=("Helvetica", 15)).grid(row = 1 ,sticky = W)
+        self.date_search = Entry(self, justify = 'right')
+        self.date_search.place(x = 120, y = 45)
+        Label(self, text = "ค้นหาตามชื่อ", font=("Helvetica", 15)).place(x = 250 , y = 38)
+        self.comp_name_search = Entry(self, justify = 'right')
+        self.comp_name_search.place(x = 360, y =45)
+
+
+
+
+        button1 = ttk.Button(self, text='หน้าหลัก', command=lambda: controller.show_frame(StartPage))
+        button1.place(x = 300 , y = 5)
+
+        self.viewing_record()
+
+    def viewing_record(self):
+        records = self.history_list.get_children()
+        for element in records:
+            self.history_list.delete(element)
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute('SELECT * FROM Record')
+        for row in cur.fetchall():
+            self.history_list.insert('', 0, text=row[1], values=(row[0], row[2],row[3], row[4]))
 
 
 app = Invoice()
