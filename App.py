@@ -69,6 +69,10 @@ class StartPage(tk.Frame):  # Calculate Price
         frame11.grid(row=2, column=1, sticky=W)
         frame12 = ttk.LabelFrame(self, text="ค้นหา")
         frame12.grid(row=1, sticky=SW)
+        frame13 = ttk.LabelFrame(self, text = "พนักงาน")
+        frame13.place(x = 590, y = 190)
+
+        now = datetime.datetime.now()
 
 
         self.chk1 = BooleanVar()
@@ -77,12 +81,7 @@ class StartPage(tk.Frame):  # Calculate Price
         self.chk4 = BooleanVar()
         self.chk5 = BooleanVar()
         self.chk6 = BooleanVar()
-        # load1 = Image.open("Gasohol95.jpg")
-        # load1 = load1.resize((150,60), Image.ANTIALIAS)
-        # render = ImageTk.PhotoImage(load1)
-        # img1 = Label(frame, image=render)
-        # img1.image = render
-        # img1.grid(row = 0)
+
         self.image1 = Image.open("Gasohol95.jpg")
         self.image1 = self.image1.resize((150, 60), Image.ANTIALIAS)
         self.photo1 = ImageTk.PhotoImage(self.image1)
@@ -92,12 +91,6 @@ class StartPage(tk.Frame):  # Calculate Price
         self.Product1 = Checkbutton(frame, text="Supreme Gasohol 95", font=AFont, variable=self.chk1, fg=self.off_color,)
         self.Product1.grid(row=1, column=0)
 
-        # load2 = Image.open("Gasohol95_Plus.jpg")
-        # load2 = load2.resize((150,60), Image.ANTIALIAS)
-        # render = ImageTk.PhotoImage(load2)
-        # img2 = Label(frame, image=render)
-        # img2.image = render
-        # img2.grid(row = 0, column = 1)
         self.image2 = Image.open("Gasohol95_Plus.jpg")
         self.image2 = self.image2.resize((150, 60), Image.ANTIALIAS)
         self.photo2 = ImageTk.PhotoImage(self.image2)
@@ -107,12 +100,6 @@ class StartPage(tk.Frame):  # Calculate Price
                                     fg=self.off_color)
         self.Product2.grid(row=1, column=1)
 
-        # load3 = Image.open("Gasohol_E20.jpg")
-        # load3 = load3.resize((150,60), Image.ANTIALIAS)
-        # render = ImageTk.PhotoImage(load3)
-        # img3 = Label(frame, image=render)
-        # img3.image = render
-        # img3.grid(row = 0, column = 2)
         self.image3 = Image.open("Gasohol_E20.jpg")
         self.image3 = self.image3.resize((150, 60), Image.ANTIALIAS)
         self.photo3 = ImageTk.PhotoImage(self.image3)
@@ -121,12 +108,6 @@ class StartPage(tk.Frame):  # Calculate Price
         self.Product3 = Checkbutton(frame, text="Supreme E20", font=AFont, variable=self.chk3, fg=self.off_color)
         self.Product3.grid(row=1, column=2)
 
-        # load4 = Image.open("Gasohol_91.jpg")
-        # load4 = load4.resize((150,60), Image.ANTIALIAS)
-        # render = ImageTk.PhotoImage(load4)
-        # img4 = Label(frame, image=render)
-        # img4.image = render
-        # img4.grid(row = 2,column = 0)
         self.image4 = Image.open("Gasohol_91.jpg")
         self.image4 = self.image4.resize((150, 60), Image.ANTIALIAS)
         self.photo4 = ImageTk.PhotoImage(self.image4)
@@ -135,12 +116,6 @@ class StartPage(tk.Frame):  # Calculate Price
         self.Product4 = Checkbutton(frame, text="Supreme Gasohol 91", font=AFont, variable=self.chk4, fg=self.off_color)
         self.Product4.grid(row=3, column=0)
 
-        # load5 = Image.open("Diesel_Plus.jpg")
-        # load5 = load5.resize((150,60), Image.ANTIALIAS)
-        # render = ImageTk.PhotoImage(load5)
-        # img5 = Label(frame, image=render)
-        # img5.image = render
-        # img5.grid(row = 2, column = 1)
         self.image5 = Image.open("Diesel_Plus.jpg")
         self.image5 = self.image5.resize((150, 60), Image.ANTIALIAS)
         self.photo5 = ImageTk.PhotoImage(self.image5)
@@ -150,12 +125,6 @@ class StartPage(tk.Frame):  # Calculate Price
                                     fg=self.off_color)
         self.Product5.grid(row=3, column=1)
 
-        # load6 = Image.open("Diesel.jpg")
-        # load6 = load6.resize((150,60), Image.ANTIALIAS)
-        # render = ImageTk.PhotoImage(load6)
-        # img6 = Label(frame, image=render)
-        # img6.image = render
-        # img6.grid(row = 2, column = 2)
         self.image6 = Image.open("Diesel.jpg")
         self.image6 = self.image6.resize((150, 60), Image.ANTIALIAS)
         self.photo6 = ImageTk.PhotoImage(self.image6)
@@ -206,6 +175,22 @@ class StartPage(tk.Frame):  # Calculate Price
         self.total_price = Entry(frame9, justify='right')
         self.total_price.bind("<KeyRelease>", self.liveLiterCal)
         self.total_price.grid(row=1, column=1)
+
+        Label(frame13, text = "รหัสพนักงาน").grid(row=0)
+        self.staff_id = Entry(frame13, justify = 'right', width = 16)
+        self.staff_id.bind('<Return>',)
+        self.staff_id.grid(row = 0 , column = 1)
+        Label(frame13, text = "-----------------------").grid(row = 1, columnspan = 2)
+        Label(frame13, text = "ชื่อพนักงาน").grid(row = 2, columnspan = 2)
+        self.staff_name = Entry(frame13 , width = 21, justify = 'center')
+        self.staff_name.grid(row = 3, columnspan = 2)
+        Label(frame13, text = "เวลาเข้ากะ").grid(row = 4, columnspan = 2)
+        self.shift_time = Entry(frame13)
+        self.shift_time.grid(row = 5, columnspan = 2)
+        logout_button = Button(frame13, text = "ออกกะ", width = 10)
+        logout_button.grid(row = 6, columnspan = 2)
+
+
 
         Label(frame12, text="ชื่อบริษัท", font=BFont).grid(row=1, column=0, sticky=E)
         self.search_comp_name = Entry(frame12, justify='right', width=27)
