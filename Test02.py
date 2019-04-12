@@ -46,7 +46,7 @@ class Invoice(tk.Tk):
 class StartPage(tk.Frame):  # Calculate Price
 
     db_name = 'MyDatabase.db'
-
+    now = datetime.datetime.now()
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -178,16 +178,16 @@ class StartPage(tk.Frame):  # Calculate Price
 
         Label(frame13, text = "รหัสพนักงาน").grid(row=0)
         self.staff_id = Entry(frame13, justify = 'right', width = 16)
-        self.staff_id.bind('<Return>',)
+        self.staff_id.bind('<Return>', self.staff_login)
         self.staff_id.grid(row = 0 , column = 1)
         Label(frame13, text = "-----------------------").grid(row = 1, columnspan = 2)
         Label(frame13, text = "ชื่อพนักงาน").grid(row = 2, columnspan = 2)
         self.staff_name = Entry(frame13 , width = 21, justify = 'center')
         self.staff_name.grid(row = 3, columnspan = 2)
         Label(frame13, text = "เวลาเข้ากะ").grid(row = 4, columnspan = 2)
-        self.shift_time = Entry(frame13)
+        self.shift_time = Entry(frame13, justify = 'center')
         self.shift_time.grid(row = 5, columnspan = 2)
-        logout_button = Button(frame13, text = "ออกกะ", width = 10)
+        logout_button = Button(frame13, text = "ออกกะ", width = 10, command = self.staff_logout)
         logout_button.grid(row = 6, columnspan = 2)
 
 
@@ -293,7 +293,9 @@ class StartPage(tk.Frame):  # Calculate Price
         self.E20_price.config(state='readonly')
         self.DS_price.config(state='readonly')
         self.DSP_price.config(state='readonly')
-
+        self.staff_name.config(state='readonly')
+        self.shift_time.config(state='readonly')
+        self.staff_id.config(state = 'normal')
     # def show_cus_name(self):
     #
     # 	con = sqlite3.connect( 'MyDatabase.db' )
@@ -301,6 +303,37 @@ class StartPage(tk.Frame):  # Calculate Price
     # 	cur.execute( 'SELECT Customer_Name FROM Customer WHERE Customer_Name = ?',self.product_name.get() )
     # 	# self.c_name.insert(END,cur.fetchall())
     # 	print( cur.fetchall() )
+
+
+    def staff_login(self,event):
+        try:
+            self.staff_name.config(state = 'normal')
+            self.shift_time.config(state=  'normal')
+            self.staff_name.delete(0,END)
+            self.shift_time.delete(0,END)
+
+            con = sqlite3.connect('MyDatabase.db')
+            cur = con.cursor()
+            cur.execute('SELECT Staff_Name FROM Staff WHERE Staff_ID = ?', self.staff_id.get())
+            self.staff_name.insert(END, str(cur.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
+            self.shift_time.insert(END, self.now.strftime("%H" + ":" + "%M"))
+
+            self.staff_id.config(state = 'readonly')
+            self.staff_name.config(state='readonly')
+            self.shift_time.config(state='readonly')
+        except:
+            messagebox.showwarning("เกิดข้อผิดพลาด","ไม่พบข้อมูลพนักงาน กรุณาใส่เลขใหม่")
+            self.staff_name.config(state='readonly')
+            self.shift_time.config(state='readonly')
+    def staff_logout(self):
+        self.staff_name.config(state='normal')
+        self.shift_time.config(state='normal')
+        self.staff_id.config(state = 'normal')
+        self.staff_name.delete(0, END)
+        self.shift_time.delete(0, END)
+        self.staff_id.delete(0,END)
+        self.staff_name.config(state='readonly')
+        self.shift_time.config(state='readonly')
 
     def show_tax_list(self,event):
 
@@ -311,46 +344,53 @@ class StartPage(tk.Frame):  # Calculate Price
             self.cus_list.insert(END, row)
 
     def searchCompName(self, event):
+        try:
+            con = sqlite3.connect('MyDatabase.db')
+            cur = con.cursor()
+            cur.execute('SELECT Name FROM Customer WHERE Name like ?', ('%' + self.search_comp_name.get() + '%',))
+            self.tax_list = Toplevel()
+            self.tax_list.title("Result")
+            self.tax_list.geometry("500x200")
+            Label(self.tax_list, text="รายชื่อบริษัท").grid(row=0)
+            self.tax = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
+            self.tax.bind("<Double-Button>", self.show_tax_id)
+            self.tax.grid(row=1)
+            for row in cur.fetchone():
+                self.tax.insert(END, row)
+            Label(self.tax_list, text="รหัสภาษี").grid(row=0, column=1)
+            self.tax_id = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
+            self.tax_id.bind('<Double-Button>', self.show_data2)
+            self.tax_id.grid(row=1, column=1)
 
-        con = sqlite3.connect('MyDatabase.db')
-        cur = con.cursor()
-        cur.execute('SELECT Name FROM Customer WHERE Name like ?', ('%' + self.search_comp_name.get() + '%',))
-        self.tax_list = Toplevel()
-        self.tax_list.title("Result")
-        self.tax_list.geometry("500x200")
-        Label(self.tax_list, text="รายชื่อบริษัท").grid(row=0)
-        self.tax = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
-        self.tax.bind("<Double-Button>", self.show_tax_id)
-        self.tax.grid(row=1)
-        for row in cur.fetchone():
-            self.tax.insert(END, row)
-        Label(self.tax_list, text="รหัสภาษี").grid(row=0, column=1)
-        self.tax_id = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
-        self.tax_id.bind('<Double-Button>', self.show_data2)
-        self.tax_id.grid(row=1, column=1)
+            self.tax_list.focus_set()
+            self.tax_list.grab_set()
+            self.tax_list.mainloop()
+        except:
+            messagebox.showwarning("เกิดข้อผิดพลาด", "ไม่พบข้อมูล")
+            self.tax_list.destroy()
 
-        self.tax_list.focus_set()
-        self.tax_list.grab_set()
-        self.tax_list.mainloop()
 
     def searchTaxId(self, event):
+        try:
+            con = sqlite3.connect('MyDatabase.db')
+            cur = con.cursor()
+            cur.execute("SELECT Name FROM Customer WHERE Tax_ID = ?", (self.search_tax_id.get(),) )
+            self.tax_list = Toplevel()
+            self.tax_list.title("Result")
+            self.tax_list.geometry("500x200")
+            Label(self.tax_list, text="รายชื่อบริษัท").grid(row=0)
+            self.tax = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
+            self.tax.bind("<Double-Button>", self.show_data3)
+            self.tax.grid(row=1)
+            for row in cur.fetchone():
+                self.tax.insert(END, row)
 
-        con = sqlite3.connect('MyDatabase.db')
-        cur = con.cursor()
-        cur.execute("SELECT Name FROM Customer WHERE Tax_ID = ?", (self.search_tax_id.get(),) )
-        self.tax_list = Toplevel()
-        self.tax_list.title("Result")
-        self.tax_list.geometry("500x200")
-        Label(self.tax_list, text="รายชื่อบริษัท").grid(row=0)
-        self.tax = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
-        self.tax.bind("<Double-Button>", self.show_data3)
-        self.tax.grid(row=1)
-        for row in cur.fetchone():
-            self.tax.insert(END, row)
-
-        self.tax_list.focus_set()
-        self.tax_list.grab_set()
-        self.tax_list.mainloop()
+            self.tax_list.focus_set()
+            self.tax_list.grab_set()
+            self.tax_list.mainloop()
+        except:
+            messagebox.showwarning("เกิดข้อผิดพลาด","ไม่พบข้อมูล")
+            self.tax_list.destroy()
 
 
     def show_tax_id(self, event):
@@ -862,11 +902,20 @@ class PageOne(tk.Frame):  # Product Page
         button2 = ttk.Button(frame, text='แก้ไขข้อมูล', command=self.editing)
         button2.grid(row=4, column=2)
 
-        self.tree = ttk.Treeview(self, height=15, column=("2", "3"))
-        self.tree.grid(row=1, column=0)
+        frame3 = LabelFrame(self)
+        frame3.grid(row = 1)
+
+        self.tree = ttk.Treeview(frame3, height=15, column=("2", "3"))
+        self.tree.grid(row=0, column=0)
         self.tree.heading('#0', text='ชื่อสินค้า', anchor=W)
         self.tree.heading(0, text='ประเภทสินค้า', anchor=W)
         self.tree.heading(1, text='ราคา', anchor=W)
+        self.tree.column('#0', width = 300)
+        self.tree.column('0', width = 90)
+        vsb = ttk.Scrollbar(frame3, orient='vertical', command=self.tree.yview)
+        self.tree.grid(row=0, sticky='nsew')
+        vsb.grid(row=0, column=1, sticky='ns')
+        self.tree.configure(yscrollcommand=vsb.set)
 
         frame2 = LabelFrame(self, text='ชุดคำสั่ง')
         frame2.grid(row=0, column=0, sticky=E)

@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="01fef1f8-0460-44d2-9a11-1f49b52f8b0b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.py" beforeDir="false" afterPath="$PROJECT_DIR$/App.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyDatabase.db" beforeDir="false" afterPath="$PROJECT_DIR$/MyDatabase.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test02.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test02.py" afterDir="false" />
     </list>
@@ -18,11 +19,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="620">
-              <caret line="1502" column="43" lean-forward="true" selection-start-line="1502" selection-start-column="43" selection-end-line="1502" selection-end-column="43" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="433">
+              <caret line="1530" selection-start-line="1530" selection-end-line="1530" />
             </state>
           </provider>
         </entry>
@@ -30,8 +28,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1972">
-              <caret line="127" column="43" selection-start-line="127" selection-start-column="43" selection-end-line="127" selection-end-column="43" />
+            <state relative-caret-position="2533">
+              <caret line="160" column="43" selection-start-line="160" selection-start-column="43" selection-end-line="160" selection-end-column="43" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -42,11 +40,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test02.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="75" lean-forward="true" selection-start-line="75" selection-end-line="75" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="158">
+              <caret line="906" lean-forward="true" selection-start-line="906" selection-end-line="906" />
             </state>
           </provider>
         </entry>
@@ -63,7 +58,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>cus_list</find>
-      <find>PageTwo</find>
+      <find>page</find>
       <find>PageOne</find>
     </findStrings>
     <dirStrings>
@@ -84,10 +79,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="883" />
-    <option name="y" value="57" />
-    <option name="width" value="974" />
-    <option name="height" value="1050" />
+    <option name="x" value="-12" />
+    <option name="y" value="-12" />
+    <option name="width" value="1390" />
+    <option name="height" value="1756" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -101,7 +96,7 @@
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -165,7 +160,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\Users\prang\AppData\Local\Programs\Python\Python37-32\python.exe" />
+      <option name="SDK_HOME" value="C:\Users\Woranat.S\AppData\Local\Programs\Python\Python37-32\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -303,28 +298,42 @@
       <option name="project" value="LOCAL" />
       <updated>1553487537052</updated>
     </task>
-    <task id="LOCAL-00016" summary="- Live Calculation">
-      <created>1554053078298</created>
+    <task id="LOCAL-00016" summary="- Search for Company name&#10;- Error handling for Live Calculation">
+      <created>1553492838214</created>
       <option name="number" value="00016" />
       <option name="presentableId" value="LOCAL-00016" />
       <option name="project" value="LOCAL" />
-      <updated>1554053078298</updated>
+      <updated>1553492838214</updated>
     </task>
-    <task id="LOCAL-00017" summary="- Checkbox can only check once at time&#10;- Tax_ID Search&#10;- Add Scrollbar&#10;- Add history page (WP)">
-      <created>1554725326617</created>
+    <task id="LOCAL-00017" summary="- Price Calulation&#10;- Adjust Entry and Text box size">
+      <created>1554099762567</created>
       <option name="number" value="00017" />
       <option name="presentableId" value="LOCAL-00017" />
       <option name="project" value="LOCAL" />
-      <updated>1554725326617</updated>
+      <updated>1554099762568</updated>
     </task>
-    <task id="LOCAL-00018" summary="- Update Tax_ID in the StartPage automatically when add to my database&#10;- Add tax invoice history list">
-      <created>1554739426648</created>
+    <task id="LOCAL-00018" summary="- Get rid of bracket">
+      <created>1554104162635</created>
       <option name="number" value="00018" />
       <option name="presentableId" value="LOCAL-00018" />
       <option name="project" value="LOCAL" />
-      <updated>1554739426648</updated>
+      <updated>1554104162636</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="- Calculate grand total price">
+      <created>1554108155244</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1554108155244</updated>
+    </task>
+    <task id="LOCAL-00020" summary="- Edit Product price and update dynamically&#10;- All frames know each other now in order to use method across frame(class)">
+      <created>1554109102359</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1554109102359</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TodoView">
@@ -337,7 +346,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.21710037" />
@@ -349,13 +358,13 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4989339" visible="true" weight="0.32719395" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39869988" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49962825" visible="true" weight="0.3178808" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32980132" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5010661" side_tool="true" weight="0.32936078" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50037175" side_tool="true" weight="0.32980132" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32936078" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32936078" />
@@ -367,8 +376,6 @@
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="R Graphics" order="8" />
-      <window_info anchor="right" id="R Packages" order="9" />
     </layout>
     <layout-to-restore>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2177243" />
@@ -410,47 +417,43 @@
     <MESSAGE value="- Show Invoice data" />
     <MESSAGE value="- Search tax id from own database" />
     <MESSAGE value="- Add refresh button" />
-    <MESSAGE value="- Live Calculation" />
-    <MESSAGE value="- Checkbox can only check once at time&#10;- Tax_ID Search&#10;- Add Scrollbar&#10;- Add history page (WP)" />
-    <MESSAGE value="- Update Tax_ID in the StartPage automatically when add to my database&#10;- Add tax invoice history list" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Update Tax_ID in the StartPage automatically when add to my database&#10;- Add tax invoice history list" />
+    <MESSAGE value="- Search for Company name&#10;- Error handling for Live Calculation" />
+    <MESSAGE value="- Price Calulation&#10;- Adjust Entry and Text box size" />
+    <MESSAGE value="- Get rid of bracket" />
+    <MESSAGE value="- Calculate grand total price" />
+    <MESSAGE value="- Edit Product price and update dynamically&#10;- All frames know each other now in order to use method across frame(class)" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Edit Product price and update dynamically&#10;- All frames know each other now in order to use method across frame(class)" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/MainWindow.py" />
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="2298" selection-start-line="2298" selection-end-line="2298" />
+        <state relative-caret-position="197">
+          <caret line="2688" selection-start-line="2688" selection-end-line="2688" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MainWindow.py" />
+    <entry file="file://$PROJECT_DIR$/Test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2533">
+          <caret line="160" column="43" selection-start-line="160" selection-start-column="43" selection-end-line="160" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/App.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="620">
-          <caret line="1502" column="43" lean-forward="true" selection-start-line="1502" selection-start-column="43" selection-end-line="1502" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1972">
-          <caret line="127" column="43" selection-start-line="127" selection-start-column="43" selection-end-line="127" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="433">
+          <caret line="1530" selection-start-line="1530" selection-end-line="1530" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test02.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="75" lean-forward="true" selection-start-line="75" selection-end-line="75" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="158">
+          <caret line="906" lean-forward="true" selection-start-line="906" selection-end-line="906" />
         </state>
       </provider>
     </entry>
