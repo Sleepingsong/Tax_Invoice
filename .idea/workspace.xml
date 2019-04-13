@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="01fef1f8-0460-44d2-9a11-1f49b52f8b0b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.py" beforeDir="false" afterPath="$PROJECT_DIR$/App.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyDatabase.db" beforeDir="false" afterPath="$PROJECT_DIR$/MyDatabase.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test02.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test02.py" afterDir="false" />
     </list>
@@ -19,7 +18,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="433">
+            <state relative-caret-position="25772">
               <caret line="1530" selection-start-line="1530" selection-end-line="1530" />
             </state>
           </provider>
@@ -40,8 +39,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test02.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
-              <caret line="906" lean-forward="true" selection-start-line="906" selection-end-line="906" />
+            <state relative-caret-position="342">
+              <caret line="975" column="26" selection-start-line="975" selection-start-column="26" selection-end-line="975" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -60,6 +59,7 @@
       <find>cus_list</find>
       <find>page</find>
       <find>PageOne</find>
+      <find>pageone</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\Woranat.S\Desktop\Tax_Invoice</dir>
@@ -333,7 +333,14 @@
       <option name="project" value="LOCAL" />
       <updated>1554109102359</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="- Add Scrollbar&#10;- Staff_login and logout function&#10;- Error handling for Staff_ID, Search for Company name, and Tax_ID">
+      <created>1555066159565</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1555066159568</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TodoView">
@@ -422,17 +429,18 @@
     <MESSAGE value="- Get rid of bracket" />
     <MESSAGE value="- Calculate grand total price" />
     <MESSAGE value="- Edit Product price and update dynamically&#10;- All frames know each other now in order to use method across frame(class)" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Edit Product price and update dynamically&#10;- All frames know each other now in order to use method across frame(class)" />
+    <MESSAGE value="- Add Scrollbar&#10;- Staff_login and logout function&#10;- Error handling for Staff_ID, Search for Company name, and Tax_ID" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Add Scrollbar&#10;- Staff_login and logout function&#10;- Error handling for Staff_ID, Search for Company name, and Tax_ID" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py">
+    <entry file="file://$PROJECT_DIR$/MainWindow.py" />
+    <entry file="file://$PROJECT_DIR$/App.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="2688" selection-start-line="2688" selection-end-line="2688" />
+        <state relative-caret-position="25772">
+          <caret line="1530" selection-start-line="1530" selection-end-line="1530" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MainWindow.py" />
     <entry file="file://$PROJECT_DIR$/Test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2533">
@@ -443,17 +451,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="433">
-          <caret line="1530" selection-start-line="1530" selection-end-line="1530" />
+        <state relative-caret-position="163">
+          <caret line="1704" selection-start-line="1704" selection-end-line="1704" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test02.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="906" lean-forward="true" selection-start-line="906" selection-end-line="906" />
+        <state relative-caret-position="342">
+          <caret line="975" column="26" selection-start-line="975" selection-start-column="26" selection-end-line="975" selection-end-column="26" />
         </state>
       </provider>
     </entry>

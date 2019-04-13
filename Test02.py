@@ -912,6 +912,7 @@ class PageOne(tk.Frame):  # Product Page
         self.tree.heading(1, text='ราคา', anchor=W)
         self.tree.column('#0', width = 300)
         self.tree.column('0', width = 90)
+        self.tree.bind('<Double-Button>', self.editing)
         vsb = ttk.Scrollbar(frame3, orient='vertical', command=self.tree.yview)
         self.tree.grid(row=0, sticky='nsew')
         vsb.grid(row=0, column=1, sticky='ns')
@@ -953,7 +954,6 @@ class PageOne(tk.Frame):  # Product Page
             query = 'INSERT INTO Product VALUES (NULL, ?, ?,?)'
             parameters = (self.name.get(), self.type.get(), self.price.get())
             self.run_query(query, parameters)
-            self.message['text'] = 'Record {} added to database'.format(self.name.get())
             self.name.delete(0, END)
             self.type.delete(0, END)
             self.price.delete(0, END)
@@ -962,57 +962,56 @@ class PageOne(tk.Frame):  # Product Page
         self.viewing_record()
 
     def deleting(self):
-        self.message['text'] = ''
         try:
             self.tree.item(self.tree.selection())['values'][0]
         except IndexError as e:
             self.message['text'] = 'Please select record'
             return
 
-        self.message['text'] = ''
         name = self.tree.item(self.tree.selection())['text']
         query = 'DELETE FROM Product WHERE Product_Name = ?'
         self.run_query(query, (name,))
-        self.message['text'] = 'Record {} is deleted'.format(name)
         self.viewing_record()
 
-    def editing(self):
+    def editing(self,event):
         try:
             self.tree.item(self.tree.selection())['values'][1]
         except IndexError as e:
-            self.message['text'] = 'Please select record'
+
             return
 
-        # name = self.tree.item( self.tree.selection() )['text']
+        name = self.tree.item( self.tree.selection() )['text']
         old_price = self.tree.item(self.tree.selection())['values'][1]
 
         self.edit_main = Toplevel()
-        self.edit_main.title('Editing')
+        self.edit_main.title('แก้ไขข้อมูลสินค้า')
+        self.edit_main.geometry('500x300')
 
-        # Label( self.edit_main,text = 'Old name: ' ).grid( row = 0,column = 1 )
-        # Entry( self.edit_main,textvariable = StringVar( self.edit_main,value = name ),state = 'readonly' ).grid(
-        # 	row = 0,column = 2 )
-        # Label( self.edit_main,text = 'New name: ' ).grid( row = 1,column = 1 )
-        # new_name = Entry( self.edit_main )
-        # new_name.grid( row = 1,column = 2 )
+        Label( self.edit_main,text = 'ชื่อสินค้าเก่า' ,font=("Helvetica", 16)).grid( row = 0,column = 1 )
+        Pre_Name = Label( self.edit_main,textvariable = StringVar( self.edit_main,value = name ),font=("Helvetica", 16))
+        Pre_Name.grid(row = 0,column = 2 )
+        Label( self.edit_main,text = 'ชื่อสินค้าใหม่',font=("Helvetica", 16)).grid( row = 1,column = 1 )
+        new_name = Text( self.edit_main, height =1,width = 30,font=("Helvetica", 15))
+        new_name.grid( row = 1,column = 2 )
 
-        Label(self.edit_main, text='Old Price: ').grid(row=2, column=1)
-        Entry(self.edit_main, textvariable=StringVar(self.edit_main, value=old_price), state='readonly').grid(
-            row=2, column=2)
-        Label(self.edit_main, text='New price: ').grid(row=3, column=1)
-        new_price = Entry(self.edit_main)
+        Label(self.edit_main, text='ราคาเก่า',font=("Helvetica", 16)).grid(row=2, column=1)
+        Pre_Price = Label(self.edit_main, textvariable=StringVar(self.edit_main, value=old_price), font=("Helvetica", 16))
+        Pre_Price.grid(row=2, column=2)
+        Label(self.edit_main, text='ราคาใหม่',font=("Helvetica", 16)).grid(row=3, column=1)
+        new_price = Text( self.edit_main, height =1,width = 30,font=("Helvetica", 15))
         new_price.grid(row=3, column=2)
 
-        Button(self.edit_main, text='Save Change',
-               command=lambda: self.edit_record(new_price.get(), old_price)).grid(row=4,
-                                                                                  column=2,
-                                                                                  sticky=W)
+        Button(self.edit_main, text='ตกลง',font=("Helvetica", 14),width = 8,height=1,
+               command=lambda: self.edit_record(new_price.get(1.0,END), new_name.get(1.0,END) ,old_price, name)).grid(row=4, column=2,)
+        Button(self.edit_main, text ="ยกเลิก",font=("Helvetica", 14),width = 8,height=1,command = self.edit_main.destroy).grid(row=5,column =2)
 
+        self.edit_main.focus_set()
+        self.edit_main.grab_set()
         self.edit_main.mainloop()
 
-    def edit_record(self, new_price, old_price):
-        query = 'UPDATE Product SET Product_Price = ? WHERE Product_Price = ?'
-        paremeters = (new_price, old_price)
+    def edit_record(self, new_price,new_name, old_price, old_name):
+        query = 'UPDATE Product SET Product_Price = ? , Product_Name = ? WHERE Product_Price = ? AND Product_Name = ?'
+        paremeters = (new_price, new_name ,old_price,old_name)
         self.run_query(query, paremeters)
         self.edit_main.destroy()
         self.viewing_record()
