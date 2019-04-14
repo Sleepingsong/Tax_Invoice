@@ -36,6 +36,9 @@ class Invoice(tk.Tk):
 
         self.frames[PageOne].setStartPageRef(self.frames[StartPage])
         self.frames[PageTwo].setStartPageRef2(self.frames[StartPage])
+        self.frames[PageThree].setStartPageRef3(self.frames[StartPage])
+        self.frames[StartPage].setStartPageRef4(self.frames[PageFour])
+
         self.show_frame(StartPage)
 
     def show_frame(self, cont):
@@ -47,6 +50,10 @@ class StartPage(tk.Frame):  # Calculate Price
 
     db_name = 'MyDatabase.db'
     now = datetime.datetime.now()
+
+    def setStartPageRef4(self, startPageRef):
+        self.startPageRef = startPageRef
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -175,6 +182,10 @@ class StartPage(tk.Frame):  # Calculate Price
         self.total_price = Entry(frame9, justify='right')
         self.total_price.bind("<KeyRelease>", self.liveLiterCal)
         self.total_price.grid(row=1, column=1)
+        self.print_button = ttk.Button(self, text = "สั่งพิมพ์", width = 10, command = self.record_tax_invoice)
+        self.print_button.place(x = 60, y =275)
+        self.print_button.config(state= 'disabled')
+
 
         Label(frame13, text = "รหัสพนักงาน").grid(row=0)
         self.staff_id = Entry(frame13, justify = 'right', width = 16)
@@ -189,7 +200,6 @@ class StartPage(tk.Frame):  # Calculate Price
         self.shift_time.grid(row = 5, columnspan = 2)
         logout_button = Button(frame13, text = "ออกกะ", width = 10, command = self.staff_logout)
         logout_button.grid(row = 6, columnspan = 2)
-
 
 
         Label(frame12, text="ชื่อบริษัท", font=BFont).grid(row=1, column=0, sticky=E)
@@ -284,7 +294,14 @@ class StartPage(tk.Frame):  # Calculate Price
                              width=15)
         button6.grid(row=3, column=0)
 
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute(' SELECT Record_ID FROM Record ORDER BY Record_ID DESC LIMIT 1')
+        self.lastest_record = str(cur.fetchone()).replace('INV-','').replace('(', '').replace(')', '').replace("'", '').replace(",", '')
+        self.lastest_record_number = int(self.lastest_record)
+        print(self.lastest_record_number)
 
+        self.record_number = 1
         self.Show_gas_price()
         self.G95_price.config(state='readonly')
         self.GP95_price.config(state='readonly')
@@ -304,6 +321,27 @@ class StartPage(tk.Frame):  # Calculate Price
     # 	# self.c_name.insert(END,cur.fetchall())
     # 	print( cur.fetchall() )
 
+    def record_tax_invoice(self):
+        try:
+            record_id = "INV-{0:07}".format(self.lastest_record_number+1)
+            record_total_price = self.total_price.get()
+            record_staff_name = self.staff_name.get()
+            record_date = self.now.strftime("%d"+"/"+"%m"+"/"+"%Y")
+            record_comp_name = self.comp_name.get()
+            Record_list = [record_date,
+                           record_id,
+                           record_comp_name,
+                           record_total_price,
+                           record_staff_name]
+
+
+            con = sqlite3.connect('MyDatabase.db')
+            cur = con.cursor()
+            cur.execute(' INSERT INTO Record(Record_Date, Record_ID, Company_Name, Total_Price,Staff_Name) VALUES(?,?,?,?,?)', Record_list)
+            con.commit()
+            self.startPageRef.viewing_record()
+        except:
+            messagebox.showerror("เกิดข้อผิดพลาด","กรุณาใส่ข้อมูลให้ครบถ้วน")
 
     def staff_login(self,event):
         try:
@@ -317,7 +355,7 @@ class StartPage(tk.Frame):  # Calculate Price
             cur.execute('SELECT Staff_Name FROM Staff WHERE Staff_ID = ?', self.staff_id.get())
             self.staff_name.insert(END, str(cur.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
             self.shift_time.insert(END, self.now.strftime("%H" + ":" + "%M"))
-
+            self.print_button.config(state='normal')
             self.staff_id.config(state = 'readonly')
             self.staff_name.config(state='readonly')
             self.shift_time.config(state='readonly')
@@ -325,6 +363,7 @@ class StartPage(tk.Frame):  # Calculate Price
             messagebox.showwarning("เกิดข้อผิดพลาด","ไม่พบข้อมูลพนักงาน กรุณาใส่เลขใหม่")
             self.staff_name.config(state='readonly')
             self.shift_time.config(state='readonly')
+
     def staff_logout(self):
         self.staff_name.config(state='normal')
         self.shift_time.config(state='normal')
@@ -344,30 +383,34 @@ class StartPage(tk.Frame):  # Calculate Price
             self.cus_list.insert(END, row)
 
     def searchCompName(self, event):
+        try:
+            con = sqlite3.connect('MyDatabase.db')
+            cur = con.cursor()
+            cur.execute('SELECT Name FROM Customer WHERE Name like ?', ('%' + self.search_comp_name.get() + '%',))
+            self.tax_list = Toplevel()
+            self.tax_list.title("Result")
+            self.tax_list.geometry("500x200")
+            Label(self.tax_list, text="รายชื่อบริษัท").grid(row=0)
+            self.tax = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
+            self.tax.bind("<Double-Button>", self.show_tax_id)
+            self.tax.grid(row=1)
+            for row in cur.fetchone():
+                self.tax.insert(END, row)
+            Label(self.tax_list, text="รหัสภาษี").grid(row=0, column=1)
+            self.tax_id = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
+            self.tax_id.bind('<Double-Button>', self.show_data2)
+            self.tax_id.grid(row=1, column=1)
 
-        con = sqlite3.connect('MyDatabase.db')
-        cur = con.cursor()
-        cur.execute('SELECT Name FROM Customer WHERE Name like ?', ('%' + self.search_comp_name.get() + '%',))
-        self.tax_list = Toplevel()
-        self.tax_list.title("Result")
-        self.tax_list.geometry("500x200")
-        Label(self.tax_list, text="รายชื่อบริษัท").grid(row=0)
-        self.tax = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
-        self.tax.bind("<Double-Button>", self.show_tax_id)
-        self.tax.grid(row=1)
-        for row in cur.fetchone():
-            self.tax.insert(END, row)
-        Label(self.tax_list, text="รหัสภาษี").grid(row=0, column=1)
-        self.tax_id = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
-        self.tax_id.bind('<Double-Button>', self.show_data2)
-        self.tax_id.grid(row=1, column=1)
+            self.tax_list.focus_set()
+            self.tax_list.grab_set()
+            self.tax_list.mainloop()
+        except:
+            messagebox.showwarning("เกิดข้อผิดพลาด", "ไม่พบข้อมูล")
+            self.tax_list.destroy()
 
-        self.tax_list.focus_set()
-        self.tax_list.grab_set()
-        self.tax_list.mainloop()
 
     def searchTaxId(self, event):
-
+        try:
             con = sqlite3.connect('MyDatabase.db')
             cur = con.cursor()
             cur.execute("SELECT Name FROM Customer WHERE Tax_ID = ?", (self.search_tax_id.get(),) )
@@ -384,7 +427,9 @@ class StartPage(tk.Frame):  # Calculate Price
             self.tax_list.focus_set()
             self.tax_list.grab_set()
             self.tax_list.mainloop()
-
+        except:
+            messagebox.showwarning("เกิดข้อผิดพลาด","ไม่พบข้อมูล")
+            self.tax_list.destroy()
 
 
     def show_tax_id(self, event):
@@ -406,6 +451,7 @@ class StartPage(tk.Frame):  # Calculate Price
                                           str(self.chk5.get()),
                                           str(self.chk6.get()) ]
             self.count = self.checkbox_controller.count('True')
+
 
             if self.count >= 2:
                 messagebox.showwarning("ข้อผิดพลาด","กรุณาเลือกสินค้าเพียงชนิดเดียวเท่านั้น!")
@@ -442,7 +488,9 @@ class StartPage(tk.Frame):  # Calculate Price
                 price = float(self.product_liter.get()) * float(self.DS_price.get())
                 self.total_price.insert(END, round(price, 3))
         except:
-            print("ERROR")
+            messagebox.showerror("เกิดข้อผิดพลาด","กรุณาใส่ตัวเลขเท่านั้น")
+            self.product_liter.delete(0,'end')
+            self.product_liter.delete(0, 'end')
 
     def liveLiterCal(self, event):
         try:
@@ -751,6 +799,7 @@ class StartPage(tk.Frame):  # Calculate Price
         self.DSP_price.config(state='readonly')
 
     def checkG95(self):
+
         if self.chk1.get() == False:
             self.chk1.set(True)
             self.Product1["fg"] = self.on_color
@@ -758,11 +807,39 @@ class StartPage(tk.Frame):  # Calculate Price
             self.chk1.set(False)
             self.Product1["fg"] = self.off_color
 
+        self.checkbox_controller = [str(self.chk1.get()),
+                                    str(self.chk2.get()),
+                                    str(self.chk3.get()),
+                                    str(self.chk4.get()),
+                                    str(self.chk5.get()),
+                                    str(self.chk6.get())]
+        self.count = self.checkbox_controller.count('True')
+
+        if self.count >= 2:
+            messagebox.showwarning("ข้อผิดพลาด", "กรุณาเลือกสินค้าเพียงชนิดเดียวเท่านั้น!")
+            self.chk1.set(False)
+            self.Product1["fg"] = self.off_color
+
+
     def checkGP95(self):
+
         if self.chk2.get() == False:
             self.chk2.set(True)
             self.Product2["fg"] = self.on_color
         else:
+            self.chk2.set(False)
+            self.Product2["fg"] = self.off_color
+
+        self.checkbox_controller = [str(self.chk1.get()),
+                                    str(self.chk2.get()),
+                                    str(self.chk3.get()),
+                                    str(self.chk4.get()),
+                                    str(self.chk5.get()),
+                                    str(self.chk6.get())]
+        self.count = self.checkbox_controller.count('True')
+
+        if self.count >= 2:
+            messagebox.showwarning("ข้อผิดพลาด", "กรุณาเลือกสินค้าเพียงชนิดเดียวเท่านั้น!")
             self.chk2.set(False)
             self.Product2["fg"] = self.off_color
 
@@ -771,6 +848,18 @@ class StartPage(tk.Frame):  # Calculate Price
             self.chk3.set(True)
             self.Product3["fg"] = self.on_color
         else:
+            self.chk3.set(False)
+            self.Product3["fg"] = self.off_color
+        self.checkbox_controller = [str(self.chk1.get()),
+                                    str(self.chk2.get()),
+                                    str(self.chk3.get()),
+                                    str(self.chk4.get()),
+                                    str(self.chk5.get()),
+                                    str(self.chk6.get())]
+        self.count = self.checkbox_controller.count('True')
+
+        if self.count >= 2:
+            messagebox.showwarning("ข้อผิดพลาด", "กรุณาเลือกสินค้าเพียงชนิดเดียวเท่านั้น!")
             self.chk3.set(False)
             self.Product3["fg"] = self.off_color
 
@@ -782,6 +871,19 @@ class StartPage(tk.Frame):  # Calculate Price
             self.chk4.set(False)
             self.Product4["fg"] = self.off_color
 
+        self.checkbox_controller = [str(self.chk1.get()),
+                                    str(self.chk2.get()),
+                                    str(self.chk3.get()),
+                                    str(self.chk4.get()),
+                                    str(self.chk5.get()),
+                                    str(self.chk6.get())]
+        self.count = self.checkbox_controller.count('True')
+
+        if self.count >= 2:
+            messagebox.showwarning("ข้อผิดพลาด", "กรุณาเลือกสินค้าเพียงชนิดเดียวเท่านั้น!")
+            self.chk4.set(False)
+            self.Product4["fg"] = self.off_color
+
     def checkDSP(self):
         if self.chk5.get() == False:
             self.chk5.set(True)
@@ -790,11 +892,37 @@ class StartPage(tk.Frame):  # Calculate Price
             self.chk5.set(False)
             self.Product5["fg"] = self.off_color
 
+        self.checkbox_controller = [str(self.chk1.get()),
+                                    str(self.chk2.get()),
+                                    str(self.chk3.get()),
+                                    str(self.chk4.get()),
+                                    str(self.chk5.get()),
+                                    str(self.chk6.get())]
+        self.count = self.checkbox_controller.count('True')
+
+        if self.count >= 2:
+            messagebox.showwarning("ข้อผิดพลาด", "กรุณาเลือกสินค้าเพียงชนิดเดียวเท่านั้น!")
+            self.chk5.set(False)
+            self.Product5["fg"] = self.off_color
+
     def checkDS(self):
         if self.chk6.get() == False:
             self.chk6.set(True)
             self.Product6["fg"] = self.on_color
         else:
+            self.chk6.set(False)
+            self.Product6["fg"] = self.off_color
+
+        self.checkbox_controller = [str(self.chk1.get()),
+                                    str(self.chk2.get()),
+                                    str(self.chk3.get()),
+                                    str(self.chk4.get()),
+                                    str(self.chk5.get()),
+                                    str(self.chk6.get())]
+        self.count = self.checkbox_controller.count('True')
+
+        if self.count >= 2:
+            messagebox.showwarning("ข้อผิดพลาด", "กรุณาเลือกสินค้าเพียงชนิดเดียวเท่านั้น!")
             self.chk6.set(False)
             self.Product6["fg"] = self.off_color
 
@@ -896,11 +1024,21 @@ class PageOne(tk.Frame):  # Product Page
         button2 = ttk.Button(frame, text='แก้ไขข้อมูล', command=self.editing)
         button2.grid(row=4, column=2)
 
-        self.tree = ttk.Treeview(self, height=15, column=("2", "3"))
-        self.tree.grid(row=1, column=0)
+        frame3 = LabelFrame(self)
+        frame3.grid(row = 1)
+
+        self.tree = ttk.Treeview(frame3, height=15, column=("2", "3"))
+        self.tree.grid(row=0, column=0)
         self.tree.heading('#0', text='ชื่อสินค้า', anchor=W)
         self.tree.heading(0, text='ประเภทสินค้า', anchor=W)
         self.tree.heading(1, text='ราคา', anchor=W)
+        self.tree.column('#0', width = 300)
+        self.tree.column('0', width = 90)
+        self.tree.bind('<Double-Button>', self.editing)
+        vsb = ttk.Scrollbar(frame3, orient='vertical', command=self.tree.yview)
+        self.tree.grid(row=0, sticky='nsew')
+        vsb.grid(row=0, column=1, sticky='ns')
+        self.tree.configure(yscrollcommand=vsb.set)
 
         frame2 = LabelFrame(self, text='ชุดคำสั่ง')
         frame2.grid(row=0, column=0, sticky=E)
@@ -938,7 +1076,6 @@ class PageOne(tk.Frame):  # Product Page
             query = 'INSERT INTO Product VALUES (NULL, ?, ?,?)'
             parameters = (self.name.get(), self.type.get(), self.price.get())
             self.run_query(query, parameters)
-            self.message['text'] = 'Record {} added to database'.format(self.name.get())
             self.name.delete(0, END)
             self.type.delete(0, END)
             self.price.delete(0, END)
@@ -947,57 +1084,56 @@ class PageOne(tk.Frame):  # Product Page
         self.viewing_record()
 
     def deleting(self):
-        self.message['text'] = ''
         try:
             self.tree.item(self.tree.selection())['values'][0]
         except IndexError as e:
             self.message['text'] = 'Please select record'
             return
 
-        self.message['text'] = ''
         name = self.tree.item(self.tree.selection())['text']
         query = 'DELETE FROM Product WHERE Product_Name = ?'
         self.run_query(query, (name,))
-        self.message['text'] = 'Record {} is deleted'.format(name)
         self.viewing_record()
 
-    def editing(self):
+    def editing(self,event):
         try:
             self.tree.item(self.tree.selection())['values'][1]
         except IndexError as e:
-            self.message['text'] = 'Please select record'
+
             return
 
-        # name = self.tree.item( self.tree.selection() )['text']
+        name = self.tree.item( self.tree.selection() )['text']
         old_price = self.tree.item(self.tree.selection())['values'][1]
 
         self.edit_main = Toplevel()
-        self.edit_main.title('Editing')
+        self.edit_main.title('แก้ไขข้อมูลสินค้า')
+        self.edit_main.geometry('500x300')
 
-        # Label( self.edit_main,text = 'Old name: ' ).grid( row = 0,column = 1 )
-        # Entry( self.edit_main,textvariable = StringVar( self.edit_main,value = name ),state = 'readonly' ).grid(
-        # 	row = 0,column = 2 )
-        # Label( self.edit_main,text = 'New name: ' ).grid( row = 1,column = 1 )
-        # new_name = Entry( self.edit_main )
-        # new_name.grid( row = 1,column = 2 )
+        Label( self.edit_main,text = 'ชื่อสินค้าเก่า' ,font=("Helvetica", 16)).grid( row = 0,column = 1 )
+        Pre_Name = Label( self.edit_main,textvariable = StringVar( self.edit_main,value = name ),font=("Helvetica", 16))
+        Pre_Name.grid(row = 0,column = 2 )
+        Label( self.edit_main,text = 'ชื่อสินค้าใหม่',font=("Helvetica", 16)).grid( row = 1,column = 1 )
+        new_name = Text( self.edit_main, height =1,width = 30,font=("Helvetica", 15))
+        new_name.grid( row = 1,column = 2 )
 
-        Label(self.edit_main, text='Old Price: ').grid(row=2, column=1)
-        Entry(self.edit_main, textvariable=StringVar(self.edit_main, value=old_price), state='readonly').grid(
-            row=2, column=2)
-        Label(self.edit_main, text='New price: ').grid(row=3, column=1)
-        new_price = Entry(self.edit_main)
+        Label(self.edit_main, text='ราคาเก่า',font=("Helvetica", 16)).grid(row=2, column=1)
+        Pre_Price = Label(self.edit_main, textvariable=StringVar(self.edit_main, value=old_price), font=("Helvetica", 16))
+        Pre_Price.grid(row=2, column=2)
+        Label(self.edit_main, text='ราคาใหม่',font=("Helvetica", 16)).grid(row=3, column=1)
+        new_price = Text( self.edit_main, height =1,width = 30,font=("Helvetica", 15))
         new_price.grid(row=3, column=2)
 
-        Button(self.edit_main, text='Save Change',
-               command=lambda: self.edit_record(new_price.get(), old_price)).grid(row=4,
-                                                                                  column=2,
-                                                                                  sticky=W)
+        Button(self.edit_main, text='ตกลง',font=("Helvetica", 14),width = 8,height=1,
+               command=lambda: self.edit_record(new_price.get(1.0,END), new_name.get(1.0,END) ,old_price, name)).grid(row=4, column=2,)
+        Button(self.edit_main, text ="ยกเลิก",font=("Helvetica", 14),width = 8,height=1,command = self.edit_main.destroy).grid(row=5,column =2)
 
+        self.edit_main.focus_set()
+        self.edit_main.grab_set()
         self.edit_main.mainloop()
 
-    def edit_record(self, new_price, old_price):
-        query = 'UPDATE Product SET Product_Price = ? WHERE Product_Price = ?'
-        paremeters = (new_price, old_price)
+    def edit_record(self, new_price,new_name, old_price, old_name):
+        query = 'UPDATE Product SET Product_Price = ? , Product_Name = ? WHERE Product_Price = ? AND Product_Name = ?'
+        paremeters = (new_price, new_name ,old_price,old_name)
         self.run_query(query, paremeters)
         self.edit_main.destroy()
         self.viewing_record()
@@ -1199,6 +1335,9 @@ class PageTwo(tk.Frame):  # Customer Page
 
 
 class PageThree(tk.Frame):  # CalPrice
+
+    def setStartPageRef3(self, startPageRef):
+        self.startPageRef = startPageRef
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -1473,6 +1612,7 @@ class PageFour(tk.Frame):
 
     db_name = 'MyDatabase.db'
 
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -1519,7 +1659,7 @@ class PageFour(tk.Frame):
             self.history_list.delete(element)
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
-        cur.execute('SELECT * FROM Record')
+        cur.execute('SELECT * FROM Record ORDER BY Record_ID DESC')
         for row in cur.fetchall():
             self.history_list.insert('', 0, text=row[1], values=(row[0], row[2],row[3], row[4]))
 
