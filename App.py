@@ -79,7 +79,7 @@ class StartPage(tk.Frame):  # Calculate Price
         frame13 = ttk.LabelFrame(self, text = "พนักงาน")
         frame13.place(x = 590, y = 190)
 
-        now = datetime.datetime.now()
+
 
 
         self.chk1 = BooleanVar()
@@ -182,9 +182,8 @@ class StartPage(tk.Frame):  # Calculate Price
         self.total_price = Entry(frame9, justify='right')
         self.total_price.bind("<KeyRelease>", self.liveLiterCal)
         self.total_price.grid(row=1, column=1)
-        self.print_button = ttk.Button(self, text = "สั่งพิมพ์", width = 10, command = self.record_tax_invoice)
+        self.print_button = ttk.Button(self, text = "สั่งพิมพ์", width = 10, command = self.print_confirmation)
         self.print_button.place(x = 60, y =275)
-        self.print_button.config(state= 'disabled')
 
 
         Label(frame13, text = "รหัสพนักงาน").grid(row=0)
@@ -299,7 +298,6 @@ class StartPage(tk.Frame):  # Calculate Price
         cur.execute(' SELECT Record_ID FROM Record ORDER BY Record_ID DESC LIMIT 1')
         self.lastest_record = str(cur.fetchone()).replace('INV-','').replace('(', '').replace(')', '').replace("'", '').replace(",", '')
         self.lastest_record_number = int(self.lastest_record)
-        print(self.lastest_record_number)
 
         self.record_number = 1
         self.Show_gas_price()
@@ -342,6 +340,22 @@ class StartPage(tk.Frame):  # Calculate Price
             self.startPageRef.viewing_record()
         except:
             messagebox.showerror("เกิดข้อผิดพลาด","กรุณาใส่ข้อมูลให้ครบถ้วน")
+
+    def print_confirmation(self):
+
+
+
+        self.confirmation = Toplevel()
+        self.confirmation.title("ยืนยันหรือไม่")
+        self.confirmation.geometry("%dx%d+%d+%d" % (270, 90, 300, 250))
+        Label(self.confirmation, text = "ยืนยันการสั่งพิมพ์หรือไม่?", font=("Helvetica", 20)).grid(row=0,columnspan = 2)
+        self.confirm_button = Button(self.confirmation, text = "ยืนยัน", font=("Helvetica", 14), width = 5, command = self.record_tax_invoice)
+        self.confirm_button.grid(row=1)
+        self.cancel_button = Button(self.confirmation, text = "ยกเลิก", font=("Helvetica", 14), width = 5 , command = self.confirmation.destroy)
+        self.cancel_button.grid(row=1, column = 1)
+        self.confirmation.focus_set()
+        self.confirmation.grab_set()
+        self.confirmation.mainloop()
 
     def staff_login(self,event):
         try:
@@ -690,7 +704,6 @@ class StartPage(tk.Frame):  # Calculate Price
         self.Aumper_name.delete(0, 'end')
         self.Province_name.delete(0, 'end')
         self.Postcode.delete(0, 'end')
-
         self.get_selecte_value = self.tax.get(self.tax.curselection())
 
         con = sqlite3.connect('MyDatabase.db')
@@ -750,6 +763,7 @@ class StartPage(tk.Frame):  # Calculate Price
         cur13.execute('SELECT PostCode FROM Customer WHERE Name = ?', (self.get_selecte_value,))
         self.Postcode.insert(END, cur13.fetchall())
 
+        self.tax_list.destroy()
     def Show_gas_price(self):
         self.G95_price.config(state='normal')
         self.GP95_price.config(state='normal')
@@ -1257,7 +1271,6 @@ class PageTwo(tk.Frame):  # Customer Page
                 # Convert Zeep Response object (in this case Service) to Python dict.
                 result = zeep.helpers.serialize_object(result)
 
-                # print(result)
                 for k in result.keys():
                     if result[k] is not None:
                         v = result[k].get('anyType', None)[0]
@@ -1684,6 +1697,7 @@ class PageFour(tk.Frame):
         cur.execute('SELECT * FROM Record WHERE Company_Name like ?',('%' + self.comp_name_search.get() + '%',))
         for row in cur.fetchall():
             self.history_list.insert('', 0, text=row[1], values=(row[0], row[2], row[3], row[4]))
+
 
 app = Invoice()
 app.geometry("800x480")
