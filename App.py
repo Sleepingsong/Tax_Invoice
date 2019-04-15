@@ -1640,9 +1640,11 @@ class PageFour(tk.Frame):
 
         Label(self, text = "ค้นหาตามวันที่",font=("Helvetica", 15)).grid(row = 1 ,sticky = W)
         self.date_search = Entry(self, justify = 'right')
+        self.date_search.bind('<KeyRelease>', self.search_record_date)
         self.date_search.place(x = 120, y = 45)
         Label(self, text = "ค้นหาตามชื่อ", font=("Helvetica", 15)).place(x = 250 , y = 38)
         self.comp_name_search = Entry(self, justify = 'right')
+        self.comp_name_search.bind('<KeyRelease>', self.search_record_name)
         self.comp_name_search.place(x = 360, y =45)
 
 
@@ -1663,6 +1665,25 @@ class PageFour(tk.Frame):
         for row in cur.fetchall():
             self.history_list.insert('', 0, text=row[1], values=(row[0], row[2],row[3], row[4]))
 
+    def search_record_date(self,event):
+        records = self.history_list.get_children()
+        for element in records:
+            self.history_list.delete(element)
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute('SELECT * FROM Record WHERE Record_Date like ?',('%' + self.date_search.get() + '%',))
+        for row in cur.fetchall():
+            self.history_list.insert('', 0, text=row[1], values=(row[0], row[2], row[3], row[4]))
+
+    def search_record_name(self,event):
+        records = self.history_list.get_children()
+        for element in records:
+            self.history_list.delete(element)
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute('SELECT * FROM Record WHERE Company_Name like ?',('%' + self.comp_name_search.get() + '%',))
+        for row in cur.fetchall():
+            self.history_list.insert('', 0, text=row[1], values=(row[0], row[2], row[3], row[4]))
 
 app = Invoice()
 app.geometry("800x480")
