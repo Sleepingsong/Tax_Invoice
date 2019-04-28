@@ -13,6 +13,8 @@ import urllib3
 import datetime
 import time
 import threading
+import os
+import tempfile
 
 LARGE_FONT = ("Verdana", 12)
 
@@ -184,6 +186,8 @@ class StartPage(tk.Frame):  # Calculate Price
         self.total_price.grid(row=1, column=1)
         self.print_button = ttk.Button(self, text = "สั่งพิมพ์", width = 10, command = self.print_confirmation)
         self.print_button.place(x = 60, y =275)
+        self.print = ttk.Button(self , text = "พิมพ์",width = 10, command =self.print_receipt)
+        self.print.place(x = 180 , y = 275)
 
 
         Label(frame13, text = "รหัสพนักงาน").grid(row=0)
@@ -252,6 +256,11 @@ class StartPage(tk.Frame):  # Calculate Price
         Label(frame10, text="รหัสไปษณีย์").grid(row=4, column=2, sticky=E)
         self.Postcode = Entry(frame10, justify='right', width=17)
         self.Postcode.grid(row=4, column=3, sticky=W)
+        Label(frame10, text = "เลขประจำผู้เสียภาษีผู้ซื้อ").place(x = 300 , y= 63)
+        self.Cus_tax_num = Entry(frame10, justify = 'right', width = 20)
+        self.Cus_tax_num.place(x= 390, y = 64)
+
+
 
         self.cus_list = Listbox(frame11, height=5, selectmode=SINGLE)
         self.cus_list.bind("<Enter>", self.show_tax_list)
@@ -319,6 +328,48 @@ class StartPage(tk.Frame):  # Calculate Price
     # 	# self.c_name.insert(END,cur.fetchall())
     # 	print( cur.fetchall() )
 
+    def print_receipt(self):
+        record_id = "INV-{0:07}".format(self.lastest_record_number + 1)
+        tax_id = '0203556007965'
+        tempfiles = tempfile.mktemp(".txt")
+        receipt = open(tempfiles, "wt",encoding="utf-8")
+        receipt.write("\tใบเสร็จรับเงิน/ใบกำกับภาษี\n")
+        receipt.write("(ต้นฉบับ)\n")
+        receipt.write("หจก.เดอะวันปิโตเลียม\n9/7 หมู่ 3 ถ.สุขุมวิท ต.ห้วยกะปิ\nอ.เมืองชลบุรี จ.ชลบุรี 20000\nTel. 086-4069062 FAX: 02-9030080 ต่อ 7811\n")
+        receipt.write("Tax ID:"+tax_id+'\n')
+        receipt.write("สาขาที่ออกใบกำกับภาษี: สำนักงานใหญ่\n")
+        receipt.write("เลขที่: "+record_id+"\n")
+        receipt.write("วันที่: "+self.now.strftime("%d"+"/"+"%m"+"/"+"%Y")+" "+self.now.strftime("%H" + ":" + "%M")+"\n")
+        receipt.write("ชื่อ: "+self.comp_name.get()+"\n")
+        receipt.write("ที่อยู่: " + self.house_no.get()+" ")
+        if self.Moo_no.get() is not '-':
+            receipt.write("หมู่ "+self.Moo_no.get()+" ")
+        if self.Soi_no.get() is not '-':
+            receipt.write("ซ."+self.Soi_no.get()+" ")
+        if self.Stree_name.get() is not '-':
+            receipt.write("ถ."+self.Stree_name.get()+" ")
+        if self.Thumbon_name.get() is not '-':
+            receipt.write("ต."+self.Thumbon_name.get()+" ")
+        receipt.write("\n")
+        if self.Aumper_name.get() is not '-':
+            receipt.write("อ."+self.Aumper_name.get()+" ")
+        if self.Province_name.get() is not '-':
+            receipt.write("จ."+self.Province_name.get()+" ")
+        if self.Postcode.get() is not '-':
+            receipt.write(" "+self.Postcode.get()+" ")
+        receipt.write("\n")
+        receipt.write("เลขประจำผู้เสียภาษีผู้ซื้อ: "+self.Cus_tax_num.get())
+        receipt.write("ทะเบียนรถ: ")
+        receipt.write("\n")
+        receipt.write("รายการ\t\t\tราคา/ต่อหน่วย\tปรัมาณ\tจำนวนเงิน\n")
+        receipt.write("=================================\n")
+        receipt.write(self.Product1.cget("text"))
+
+
+
+
+        os.startfile(tempfiles)
+
     def record_tax_invoice(self):
         try:
             record_id = "INV-{0:07}".format(self.lastest_record_number+1)
@@ -338,8 +389,13 @@ class StartPage(tk.Frame):  # Calculate Price
             cur.execute(' INSERT INTO Record(Record_Date, Record_ID, Company_Name, Total_Price,Staff_Name) VALUES(?,?,?,?,?)', Record_list)
             con.commit()
             self.startPageRef.viewing_record()
+
         except:
             messagebox.showerror("เกิดข้อผิดพลาด","กรุณาใส่ข้อมูลให้ครบถ้วน")
+        else:
+            self.confirmation.destroy()
+
+
 
     def print_confirmation(self):
 
@@ -408,7 +464,7 @@ class StartPage(tk.Frame):  # Calculate Price
             self.tax = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
             self.tax.bind("<Double-Button>", self.show_tax_id)
             self.tax.grid(row=1)
-            for row in cur.fetchone():
+            for row in cur.fetchall():
                 self.tax.insert(END, row)
             Label(self.tax_list, text="รหัสภาษี").grid(row=0, column=1)
             self.tax_id = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
@@ -427,7 +483,7 @@ class StartPage(tk.Frame):  # Calculate Price
         try:
             con = sqlite3.connect('MyDatabase.db')
             cur = con.cursor()
-            cur.execute("SELECT Name FROM Customer WHERE Tax_ID = ?", (self.search_tax_id.get(),) )
+            cur.execute("SELECT Name FROM Customer WHERE Tax_ID like ?", ('%' + self.search_tax_id.get() + '%',))
             self.tax_list = Toplevel()
             self.tax_list.title("Result")
             self.tax_list.geometry("500x200")
@@ -435,7 +491,7 @@ class StartPage(tk.Frame):  # Calculate Price
             self.tax = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
             self.tax.bind("<Double-Button>", self.show_data3)
             self.tax.grid(row=1)
-            for row in cur.fetchone():
+            for row in cur.fetchall():
                 self.tax.insert(END, row)
 
             self.tax_list.focus_set()
@@ -452,8 +508,8 @@ class StartPage(tk.Frame):  # Calculate Price
         self.get_tax_value = self.tax.get(self.tax.curselection())
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
-        cur.execute('SELECT Tax_ID FROM Customer WHERE Name = ? ', (self.get_tax_value,))
-        for row in cur.fetchone():
+        cur.execute('SELECT Tax_ID FROM Customer WHERE Name = ? ', (self.get_tax_value))
+        for row in cur.fetchall():
             self.tax_id.insert(END, row)
 
     def livePriceCal(self, event):
@@ -552,9 +608,12 @@ class StartPage(tk.Frame):  # Calculate Price
         self.Aumper_name.delete(0, 'end')
         self.Province_name.delete(0, 'end')
         self.Postcode.delete(0, 'end')
+        self.Cus_tax_num.delete(0, 'end')
 
         self.get_selecte_value = self.cus_list.get(self.cus_list.curselection())
 
+
+        self.Cus_tax_num.insert(END, self.get_selecte_value)
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
         cur.execute('SELECT Name FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
@@ -627,64 +686,65 @@ class StartPage(tk.Frame):  # Calculate Price
         self.Aumper_name.delete(0, 'end')
         self.Province_name.delete(0, 'end')
         self.Postcode.delete(0, 'end')
-
+        self.Cus_tax_num.delete(0 , 'end')
         self.get_value = self.tax_id.get(self.tax_id.curselection())
 
+        self.Cus_tax_num.insert(END, self.get_value)
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
-        cur.execute('SELECT Name FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        cur.execute('SELECT Name FROM Customer WHERE Tax_ID = ?', (self.get_value))
         self.comp_name.insert(END,
                               str(cur.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
 
         cur2 = con.cursor()
-        cur2.execute('SELECT BranchNumber FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        cur2.execute('SELECT BranchNumber FROM Customer WHERE Tax_ID = ?', (self.get_value))
         self.branch_num.insert(END, cur2.fetchone())
 
         cur3 = con.cursor()
-        cur3.execute('SELECT BuildingName FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        cur3.execute('SELECT BuildingName FROM Customer WHERE Tax_ID = ?', (self.get_value))
         self.building_name.insert(END,
                                   str(cur3.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",",
                                                                                                                   ''))
 
         cur4 = con.cursor()
-        cur4.execute('SELECT FloorNumber FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        cur4.execute('SELECT FloorNumber FROM Customer WHERE Tax_ID = ?', (self.get_value))
         self.branch_floor.insert(END, cur4.fetchall())
 
         cur5 = con.cursor()
-        cur5.execute('SELECT VillageName FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        cur5.execute('SELECT VillageName FROM Customer WHERE Tax_ID = ?', (self.get_value))
         self.village_name.insert(END, cur5.fetchall())
 
         cur6 = con.cursor()
-        cur6.execute('SELECT HouseNumber FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        cur6.execute('SELECT HouseNumber FROM Customer WHERE Tax_ID = ?', (self.get_value))
         self.house_no.insert(END, cur6.fetchall())
 
         cur7 = con.cursor()
-        cur7.execute('SELECT MooNumber FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        cur7.execute('SELECT MooNumber FROM Customer WHERE Tax_ID = ?', (self.get_value))
         self.Moo_no.insert(END, cur7.fetchall())
 
         cur8 = con.cursor()
-        cur8.execute('SELECT SoiName FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        cur8.execute('SELECT SoiName FROM Customer WHERE Tax_ID = ?', (self.get_value))
         self.Soi_no.insert(END,
                            str(cur8.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
 
         cur9 = con.cursor()
-        cur9.execute('SELECT StreetName FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        cur9.execute('SELECT StreetName FROM Customer WHERE Tax_ID = ?', (self.get_value))
         self.Stree_name.insert(END, cur9.fetchall())
 
         cur10 = con.cursor()
-        cur10.execute('SELECT Thambol FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        cur10.execute('SELECT Thambol FROM Customer WHERE Tax_ID = ?', (self.get_value))
         self.Thumbon_name.insert(END, cur10.fetchall())
 
         cur11 = con.cursor()
-        cur11.execute('SELECT Amphur FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        cur11.execute('SELECT Amphur FROM Customer WHERE Tax_ID = ?', (self.get_value))
         self.Aumper_name.insert(END, cur11.fetchall())
 
         cur12 = con.cursor()
-        cur12.execute('SELECT Province FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        cur12.execute('SELECT Province FROM Customer WHERE Tax_ID = ?', (self.get_value))
         self.Province_name.insert(END, cur12.fetchall())
 
         cur13 = con.cursor()
-        cur13.execute('SELECT PostCode FROM Customer WHERE Tax_ID = ?', (self.get_value,))
+        cur13.execute('SELECT PostCode FROM Customer WHERE Tax_ID = ?', (self.get_value))
         self.Postcode.insert(END, cur13.fetchall())
 
         self.tax_list.destroy()
@@ -704,64 +764,71 @@ class StartPage(tk.Frame):  # Calculate Price
         self.Aumper_name.delete(0, 'end')
         self.Province_name.delete(0, 'end')
         self.Postcode.delete(0, 'end')
+        self.Cus_tax_num.delete(0, 'end')
         self.get_selecte_value = self.tax.get(self.tax.curselection())
+
+
 
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
-        cur.execute('SELECT Name FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        cur.execute('SELECT Name FROM Customer WHERE Name = ?', (self.get_selecte_value))
         self.comp_name.insert(END,
                               str(cur.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
 
         cur2 = con.cursor()
-        cur2.execute('SELECT BranchNumber FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        cur2.execute('SELECT BranchNumber FROM Customer WHERE Name = ?', (self.get_selecte_value))
         self.branch_num.insert(END, cur2.fetchone())
 
         cur3 = con.cursor()
-        cur3.execute('SELECT BuildingName FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        cur3.execute('SELECT BuildingName FROM Customer WHERE Name = ?', (self.get_selecte_value))
         self.building_name.insert(END,
                                   str(cur3.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",",
                                                                                                                   ''))
 
         cur4 = con.cursor()
-        cur4.execute('SELECT FloorNumber FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        cur4.execute('SELECT FloorNumber FROM Customer WHERE Name = ?', (self.get_selecte_value))
         self.branch_floor.insert(END, cur4.fetchall())
 
         cur5 = con.cursor()
-        cur5.execute('SELECT VillageName FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        cur5.execute('SELECT VillageName FROM Customer WHERE Name = ?', (self.get_selecte_value))
         self.village_name.insert(END, cur5.fetchall())
 
         cur6 = con.cursor()
-        cur6.execute('SELECT HouseNumber FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        cur6.execute('SELECT HouseNumber FROM Customer WHERE Name = ?', (self.get_selecte_value))
         self.house_no.insert(END, cur6.fetchall())
 
         cur7 = con.cursor()
-        cur7.execute('SELECT MooNumber FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        cur7.execute('SELECT MooNumber FROM Customer WHERE Name = ?', (self.get_selecte_value))
         self.Moo_no.insert(END, cur7.fetchall())
 
         cur8 = con.cursor()
-        cur8.execute('SELECT SoiName FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        cur8.execute('SELECT SoiName FROM Customer WHERE Name = ?', (self.get_selecte_value))
         self.Soi_no.insert(END,
                            str(cur8.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
 
         cur9 = con.cursor()
-        cur9.execute('SELECT StreetName FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        cur9.execute('SELECT StreetName FROM Customer WHERE Name = ?', (self.get_selecte_value))
         self.Stree_name.insert(END, cur9.fetchall())
 
         cur10 = con.cursor()
-        cur10.execute('SELECT Thambol FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        cur10.execute('SELECT Thambol FROM Customer WHERE Name = ?', (self.get_selecte_value))
         self.Thumbon_name.insert(END, cur10.fetchall())
 
         cur11 = con.cursor()
-        cur11.execute('SELECT Amphur FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        cur11.execute('SELECT Amphur FROM Customer WHERE Name = ?', (self.get_selecte_value))
         self.Aumper_name.insert(END, cur11.fetchall())
 
         cur12 = con.cursor()
-        cur12.execute('SELECT Province FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        cur12.execute('SELECT Province FROM Customer WHERE Name = ?', (self.get_selecte_value))
         self.Province_name.insert(END, cur12.fetchall())
 
         cur13 = con.cursor()
-        cur13.execute('SELECT PostCode FROM Customer WHERE Name = ?', (self.get_selecte_value,))
+        cur13.execute('SELECT PostCode FROM Customer WHERE Name = ?', (self.get_selecte_value))
         self.Postcode.insert(END, cur13.fetchall())
+
+        cur14 = con.cursor()
+        cur14.execute('SELECT Tax_ID FROM Customer WHERE Name = ?', (self.get_selecte_value))
+        self.Cus_tax_num.insert(END, cur14.fetchall())
 
         self.tax_list.destroy()
     def Show_gas_price(self):
