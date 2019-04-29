@@ -65,21 +65,21 @@ class StartPage(tk.Frame):  # Calculate Price
         self.off_color = 'black'
 
         frame = ttk.LabelFrame(self, text='สินค้า')
-        frame.grid(row=0, column=0, sticky=W)
-        frame7 = ttk.LabelFrame(self, text='ราคาน้ำมัน ณ ปัจจุบัน')
-        frame7.grid(row=1, sticky=NE)
+        frame.grid(row=1, column=0, sticky=W)
+        frame7 = ttk.LabelFrame(self, text='พนักงาน')
+        frame7.place(x = 620 , y = 51)
         frame8 = ttk.LabelFrame(self, text='ชุดคำสั่ง')
-        frame8.grid(row=0, column=1, sticky=NW)
+        frame8.grid(row=0, column=0, sticky=NW)
         frame9 = ttk.LabelFrame(self, text="คำนวณเงิน")
-        frame9.grid(row=1, sticky=NW)
+        frame9.grid(row = 2 ,sticky = E)
         frame10 = ttk.LabelFrame(self, text="ผู้ซื้อ")
-        frame10.grid(row=2, column=0, sticky=W)
+        frame10.grid(row=3, column=0, sticky=W)
         frame11 = ttk.LabelFrame(self, text="รหัสประจำตัวผู้เสียภาษี")
-        frame11.grid(row=2, column=1, sticky=W)
+        frame11.place(x= 560, y =370)
         frame12 = ttk.LabelFrame(self, text="ค้นหา")
-        frame12.grid(row=1, sticky=SW)
-        frame13 = ttk.LabelFrame(self, text = "พนักงาน")
-        frame13.place(x = 590, y = 190)
+        frame12.grid(row=2, sticky=SW)
+        frame14 = ttk.LabelFrame(self, text = "ทะเบียนรถ")
+        frame14.grid(row = 2 , columnspan = 2,sticky = S)
 
 
 
@@ -96,9 +96,11 @@ class StartPage(tk.Frame):  # Calculate Price
         self.photo1 = ImageTk.PhotoImage(self.image1)
         self.G95_button = tk.Button(frame, image=self.photo1, height=60, width=150, command=self.checkG95)
         self.G95_button.grid(row=0)
-
         self.Product1 = Checkbutton(frame, text="Supreme Gasohol 95", font=AFont, variable=self.chk1, fg=self.off_color,)
         self.Product1.grid(row=1, column=0)
+        Label(frame, text = "ราคาต่อหน่วย:", font=BFont).grid(row=2, sticky = W)
+        self.G95_price = Entry(frame, width=15, justify='right')
+        self.G95_price.grid(row=2, column=0, sticky = E)
 
         self.image2 = Image.open("Gasohol95_Plus.jpg")
         self.image2 = self.image2.resize((150, 60), Image.ANTIALIAS)
@@ -108,71 +110,57 @@ class StartPage(tk.Frame):  # Calculate Price
         self.Product2 = Checkbutton(frame, text="Supreme Plus Gasohol 95", font=AFont, variable=self.chk2,
                                     fg=self.off_color)
         self.Product2.grid(row=1, column=1)
+        Label(frame, text="ราคาต่อหน่วย:", font=BFont).grid(row=2,column = 1, sticky=W)
+        self.GP95_price = Entry(frame, width=15, justify='right')
+        self.GP95_price.grid(row=2, column=1, sticky=E)
 
         self.image3 = Image.open("Gasohol_E20.jpg")
         self.image3 = self.image3.resize((150, 60), Image.ANTIALIAS)
         self.photo3 = ImageTk.PhotoImage(self.image3)
         self.E20_button = tk.Button(frame, image=self.photo3, height=60, width=150, command=self.checkE20)
         self.E20_button.grid(row=0, column=2)
-        self.Product3 = Checkbutton(frame, text="Supreme E20", font=AFont, variable=self.chk3, fg=self.off_color)
+        self.Product3 = Checkbutton(frame, text="Supreme E20               ", font=AFont, variable=self.chk3, fg=self.off_color)
         self.Product3.grid(row=1, column=2)
+        Label(frame, text="ราคาต่อหน่วย:", font=BFont).grid(row=2, column=2, sticky=W)
+        self.E20_price = Entry(frame, width=15, justify='right')
+        self.E20_price.grid(row=2, column=2, sticky=E)
+
 
         self.image4 = Image.open("Gasohol_91.jpg")
         self.image4 = self.image4.resize((150, 60), Image.ANTIALIAS)
         self.photo4 = ImageTk.PhotoImage(self.image4)
         self.G91_button = tk.Button(frame, image=self.photo4, height=60, width=150, command=self.checkG91)
-        self.G91_button.grid(row=2, column=0)
+        self.G91_button.grid(row=3, column=0)
         self.Product4 = Checkbutton(frame, text="Supreme Gasohol 91", font=AFont, variable=self.chk4, fg=self.off_color)
-        self.Product4.grid(row=3, column=0)
+        self.Product4.grid(row=4, column=0)
+        Label(frame, text="ราคาต่อหน่วย:", font=BFont).grid(row=5, column=0, sticky=W)
+        self.G91_price = Entry(frame, width=15, justify='right')
+        self.G91_price.grid(row=5, column=0, sticky=E)
+
 
         self.image5 = Image.open("Diesel_Plus.jpg")
         self.image5 = self.image5.resize((150, 60), Image.ANTIALIAS)
         self.photo5 = ImageTk.PhotoImage(self.image5)
         self.DSP_button = tk.Button(frame, image=self.photo5, height=60, width=150, command=self.checkDSP)
-        self.DSP_button.grid(row=2, column=1)
+        self.DSP_button.grid(row=3, column=1)
         self.Product5 = Checkbutton(frame, text="Supreme Plus Diesel", font=AFont, variable=self.chk5,
                                     fg=self.off_color)
-        self.Product5.grid(row=3, column=1)
+        self.Product5.grid(row=4, column=1)
+        Label(frame, text="ราคาต่อหน่วย:", font=BFont).grid(row=5, column=1, sticky=W)
+        self.DSP_price = Entry(frame, width=15, justify='right')
+        self.DSP_price.grid(row=5, column=1, sticky=E)
 
         self.image6 = Image.open("Diesel.jpg")
         self.image6 = self.image6.resize((150, 60), Image.ANTIALIAS)
         self.photo6 = ImageTk.PhotoImage(self.image6)
         self.DS_button = tk.Button(frame, image=self.photo6, height=60, width=150, command=self.checkDS)
-        self.DS_button.grid(row=2, column=2)
+        self.DS_button.grid(row=3, column=2)
         self.Product6 = Checkbutton(frame, text="Supreme Diesel", font=AFont, variable=self.chk6, fg=self.off_color)
-        self.Product6.grid(row=3, column=2)
+        self.Product6.grid(row=4, column=2)
+        Label(frame, text="ราคาต่อหน่วย:", font=BFont).grid(row=5, column=2, sticky=W)
+        self.DS_price = Entry(frame, width=15, justify='right')
+        self.DS_price.grid(row=5, column=2, sticky=E)
 
-
-        Label(frame7, text='Supreme Gasohol 95 :', font=BFont).grid(row=0, column=0, sticky=E)
-        Label(frame7, text='บาท', font=BFont).grid(row=0, column=2)
-        self.G95_price = Entry(frame7, width=8, justify='right')
-        self.G95_price.grid(row=0, column=1)
-
-        Label(frame7, text='Supreme Plus Gasohol 95 :', font=BFont).grid(row=1, column=0, sticky=E)
-        Label(frame7, text='บาท', font=BFont).grid(row=1, column=2)
-        self.GP95_price = Entry(frame7, width=8, justify='right')
-        self.GP95_price.grid(row=1, column=1)
-
-        Label(frame7, text='Supreme E20 :', font=BFont).grid(row=2, column=0, sticky=E)
-        Label(frame7, text='บาท', font=BFont).grid(row=2, column=2)
-        self.E20_price = Entry(frame7, width=8, justify='right')
-        self.E20_price.grid(row=2, column=1)
-
-        Label(frame7, text='Supreme Gasohol 91 :', font=BFont).grid(row=3, column=0, sticky=E)
-        Label(frame7, text='บาท', font=BFont).grid(row=3, column=2)
-
-        self.G91_price = Entry(frame7, width=8, justify='right')
-        self.G91_price.grid(row=3, column=1)
-
-        Label(frame7, text='Supreme Diesel :', font=BFont).grid(row=4, column=0, sticky=E)
-        Label(frame7, text='บาท', font=BFont).grid(row=4, column=2)
-        self.DS_price = Entry(frame7, width=8, justify='right')
-        self.DS_price.grid(row=4, column=1)
-
-        Label(frame7, text='Supreme Plus Diesel :', font=BFont).grid(row=5, column=0, sticky=E)
-        Label(frame7, text='บาท', font=BFont).grid(row=5, column=2)
-        self.DSP_price = Entry(frame7, width=8, justify='right')
-        self.DSP_price.grid(row=5, column=1)
 
         Label(frame9, text='จำนวนลิตร', font=BFont).grid(row=0, column=0)
         Label(frame9, text='ลิตร', font=BFont).grid(row=0, column=2)
@@ -184,24 +172,24 @@ class StartPage(tk.Frame):  # Calculate Price
         self.total_price = Entry(frame9, justify='right')
         self.total_price.bind("<KeyRelease>", self.liveLiterCal)
         self.total_price.grid(row=1, column=1)
-        self.print_button = ttk.Button(self, text = "สั่งพิมพ์", width = 10, command = self.print_confirmation)
-        self.print_button.place(x = 60, y =275)
-        self.print = ttk.Button(self , text = "พิมพ์",width = 10, command =self.print_receipt)
-        self.print.place(x = 180 , y = 275)
+        self.record_button = ttk.Button(self, text = "บันทึก", width = 10, command = self.record_confirmation)
+        self.record_button.place(x = 640, y =220)
+        self.print = ttk.Button(self , text = "พิมพ์",width = 10, command =self.print_confirmation)
+        self.print.place(x = 640 , y = 260)
 
 
-        Label(frame13, text = "รหัสพนักงาน").grid(row=0)
-        self.staff_id = Entry(frame13, justify = 'right', width = 16)
+        Label(frame7, text = "รหัสพนักงาน").grid(row=0)
+        self.staff_id = Entry(frame7, justify = 'right', width = 14)
         self.staff_id.bind('<Return>', self.staff_login)
         self.staff_id.grid(row = 0 , column = 1)
-        Label(frame13, text = "-----------------------").grid(row = 1, columnspan = 2)
-        Label(frame13, text = "ชื่อพนักงาน").grid(row = 2, columnspan = 2)
-        self.staff_name = Entry(frame13 , width = 21, justify = 'center')
+        Label(frame7, text = "-----------------------").grid(row = 1, columnspan = 2)
+        Label(frame7, text = "ชื่อพนักงาน").grid(row = 2, columnspan = 2)
+        self.staff_name = Entry(frame7 , width = 21, justify = 'center')
         self.staff_name.grid(row = 3, columnspan = 2)
-        Label(frame13, text = "เวลาเข้ากะ").grid(row = 4, columnspan = 2)
-        self.shift_time = Entry(frame13, justify = 'center')
+        Label(frame7, text = "เวลาเข้ากะ").grid(row = 4, columnspan = 2)
+        self.shift_time = Entry(frame7, justify = 'center')
         self.shift_time.grid(row = 5, columnspan = 2)
-        logout_button = Button(frame13, text = "ออกกะ", width = 10, command = self.staff_logout)
+        logout_button = Button(frame7, text = "ออกกะ", width = 10, command = self.staff_logout)
         logout_button.grid(row = 6, columnspan = 2)
 
 
@@ -213,6 +201,10 @@ class StartPage(tk.Frame):  # Calculate Price
         self.search_tax_id = Entry(frame12, justify = 'right', width = 27)
         self.search_tax_id.bind('<Return>', self.searchTaxId)
         self.search_tax_id.grid(row = 2, column = 1, sticky = W)
+
+        Label(frame14, text = "ทะเบียนรถ", font = BFont).grid(row=0, sticky = E)
+        self.car_plate = Entry(frame14, justify = 'right', width = 20)
+        self.car_plate.grid(row = 0, column = 1)
 
         Label(frame10, text="ชื่อบริษัท").grid(row=1, column=0, sticky=E)
         self.comp_name = Entry(frame10, justify='right', width=17)
@@ -288,26 +280,20 @@ class StartPage(tk.Frame):  # Calculate Price
         # button4.grid(row=2, columnspan=3)
         # button4 = ttk.Button(frame9, text="ยกเลิก", command=self.Clear)
         # button4.grid(row=3, columnspan=3)
-
-        button3 = ttk.Button(frame8, text="ข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo),
-                             width=15)
-        button3.grid(row=2, column=0, )
-        button3 = ttk.Button(frame8, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne),
-                             width=15)
-        button3.grid(row=1, column=0, )
         button3 = ttk.Button(frame8, text="คำนวณสินค้าเพิ่มเติม", command=lambda: controller.show_frame(PageThree),
                              width=15)
         button3.grid(row=0, column=0, )
+        button3 = ttk.Button(frame8, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne),
+                             width=15)
+        button3.grid(row=0, column=1, )
+        button3 = ttk.Button(frame8, text="ข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo),
+                             width=15)
+        button3.grid(row=0, column=2, )
         button6 = ttk.Button(frame8, text="ประวัติ", command=lambda: controller.show_frame(PageFour),
                              width=15)
-        button6.grid(row=3, column=0)
+        button6.grid(row=0, column=3)
 
-        con = sqlite3.connect('MyDatabase.db')
-        cur = con.cursor()
-        cur.execute(' SELECT Record_ID FROM Record ORDER BY Record_ID DESC LIMIT 1')
-        self.lastest_record = str(cur.fetchone()).replace('INV-','').replace('(', '').replace(')', '').replace("'", '').replace(",", '')
-        self.lastest_record_number = int(self.lastest_record)
-
+        self.update_lastest_record()
         self.record_number = 1
         self.Show_gas_price()
         self.G95_price.config(state='readonly')
@@ -328,47 +314,128 @@ class StartPage(tk.Frame):  # Calculate Price
     # 	# self.c_name.insert(END,cur.fetchall())
     # 	print( cur.fetchall() )
 
+    def update_lastest_record(self):
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute(' SELECT Record_ID FROM Record ORDER BY Record_ID DESC LIMIT 1')
+        self.lastest_record = str(cur.fetchone()).replace('INV-','').replace('(', '').replace(')', '').replace("'", '').replace(",", '')
+        self.lastest_record_number = int(self.lastest_record)
+
     def print_receipt(self):
-        record_id = "INV-{0:07}".format(self.lastest_record_number + 1)
-        tax_id = '0203556007965'
-        tempfiles = tempfile.mktemp(".txt")
-        receipt = open(tempfiles, "wt",encoding="utf-8")
-        receipt.write("\tใบเสร็จรับเงิน/ใบกำกับภาษี\n")
-        receipt.write("(ต้นฉบับ)\n")
-        receipt.write("หจก.เดอะวันปิโตเลียม\n9/7 หมู่ 3 ถ.สุขุมวิท ต.ห้วยกะปิ\nอ.เมืองชลบุรี จ.ชลบุรี 20000\nTel. 086-4069062 FAX: 02-9030080 ต่อ 7811\n")
-        receipt.write("Tax ID:"+tax_id+'\n')
-        receipt.write("สาขาที่ออกใบกำกับภาษี: สำนักงานใหญ่\n")
-        receipt.write("เลขที่: "+record_id+"\n")
-        receipt.write("วันที่: "+self.now.strftime("%d"+"/"+"%m"+"/"+"%Y")+" "+self.now.strftime("%H" + ":" + "%M")+"\n")
-        receipt.write("ชื่อ: "+self.comp_name.get()+"\n")
-        receipt.write("ที่อยู่: " + self.house_no.get()+" ")
-        if self.Moo_no.get() is not '-':
-            receipt.write("หมู่ "+self.Moo_no.get()+" ")
-        if self.Soi_no.get() is not '-':
-            receipt.write("ซ."+self.Soi_no.get()+" ")
-        if self.Stree_name.get() is not '-':
-            receipt.write("ถ."+self.Stree_name.get()+" ")
-        if self.Thumbon_name.get() is not '-':
-            receipt.write("ต."+self.Thumbon_name.get()+" ")
-        receipt.write("\n")
-        if self.Aumper_name.get() is not '-':
-            receipt.write("อ."+self.Aumper_name.get()+" ")
-        if self.Province_name.get() is not '-':
-            receipt.write("จ."+self.Province_name.get()+" ")
-        if self.Postcode.get() is not '-':
-            receipt.write(" "+self.Postcode.get()+" ")
-        receipt.write("\n")
-        receipt.write("เลขประจำผู้เสียภาษีผู้ซื้อ: "+self.Cus_tax_num.get())
-        receipt.write("ทะเบียนรถ: ")
-        receipt.write("\n")
-        receipt.write("รายการ\t\t\tราคา/ต่อหน่วย\tปรัมาณ\tจำนวนเงิน\n")
-        receipt.write("=================================\n")
-        receipt.write(self.Product1.cget("text"))
+
+        try:
+            record_id = "INV-{0:07}".format(self.lastest_record_number + 1)
+            tax_id = '0203556007965'
+            tempfiles = tempfile.mktemp(".txt")
+            receipt = open(tempfiles, "wt",encoding="utf-8")
+            receipt.write("\tใบเสร็จรับเงิน/ใบกำกับภาษี(ต้นฉบับ)\n")
+            receipt.write("หจก.เดอะวันปิโตเลียม\n9/7 หมู่ 3 ถ.สุขุมวิท ต.ห้วยกะปิ\nอ.เมืองชลบุรี จ.ชลบุรี 20000\nTel. 086-4069062 FAX: 02-9030080 ต่อ 7811\n")
+            receipt.write("Tax ID:"+tax_id+'\n')
+            receipt.write("สาขาที่ออกใบกำกับภาษี: สำนักงานใหญ่\n")
+            receipt.write("เลขที่: "+record_id+"\n")
+            receipt.write("วันที่: "+self.now.strftime("%d"+"/"+"%m"+"/"+"%Y")+" "+self.now.strftime("%H" + ":" + "%M")+"\n")
+            receipt.write("ชื่อ: "+self.comp_name.get()+"\n")
+            receipt.write("ที่อยู่: " + self.house_no.get()+" ")
+            if self.Moo_no.get() is not '-':
+                receipt.write("หมู่ "+self.Moo_no.get()+" ")
+            if self.Soi_no.get() is not '-':
+                receipt.write("ซ."+self.Soi_no.get()+" ")
+            if self.Stree_name.get() is not '-':
+                receipt.write("ถ."+self.Stree_name.get()+" ")
+            if self.Thumbon_name.get() is not '-':
+                receipt.write("ต."+self.Thumbon_name.get()+" ")
+            receipt.write("\n")
+            if self.Aumper_name.get() is not '-':
+                receipt.write("อ."+self.Aumper_name.get()+" ")
+            if self.Province_name.get() is not '-':
+                receipt.write("จ."+self.Province_name.get()+" ")
+            if self.Postcode.get() is not '-':
+                receipt.write(" "+self.Postcode.get()+" ")
+            receipt.write("\n")
+            receipt.write("เลขประจำผู้เสียภาษีผู้ซื้อ: "+self.Cus_tax_num.get()+"\n")
+            receipt.write("ทะเบียนรถ: " + self.car_plate.get())
+            receipt.write("\n")
+            receipt.write("รายการ\t\t\tราคา/ต่อหน่วย\tปริมาณ\tจำนวนเงิน\n")
+            receipt.write("===============================================\n")
+            if self.chk1.get() == True:
+                receipt.write(self.Product1.cget("text"))
+                receipt.write("\t"+self.G95_price.get())
+                receipt.write("\t"+self.product_liter.get())
+                receipt.write("\t"+self.total_price.get())
+            if self.chk2.get() == True:
+                receipt.write(self.Product2.cget("text"))
+                receipt.write("\t"+self.GP95_price.get())
+                receipt.write("\t" + self.product_liter.get())
+                receipt.write("\t" + self.total_price.get())
+            if self.chk3.get() == True:
+                receipt.write(self.Product3.cget("text"))
+                receipt.write(self.E20_price.get())
+                receipt.write("\t" + self.product_liter.get())
+                receipt.write("\t" + self.total_price.get())
+            if self.chk4.get() == True:
+                receipt.write(self.Product4.cget("text"))
+                receipt.write("\t"+self.G91_price.get())
+                receipt.write("\t" + self.product_liter.get())
+                receipt.write("\t" + self.total_price.get())
+            if self.chk5.get() == True:
+                receipt.write(self.Product5.cget("text"))
+                receipt.write("\t"+self.DSP_price.get())
+                receipt.write("\t" + self.product_liter.get())
+                receipt.write("\t" + self.total_price.get())
+            if self.chk6.get() == True:
+                receipt.write(self.Product6.cget("text"))
+                receipt.write("\t\t"+self.DS_price.get())
+                receipt.write("\t" + self.product_liter.get())
+                receipt.write("\t" + self.total_price.get())
+            receipt.write("\n\n")
+            receipt.write("\t\tมูลค่าสินค้า:")
+            receipt.write("\t\t\t"+self.total_price.get()+"\n")
+            receipt.write("\tภาษีมูลค่าเพิ่ม(VAT 7%)")
+            vat = float(self.total_price.get()) * 0.07
+            receipt.write("\t\t\t" + str(round(vat,2)) + "\n")
+            total = float(self.total_price.get()) + vat
+            receipt.write("\t\tรวมเป็นเงิน:")
+            receipt.write("\t\t\t" + str(round(total,0)))
+            receipt.write("\n\n\nได้รับสินค้าตามรายการบนนี้ไว้ถูกต้อง\nและในสภาพเรียบร้อยทุกประการ")
+            receipt.write("\n\n\nลงชื่อผู้รับเงิน _________________________________")
+        except:
+            messagebox.showerror("เกิดข้อผิดพลาด","ข้อมูลไม่ถูกต้อง")
+            self.confirmation.destroy()
+        else:
+            self.update_lastest_record()
+            self.comp_name.delete(0, 'end')
+            self.branch_num.delete(0, 'end')
+            self.branch_floor.delete(0, 'end')
+            self.building_name.delete(0, 'end')
+            self.village_name.delete(0, 'end')
+            self.house_no.delete(0, 'end')
+            self.Moo_no.delete(0, 'end')
+            self.Soi_no.delete(0, 'end')
+            self.Stree_name.delete(0, 'end')
+            self.Thumbon_name.delete(0, 'end')
+            self.Aumper_name.delete(0, 'end')
+            self.Province_name.delete(0, 'end')
+            self.Postcode.delete(0, 'end')
+            self.Cus_tax_num.delete(0, 'end')
+            self.total_price.delete(0,'end')
+            self.product_liter.delete(0,'end')
+            self.car_plate.delete(0,'end')
+            self.chk1.set(False)
+            self.chk2.set(False)
+            self.chk3.set(False)
+            self.chk4.set(False)
+            self.chk5.set(False)
+            self.chk6.set(False)
+            self.Product1["fg"] = self.off_color
+            self.Product2["fg"] = self.off_color
+            self.Product3["fg"] = self.off_color
+            self.Product4["fg"] = self.off_color
+            self.Product5["fg"] = self.off_color
+            self.Product6["fg"] = self.off_color
 
 
-
-
-        os.startfile(tempfiles)
+            os.startfile(tempfiles)
+            self.confirmation.destroy()
 
     def record_tax_invoice(self):
         try:
@@ -390,11 +457,58 @@ class StartPage(tk.Frame):  # Calculate Price
             con.commit()
             self.startPageRef.viewing_record()
 
+
         except:
             messagebox.showerror("เกิดข้อผิดพลาด","กรุณาใส่ข้อมูลให้ครบถ้วน")
         else:
-            self.confirmation.destroy()
+            messagebox.showinfo("เสร็จสิ้น","บันทึกข้อมูลเรียบร้อยแล้ว")
+            self.update_lastest_record()
+            self.comp_name.delete(0, 'end')
+            self.branch_num.delete(0, 'end')
+            self.branch_floor.delete(0, 'end')
+            self.building_name.delete(0, 'end')
+            self.village_name.delete(0, 'end')
+            self.house_no.delete(0, 'end')
+            self.Moo_no.delete(0, 'end')
+            self.Soi_no.delete(0, 'end')
+            self.Stree_name.delete(0, 'end')
+            self.Thumbon_name.delete(0, 'end')
+            self.Aumper_name.delete(0, 'end')
+            self.Province_name.delete(0, 'end')
+            self.Postcode.delete(0, 'end')
+            self.Cus_tax_num.delete(0, 'end')
+            self.total_price.delete(0, 'end')
+            self.product_liter.delete(0, 'end')
+            self.car_plate.delete(0, 'end')
+            self.chk1.set(False)
+            self.chk2.set(False)
+            self.chk3.set(False)
+            self.chk4.set(False)
+            self.chk5.set(False)
+            self.chk6.set(False)
+            self.Product1["fg"] = self.off_color
+            self.Product2["fg"] = self.off_color
+            self.Product3["fg"] = self.off_color
+            self.Product4["fg"] = self.off_color
+            self.Product5["fg"] = self.off_color
+            self.Product6["fg"] = self.off_color
+            self.r_confirmation.destroy()
 
+    def record_confirmation(self):
+
+        self.r_confirmation = Toplevel()
+        self.r_confirmation.title("ยืนยันหรือไม่")
+        self.r_confirmation.geometry("%dx%d+%d+%d" % (270, 90, 300, 250))
+        Label(self.r_confirmation, text="ยืนยันการบันทึกหรือไม่?", font=("Helvetica", 20)).grid(row=0, columnspan=2)
+        self.confirm_button = Button(self.r_confirmation, text="ยืนยัน", font=("Helvetica", 14), width=5,
+                                     command=self.record_tax_invoice)
+        self.confirm_button.grid(row=1)
+        self.cancel_button = Button(self.r_confirmation, text="ยกเลิก", font=("Helvetica", 14), width=5,
+                                    command=self.r_confirmation.destroy)
+        self.cancel_button.grid(row=1, column=1)
+        self.r_confirmation.focus_set()
+        self.r_confirmation.grab_set()
+        self.r_confirmation.mainloop()
 
 
     def print_confirmation(self):
@@ -405,7 +519,7 @@ class StartPage(tk.Frame):  # Calculate Price
         self.confirmation.title("ยืนยันหรือไม่")
         self.confirmation.geometry("%dx%d+%d+%d" % (270, 90, 300, 250))
         Label(self.confirmation, text = "ยืนยันการสั่งพิมพ์หรือไม่?", font=("Helvetica", 20)).grid(row=0,columnspan = 2)
-        self.confirm_button = Button(self.confirmation, text = "ยืนยัน", font=("Helvetica", 14), width = 5, command = self.record_tax_invoice)
+        self.confirm_button = Button(self.confirmation, text = "ยืนยัน", font=("Helvetica", 14), width = 5, command = self.print_receipt)
         self.confirm_button.grid(row=1)
         self.cancel_button = Button(self.confirmation, text = "ยกเลิก", font=("Helvetica", 14), width = 5 , command = self.confirmation.destroy)
         self.cancel_button.grid(row=1, column = 1)
@@ -425,7 +539,7 @@ class StartPage(tk.Frame):  # Calculate Price
             cur.execute('SELECT Staff_Name FROM Staff WHERE Staff_ID = ?', self.staff_id.get())
             self.staff_name.insert(END, str(cur.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
             self.shift_time.insert(END, self.now.strftime("%H" + ":" + "%M"))
-            self.print_button.config(state='normal')
+            self.record_button.config(state='normal')
             self.staff_id.config(state = 'readonly')
             self.staff_name.config(state='readonly')
             self.shift_time.config(state='readonly')
@@ -1082,33 +1196,31 @@ class PageOne(tk.Frame):  # Product Page
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         frame = ttk.LabelFrame(self, text='เพิ่มสินค้า')
-        frame.grid(row=0, column=0, sticky=NW)
+        frame.grid(row=1, column=0, sticky=NW)
 
         style = ttk.Style(self)
         style.configure("TButton", font=('wasy10', 14))
 
-        Label(frame, text='ชื่อสินค้า').grid(row=1, column=0)
+        Label(frame, text='ชื่อสินค้า').grid(row=1, column=0,sticky = E)
         self.name = Entry(frame)
         self.name.grid(row=1, column=1)
 
-        Label(frame, text='ประเภทสินค้า').grid(row=2, column=0)
+        Label(frame, text='ประเภทสินค้า').grid(row=1, column=2,sticky = E)
         self.type = Entry(frame, justify='right')
-        self.type.grid(row=2, column=1)
+        self.type.grid(row=1, column=3)
 
-        Label(frame, text='ราคา').grid(row=3, column=0)
+        Label(frame, text='ราคา').grid(row=1, column=4,sticky = E)
         self.price = Entry(frame, justify='right')
-        self.price.grid(row=3, column=1)
+        self.price.grid(row=1, column=5)
 
-        ttk.Button(frame, text='เพิ่มข้อมูล', command=self.adding).grid(row=4, column=0)
+        ttk.Button(frame, text='เพิ่มข้อมูล', command=self.adding).grid(row=1, column=6)
         button1 = ttk.Button(frame, text='ลบข้อมูล', command=self.deleting)
-        button1.grid(row=4, column=1)
-        button2 = ttk.Button(frame, text='แก้ไขข้อมูล', command=self.editing)
-        button2.grid(row=4, column=2)
+        button1.grid(row=1, column=7)
 
         frame3 = LabelFrame(self)
-        frame3.grid(row = 1)
+        frame3.grid(row = 2,sticky = W)
 
-        self.tree = ttk.Treeview(frame3, height=15, column=("2", "3"))
+        self.tree = ttk.Treeview(frame3, height=17, column=("2", "3"))
         self.tree.grid(row=0, column=0)
         self.tree.heading('#0', text='ชื่อสินค้า', anchor=W)
         self.tree.heading(0, text='ประเภทสินค้า', anchor=W)
@@ -1122,14 +1234,17 @@ class PageOne(tk.Frame):  # Product Page
         self.tree.configure(yscrollcommand=vsb.set)
 
         frame2 = LabelFrame(self, text='ชุดคำสั่ง')
-        frame2.grid(row=0, column=0, sticky=E)
+        frame2.grid(row=0, column=0, sticky=W)
 
-        button3 = ttk.Button(frame2, text="หน้าข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo))
-        button3.grid(row=1, column=0, )
-        button3 = ttk.Button(frame2, text="หน้าคำนวณสินค้า", command=lambda: controller.show_frame(StartPage))
+        button3 = ttk.Button(frame2, text="หน้าคำนวณสินค้า", command=lambda: controller.show_frame(StartPage), width = 15)
         button3.grid(row=0, column=0, )
-        button6 = ttk.Button(frame2, text="ประวัติ", command=lambda: controller.show_frame(PageFour))
-        button6.grid(row=2, column=0)
+        button3 = ttk.Button(frame2, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne), width = 15)
+        button3.grid(row=0, column=1, )
+        button3 = ttk.Button(frame2, text="ข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo), width = 15)
+        button3.grid(row=0, column=2, )
+        button6 = ttk.Button(frame2, text="ประวัติ", command=lambda: controller.show_frame(PageFour), width = 15)
+        button6.grid(row=0, column=3)
+
 
         self.viewing_record()
 
@@ -1153,22 +1268,20 @@ class PageOne(tk.Frame):  # Product Page
         return len(self.name.get()) != 0 and len(self.type.get()) != 0 and len(self.price.get()) != 0
 
     def adding(self):
-        if self.validation():
-            query = 'INSERT INTO Product VALUES (NULL, ?, ?,?)'
-            parameters = (self.name.get(), self.type.get(), self.price.get())
-            self.run_query(query, parameters)
-            self.name.delete(0, END)
-            self.type.delete(0, END)
-            self.price.delete(0, END)
-        else:
-            self.message['text'] = 'name field or price field is empty'
+
+        query = 'INSERT INTO Product VALUES (NULL, ?, ?,?)'
+        parameters = (self.name.get(), self.type.get(), self.price.get())
+        self.run_query(query, parameters)
+        self.name.delete(0, END)
+        self.type.delete(0, END)
+        self.price.delete(0, END)
         self.viewing_record()
 
     def deleting(self):
         try:
             self.tree.item(self.tree.selection())['values'][0]
         except IndexError as e:
-            self.message['text'] = 'Please select record'
+            messagebox.showwarning("เกิดข้อผิดพลาด","กรุณาเลือกสินค้า")
             return
 
         name = self.tree.item(self.tree.selection())['text']
@@ -1180,7 +1293,7 @@ class PageOne(tk.Frame):  # Product Page
         try:
             self.tree.item(self.tree.selection())['values'][1]
         except IndexError as e:
-
+            messagebox.showwarning("เกิดข้อผิดพลาด", "กรุณาเลือกสินค้า")
             return
 
         name = self.tree.item( self.tree.selection() )['text']
@@ -1196,6 +1309,7 @@ class PageOne(tk.Frame):  # Product Page
         Label( self.edit_main,text = 'ชื่อสินค้าใหม่',font=("Helvetica", 16)).grid( row = 1,column = 1 )
         new_name = Text( self.edit_main, height =1,width = 30,font=("Helvetica", 15))
         new_name.grid( row = 1,column = 2 )
+        new_name.insert('1.0', name)
 
         Label(self.edit_main, text='ราคาเก่า',font=("Helvetica", 16)).grid(row=2, column=1)
         Pre_Price = Label(self.edit_main, textvariable=StringVar(self.edit_main, value=old_price), font=("Helvetica", 16))
@@ -1234,7 +1348,7 @@ class PageTwo(tk.Frame):  # Customer Page
         AFont = font.Font(family='Helvetica', size=12, weight='bold')
         BFont = font.Font(family='Helvetica', size=11, )
         frame = LabelFrame(self, text="ค้นหา")
-        frame.grid(row=0, sticky=NW)
+        frame.grid(row=1, sticky=NW)
 
         default = StringVar(self, value=0)
         Label(frame, text="เลขประจำตัวผู้เสียภาษีอากร (13 หลัก)", font=BFont).grid(row=0)
@@ -1248,8 +1362,8 @@ class PageTwo(tk.Frame):  # Customer Page
         self.button2 = Button(frame, text='บันทึก', font=AFont, height=1, width=10, command=self.save_data)
         self.button2.grid(row=2, sticky=E)
 
-        frame3 = LabelFrame(self, text = "")
-        frame3.grid(row = 1)
+        frame3 = LabelFrame(self, text = "ผลลัพธ์")
+        frame3.place(x= 350 , y = 51)
         self.tree = ttk.Treeview(frame3, height=15, column=("1"))
         self.tree.heading('#0', text="ประเภท")
         self.tree.heading(0, text="ผลลัพธ์")
@@ -1260,7 +1374,7 @@ class PageTwo(tk.Frame):  # Customer Page
         self.tree.configure(yscrollcommand=vsb.set)
 
         frame2 = LabelFrame(self, text="ชุดคำสั่ง")
-        frame2.grid(row=0, column=1, sticky=E)
+        frame2.grid(row=0)
 
         self.my_list = []
 
@@ -1301,12 +1415,15 @@ class PageTwo(tk.Frame):  # Customer Page
         # frame2 = LabelFrame(self, text = 'ชุดคำสั่ง')
         # frame2.grid(row = 0, column = 0, sticky = E)
 
-        button3 = ttk.Button(frame2, text="หน้าข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne))
-        button3.grid(row=1, column=0, )
-        button3 = ttk.Button(frame2, text="หน้าคำนวณสินค้า", command=lambda: controller.show_frame(StartPage))
-        button3.grid(row=0, column=0, )
-        button6 = ttk.Button(frame2, text="ประวัติ", command=lambda: controller.show_frame(PageFour))
-        button6.grid(row=2, column=0)
+        button3 = ttk.Button(frame2, text="หน้าข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne), width = 15)
+        button3.grid(row=0, column=0)
+        button3 = ttk.Button(frame2, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne), width = 15)
+        button3.grid(row=0, column=1, )
+        button3 = ttk.Button(frame2, text="ข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo), width = 15)
+        button3.grid(row=0, column=2, )
+        button6 = ttk.Button(frame2, text="ประวัติ", command=lambda: controller.show_frame(PageFour), width = 15)
+        button6.grid(row=0, column=3)
+
 
     # self.viewing_record2()
 
