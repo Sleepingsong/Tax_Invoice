@@ -328,7 +328,7 @@ class StartPage(tk.Frame):  # Calculate Price
             tax_id = '0203556007965'
             tempfiles = tempfile.mktemp(".txt")
             receipt = open(tempfiles, "wt",encoding="utf-8")
-            receipt.write("\tใบเสร็จรับเงิน/ใบกำกับภาษี(ต้นฉบับ)\n")
+            receipt.write("\t       ใบเสร็จรับเงิน/ใบกำกับภาษี(ต้นฉบับ)\n")
             receipt.write("หจก.เดอะวันปิโตเลียม\n9/7 หมู่ 3 ถ.สุขุมวิท ต.ห้วยกะปิ\nอ.เมืองชลบุรี จ.ชลบุรี 20000\nTel. 086-4069062 FAX: 02-9030080 ต่อ 7811\n")
             receipt.write("Tax ID:"+tax_id+'\n')
             receipt.write("สาขาที่ออกใบกำกับภาษี: สำนักงานใหญ่\n")
@@ -359,33 +359,33 @@ class StartPage(tk.Frame):  # Calculate Price
             receipt.write("========================================\n")
             if self.chk1.get() == True:
                 receipt.write("Supreme\nGasohol 95")
-                receipt.write("\t"+self.G95_price.get())
-                receipt.write("\t    "+self.product_liter.get())
+                receipt.write("\t "+self.G95_price.get())
+                receipt.write("\t     "+self.product_liter.get())
                 receipt.write("\t"+self.total_price.get())
             if self.chk2.get() == True:
                 receipt.write("Supreme Plus\nGasohol 95")
-                receipt.write("\t"+self.GP95_price.get())
-                receipt.write("\t    " + self.product_liter.get())
+                receipt.write("\t "+self.GP95_price.get())
+                receipt.write("\t     " + self.product_liter.get())
                 receipt.write("\t" + self.total_price.get())
             if self.chk3.get() == True:
                 receipt.write("Supreme E20")
-                receipt.write("\t"+self.E20_price.get())
-                receipt.write("\t    " + self.product_liter.get())
+                receipt.write("\t "+self.E20_price.get())
+                receipt.write("\t     " + self.product_liter.get())
                 receipt.write("\t" + self.total_price.get())
             if self.chk4.get() == True:
                 receipt.write("Supreme\nGasohol 91")
-                receipt.write("\t"+self.G91_price.get())
-                receipt.write("\t    " + self.product_liter.get())
+                receipt.write("\t "+self.G91_price.get())
+                receipt.write("\t     " + self.product_liter.get())
                 receipt.write("\t" + self.total_price.get())
             if self.chk5.get() == True:
                 receipt.write("Supreme Plus\nDiesel")
-                receipt.write("\t\t"+self.DSP_price.get())
-                receipt.write("\t    " + self.product_liter.get())
+                receipt.write("\t\t "+self.DSP_price.get())
+                receipt.write("\t     " + self.product_liter.get())
                 receipt.write("\t" + self.total_price.get())
             if self.chk6.get() == True:
                 receipt.write("Supreme Diesel")
-                receipt.write("\t"+self.DS_price.get())
-                receipt.write("\t    " + self.product_liter.get())
+                receipt.write("\t "+self.DS_price.get())
+                receipt.write("\t     " + self.product_liter.get())
                 receipt.write("\t" + self.total_price.get())
             receipt.write("\n\n")
             receipt.write("\t\tมูลค่าสินค้า:")
@@ -398,6 +398,7 @@ class StartPage(tk.Frame):  # Calculate Price
             receipt.write("\t\t" + str(round(total,0)))
             receipt.write("\n\n\nได้รับสินค้าตามรายการบนนี้ไว้ถูกต้อง\nและในสภาพเรียบร้อยทุกประการ")
             receipt.write("\n\n\nลงชื่อผู้รับเงิน _________________________________")
+            receipt.write("\n\n\t         *****ขอบคุณที่ใช้บริการ*****")
         except:
             messagebox.showerror("เกิดข้อผิดพลาด","ข้อมูลไม่ถูกต้อง")
             self.confirmation.destroy()
@@ -1540,7 +1541,7 @@ class PageThree(tk.Frame):  # CalPrice
         tk.Frame.__init__(self, parent)
 
         frame = ttk.LabelFrame(self, text='สินค้าทั้งหมด')
-        frame.grid(row=0, column=0, sticky=NW)
+        frame.grid(row=1, column=0, sticky=NW)
 
         Label(frame, text="ชื่อสินค้า", font=("Helvetica", 10)).grid(row=1, sticky=W)
         self.product_name = ttk.Combobox(frame, width=25, justify='right', font=("Helvetica", 15), state='readonly')
@@ -1623,21 +1624,21 @@ class PageThree(tk.Frame):  # CalPrice
         self.product_number6.grid(row=7, column=2)
 
         Label(frame, text="ราคาทั้งหมด", font=("Helvetica", 10)).grid(row=1, column=3, sticky=W)
-        self.product_total = Text(frame, height=1, width=8, font=("Helvetica", 20))
+        self.product_total = Text(frame, height=1, width=8, font=("Helvetica", 15))
         self.product_total.grid(row=2, column=3)
-        self.product_total2 = Text(frame, height=1, width=8, font=("Helvetica", 20))
+        self.product_total2 = Text(frame, height=1, width=8, font=("Helvetica", 15))
         self.product_total2.grid(row=3, column=3)
-        self.product_total3 = Text(frame, height=1, width=8, font=("Helvetica", 20))
+        self.product_total3 = Text(frame, height=1, width=8, font=("Helvetica", 15))
         self.product_total3.grid(row=4, column=3)
-        self.product_total4 = Text(frame, height=1, width=8, font=("Helvetica", 20))
+        self.product_total4 = Text(frame, height=1, width=8, font=("Helvetica", 15))
         self.product_total4.grid(row=5, column=3)
-        self.product_total5 = Text(frame, height=1, width=8, font=("Helvetica", 20))
+        self.product_total5 = Text(frame, height=1, width=8, font=("Helvetica", 15))
         self.product_total5.grid(row=6, column=3)
-        self.product_total6 = Text(frame, height=1, width=8, font=("Helvetica", 20))
+        self.product_total6 = Text(frame, height=1, width=8, font=("Helvetica", 15))
         self.product_total6.grid(row=7, column=3)
 
         frame2 = ttk.LabelFrame(self, text='คำนวณราคา')
-        frame2.grid(row=1, column=0, sticky=W)
+        frame2.grid(row=2, column=0, sticky=W)
         # Label(frame2, text="ราคาสินค้าทั้งหมด(ไม่รวม Vat) :").grid(row=1, column=0)
         # self.product_total_no = Entry(frame2, width=15, justify='right')
         # self.product_total_no.grid(row=1, column=1)
@@ -1656,26 +1657,27 @@ class PageThree(tk.Frame):  # CalPrice
         button2.grid(row=3, columnspan=2)
 
         frame3 = ttk.LabelFrame(self, text="ปุ่มคำสั่งต่างๆ")
-        frame3.grid(row=0, column=1, sticky=NW)
+        frame3.grid(row=0, column=0, sticky=NE)
 
         button3 = ttk.Button(frame3, text='หน้าข้อมูลสินค้า', command=lambda: controller.show_frame(PageOne),
-                             width=20)
-        button3.grid(row=2, column=0)
+                             width=15)
+        button3.grid(row=0, column=1)
 
         button4 = ttk.Button(frame3, text='หน้าข้อมูลลูกค้า', command=lambda: controller.show_frame(PageTwo),
-                             width=20)
-        button4.grid(row=1, column=0)
+                             width=15)
+        button4.grid(row=0, column=2)
 
         button5 = ttk.Button(frame3, text="กลับหน้าคำนวณราคาน้ำมัน",
-                             command=lambda: controller.show_frame(StartPage), width=20)
+                             command=lambda: controller.show_frame(StartPage), width=15)
         button5.grid(row=0, column=0)
 
         button6 = ttk.Button(frame3, text="ประวัติ",
-                             command=lambda: controller.show_frame(PageFour), width=20)
-        button6.grid(row=3, column=0)
+                             command=lambda: controller.show_frame(PageFour), width=15)
+        button6.grid(row=0, column=3)
 
     def CalProduct(self):
 
+        self.product_grand_total.delete(1.0,'end')
         price_total = [
             self.product_total.get(1.0, END),
             self.product_total2.get(1.0, END),

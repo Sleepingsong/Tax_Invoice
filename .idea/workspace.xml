@@ -17,8 +17,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/App.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="1881" column="34" lean-forward="true" selection-start-line="1881" selection-start-column="34" selection-end-line="1881" selection-end-column="34" />
+            <state relative-caret-position="244">
+              <caret line="1873" column="34" lean-forward="true" selection-start-line="1873" selection-start-column="34" selection-end-line="1873" selection-end-column="34" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -31,9 +31,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="187">
               <caret line="11" selection-start-line="11" selection-end-line="11" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -41,7 +38,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test02.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21675">
+            <state relative-caret-position="21641">
               <caret line="1289" column="29" selection-start-line="1289" selection-start-column="29" selection-end-line="1289" selection-end-column="29" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
@@ -53,8 +50,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test03.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="395">
-              <caret line="341" column="57" lean-forward="true" selection-end-line="1889" />
+            <state relative-caret-position="346">
+              <caret line="395" column="55" lean-forward="true" selection-end-line="1891" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -65,8 +62,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test_Print.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+            <state relative-caret-position="153">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -449,7 +446,14 @@
       <option name="project" value="LOCAL" />
       <updated>1556478779811</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="- Add print confirmation screen">
+      <created>1556884584726</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1556884584726</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TodoView">
@@ -538,15 +542,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test02.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21675">
+        <state relative-caret-position="21641">
           <caret line="1289" column="29" selection-start-line="1289" selection-start-column="29" selection-end-line="1289" selection-end-column="29" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
@@ -556,8 +557,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Test_Print.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        <state relative-caret-position="153">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -566,8 +567,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Test03.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="341" column="57" lean-forward="true" selection-end-line="1889" />
+        <state relative-caret-position="346">
+          <caret line="395" column="55" lean-forward="true" selection-end-line="1891" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
@@ -576,8 +577,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/App.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="1881" column="34" lean-forward="true" selection-start-line="1881" selection-start-column="34" selection-end-line="1881" selection-end-column="34" />
+        <state relative-caret-position="244">
+          <caret line="1873" column="34" lean-forward="true" selection-start-line="1873" selection-start-column="34" selection-end-line="1873" selection-end-column="34" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
