@@ -38,8 +38,8 @@ class Invoice(tk.Tk):
 
         self.frames[PageOne].setStartPageRef(self.frames[StartPage])
         self.frames[PageTwo].setStartPageRef2(self.frames[StartPage])
-        self.frames[PageThree].setStartPageRef3(self.frames[StartPage])
         self.frames[StartPage].setStartPageRef4(self.frames[PageFour])
+        self.frames[PageOne].setStartPageRef5(self.frames[PageThree])
 
         self.show_frame(StartPage)
 
@@ -399,6 +399,7 @@ class StartPage(tk.Frame):  # Calculate Price
             receipt.write("\n\n\nได้รับสินค้าตามรายการบนนี้ไว้ถูกต้อง\nและในสภาพเรียบร้อยทุกประการ")
             receipt.write("\n\n\nลงชื่อผู้รับเงิน _________________________________")
             receipt.write("\n\n\t         *****ขอบคุณที่ใช้บริการ*****")
+
         except:
             messagebox.showerror("เกิดข้อผิดพลาด","ข้อมูลไม่ถูกต้อง")
             self.confirmation.destroy()
@@ -1194,6 +1195,10 @@ class PageOne(tk.Frame):  # Product Page
     def setStartPageRef(self, startPageRef):
         self.startPageRef = startPageRef
 
+    def setStartPageRef5(self, startPageRef):
+        self.startPageRef5 = startPageRef
+
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         frame = ttk.LabelFrame(self, text='เพิ่มสินค้า')
@@ -1277,6 +1282,8 @@ class PageOne(tk.Frame):  # Product Page
         self.type.delete(0, END)
         self.price.delete(0, END)
         self.viewing_record()
+        self.startPageRef5.combo_product()
+
 
     def deleting(self):
         try:
@@ -1289,6 +1296,7 @@ class PageOne(tk.Frame):  # Product Page
         query = 'DELETE FROM Product WHERE Product_Name = ?'
         self.run_query(query, (name,))
         self.viewing_record()
+        self.startPageRef5.combo_product()
 
     def editing(self,event):
         try:
@@ -1334,6 +1342,7 @@ class PageOne(tk.Frame):  # Product Page
         self.edit_main.destroy()
         self.viewing_record()
         self.startPageRef.Show_gas_price()
+        self.startPageRef5.combo_product()
 
 
 class PageTwo(tk.Frame):  # Customer Page
@@ -1534,38 +1543,36 @@ class PageTwo(tk.Frame):  # Customer Page
 
 class PageThree(tk.Frame):  # CalPrice
 
-    def setStartPageRef3(self, startPageRef):
-        self.startPageRef = startPageRef
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
+
         frame = ttk.LabelFrame(self, text='สินค้าทั้งหมด')
         frame.grid(row=1, column=0, sticky=NW)
-
         Label(frame, text="ชื่อสินค้า", font=("Helvetica", 10)).grid(row=1, sticky=W)
-        self.product_name = ttk.Combobox(frame, width=25, justify='right', font=("Helvetica", 15), state='readonly')
-        self.product_name['values'] = self.combo_product()
+
+        self.product_name = ttk.Combobox(frame,width=25, justify='right', font=("Helvetica", 15), state='readonly')
         self.product_name.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name.grid(row=2, column=0)
+
         self.product_name2 = ttk.Combobox(frame, width=25, justify='right', font=("Helvetica", 15), state='readonly')
-        self.product_name2['values'] = self.combo_product()
         self.product_name2.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name2.grid(row=3, column=0)
+
         self.product_name3 = ttk.Combobox(frame, width=25, justify='right', font=("Helvetica", 15), state='readonly')
-        self.product_name3['values'] = self.combo_product()
         self.product_name3.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name3.grid(row=4, column=0)
+
         self.product_name4 = ttk.Combobox(frame, width=25, justify='right', font=("Helvetica", 15), state='readonly')
-        self.product_name4['values'] = self.combo_product()
         self.product_name4.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name4.grid(row=5, column=0)
+
         self.product_name5 = ttk.Combobox(frame, width=25, justify='right', font=("Helvetica", 15), state='readonly')
-        self.product_name5['values'] = self.combo_product()
         self.product_name5.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name5.grid(row=6, column=0)
+
         self.product_name6 = ttk.Combobox(frame, width=25, justify='right', font=("Helvetica", 15), state='readonly')
-        self.product_name6['values'] = self.combo_product()
         self.product_name6.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name6.grid(row=7, column=0)
 
@@ -1764,15 +1771,23 @@ class PageThree(tk.Frame):  # CalPrice
         self.product_total6.insert(END, round(price6, 2))
 
     def combo_product(self):
-        db = sqlite3.connect('MyDatabase.db')
-        cursor = db.execute('SELECT Product_Name FROM Product')
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute('SELECT Product_Name FROM Product')
 
-        data = []
+        self.data = []
 
-        for row in cursor.fetchall():
-            data.append(row[0])
+        for row in cur.fetchall():
+            self.data.append(row[0])
 
-        return data
+        self.product_name['values'] = self.data
+        self.product_name2['values'] = self.data
+        self.product_name3['values'] = self.data
+        self.product_name4['values'] = self.data
+        self.product_name5['values'] = self.data
+        self.product_name6['values'] = self.data
+
+
 
     def clear_data(self):
 
