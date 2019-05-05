@@ -172,10 +172,8 @@ class StartPage(tk.Frame):  # Calculate Price
         self.total_price = Entry(frame9, justify='right')
         self.total_price.bind("<KeyRelease>", self.liveLiterCal)
         self.total_price.grid(row=1, column=1)
-        self.record_button = ttk.Button(self, text = "บันทึก", width = 10, command = self.record_confirmation)
-        self.record_button.place(x = 640, y =220)
-        self.print = ttk.Button(self , text = "พิมพ์",width = 10, command =self.print_confirmation)
-        self.print.place(x = 640 , y = 260)
+        self.print = tk.Button(self , text = "พิมพ์",font=('Calibri', '20'),width = 5, command =self.print_confirmation)
+        self.print.place(x = 630 , y = 230)
 
 
         Label(frame7, text = "รหัสพนักงาน").grid(row=0)
@@ -263,23 +261,6 @@ class StartPage(tk.Frame):  # Calculate Price
         self.cus_list.config(yscrollcommand = vsb.set)
 
 
-        # button1 = ttk.Button( frame10,text = "ดูข้อมูลเพิ่มเติม",width = 15,command = lambda: self.show_cus_name() )
-        # button1.grid( row = 0,column = 2 )
-        # Label( frame10,text = "รหัสประจำตัว",font = BFont ).grid( row = 1 )
-        # Label( frame10,text = "ทะเบียนรถ",font = BFont ).grid( row = 2 )
-        # self.invoice_id = ttk.Entry( frame10 ).grid( row = 1,column = 1,sticky = W )
-        # self.car_plate = ttk.Entry( frame10 ).grid( row = 2,column = 1,sticky = W )
-        # Label( frame10,text = "ชื่อ",font = BFont ).grid( row = 1,column = 2,sticky = W )
-        # self.c_name = ttk.Entry( frame10 ).grid( row = 1,column = 2,sticky = E )
-        # Label( frame10,text = "เบอร์โทรศัพท์",font = BFont ).grid( row = 1,column = 3 )
-        # self.phone_num = ttk.Entry( frame10 ).grid( row = 1,column = 4 )
-        # Label( frame10,text = "ที่อยู่",font = BFont ).grid( row = 2,column = 2,sticky = W )
-        # self.c_address = ttk.Entry( frame10,width = 55 ).grid( row = 2,column = 2,columnspan = 3,sticky = E )
-
-        # button4 = ttk.Button(frame9, text="คำนวณราคา", command=self.CalPrice)
-        # button4.grid(row=2, columnspan=3)
-        # button4 = ttk.Button(frame9, text="ยกเลิก", command=self.Clear)
-        # button4.grid(row=3, columnspan=3)
         button3 = ttk.Button(frame8, text="คำนวณสินค้าเพิ่มเติม", command=lambda: controller.show_frame(PageThree),
                              width=15)
         button3.grid(row=0, column=0, )
@@ -306,13 +287,6 @@ class StartPage(tk.Frame):  # Calculate Price
         self.staff_name.config(state='readonly')
         self.shift_time.config(state='readonly')
         self.staff_id.config(state = 'normal')
-    # def show_cus_name(self):
-    #
-    # 	con = sqlite3.connect( 'MyDatabase.db' )
-    # 	cur = con.cursor()
-    # 	cur.execute( 'SELECT Customer_Name FROM Customer WHERE Customer_Name = ?',self.product_name.get() )
-    # 	# self.c_name.insert(END,cur.fetchall())
-    # 	print( cur.fetchall() )
 
     def update_lastest_record(self):
         con = sqlite3.connect('MyDatabase.db')
@@ -325,85 +299,143 @@ class StartPage(tk.Frame):  # Calculate Price
 
         try:
             record_id = "INV-{0:07}".format(self.lastest_record_number + 1)
-            tax_id = '0203556007965'
-            tempfiles = tempfile.mktemp(".txt")
-            receipt = open(tempfiles, "wt",encoding="utf-8")
-            receipt.write("\t       ใบเสร็จรับเงิน/ใบกำกับภาษี(ต้นฉบับ)\n")
-            receipt.write("หจก.เดอะวันปิโตเลียม\n9/7 หมู่ 3 ถ.สุขุมวิท ต.ห้วยกะปิ\nอ.เมืองชลบุรี จ.ชลบุรี 20000\nTel. 086-4069062 FAX: 02-9030080 ต่อ 7811\n")
-            receipt.write("Tax ID:"+tax_id+'\n')
-            receipt.write("สาขาที่ออกใบกำกับภาษี: สำนักงานใหญ่\n")
-            receipt.write("เลขที่: "+record_id+"\n")
-            receipt.write("วันที่: "+self.now.strftime("%d"+"/"+"%m"+"/"+"%Y")+" "+self.now.strftime("%H" + ":" + "%M")+"\n")
-            receipt.write("ชื่อ: "+self.comp_name.get()+"\n")
-            receipt.write("ที่อยู่: " + self.house_no.get()+" ")
-            if self.Moo_no.get() is not '-':
-                receipt.write("หมู่ "+self.Moo_no.get()+" ")
-            if self.Soi_no.get() is not '-':
-                receipt.write("ซ."+self.Soi_no.get()+" ")
-            if self.Stree_name.get() is not '-':
-                receipt.write("ถ."+self.Stree_name.get()+" ")
-            if self.Thumbon_name.get() is not '-':
-                receipt.write("ต."+self.Thumbon_name.get()+" ")
-            receipt.write("\n")
-            if self.Aumper_name.get() is not '-':
-                receipt.write("        อ."+self.Aumper_name.get()+" ")
-            if self.Province_name.get() is not '-':
-                receipt.write("จ."+self.Province_name.get()+" ")
-            if self.Postcode.get() is not '-':
-                receipt.write(" "+self.Postcode.get()+" ")
-            receipt.write("\n")
-            receipt.write("เลขประจำผู้เสียภาษีผู้ซื้อ: "+self.Cus_tax_num.get()+"\n")
-            receipt.write("ทะเบียนรถ: " + self.car_plate.get())
-            receipt.write("\n")
-            receipt.write("รายการ\t\tราคา/ต่อหน่วย    ปริมาณ\tจำนวนเงิน\n")
-            receipt.write("========================================\n")
+            record_total_price = self.total_price.get()
+            recrod_car_plate = self.car_plate.get()
+            record_staff_name = self.staff_name.get()
+            record_date = self.now.strftime("%d" + "/" + "%m" + "/" + "%Y")
+            record_comp_name = self.comp_name.get()
+            Record_list = [record_date,
+                           record_id,
+                           record_comp_name,
+                           record_total_price,
+                           record_staff_name,
+                           recrod_car_plate]
+
+            con = sqlite3.connect('MyDatabase.db')
+            cur = con.cursor()
+            cur.execute(
+                ' INSERT INTO Record(Record_Date, Record_ID, Company_Name, Total_Price,Staff_Name, Car_Plate) VALUES(?,?,?,?,?,?)',
+                Record_list)
+            con.commit()
+            self.startPageRef.viewing_record()
             if self.chk1.get() == True:
-                receipt.write("Supreme\nGasohol 95")
-                receipt.write("\t "+self.G95_price.get())
-                receipt.write("\t     "+self.product_liter.get())
-                receipt.write("\t"+self.total_price.get())
+                record_product_name = "Supreme Gasohol 95"
+                cur2 = con.cursor()
+                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',
+                             (record_id, record_product_name))
+                con.commit()
             if self.chk2.get() == True:
-                receipt.write("Supreme Plus\nGasohol 95")
-                receipt.write("\t "+self.GP95_price.get())
-                receipt.write("\t     " + self.product_liter.get())
-                receipt.write("\t" + self.total_price.get())
+                record_product_name = "Supreme Plus Gasohol 95"
+                cur2 = con.cursor()
+                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',
+                             (record_id, record_product_name))
+                con.commit()
             if self.chk3.get() == True:
-                receipt.write("Supreme E20")
-                receipt.write("\t "+self.E20_price.get())
-                receipt.write("\t     " + self.product_liter.get())
-                receipt.write("\t" + self.total_price.get())
+                record_product_name = "Supreme E20"
+                cur2 = con.cursor()
+                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',
+                             (record_id, record_product_name))
+                con.commit()
             if self.chk4.get() == True:
-                receipt.write("Supreme\nGasohol 91")
-                receipt.write("\t "+self.G91_price.get())
-                receipt.write("\t     " + self.product_liter.get())
-                receipt.write("\t" + self.total_price.get())
+                record_product_name = "Supreme Gasohol 91"
+                cur2 = con.cursor()
+                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',
+                             (record_id, record_product_name))
+                con.commit()
             if self.chk5.get() == True:
-                receipt.write("Supreme Plus\nDiesel")
-                receipt.write("\t\t "+self.DSP_price.get())
-                receipt.write("\t     " + self.product_liter.get())
-                receipt.write("\t" + self.total_price.get())
+                record_product_name = "Supreme Plus Diesel"
+                cur2 = con.cursor()
+                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',
+                             (record_id, record_product_name))
+                con.commit()
             if self.chk6.get() == True:
-                receipt.write("Supreme Diesel")
-                receipt.write("\t "+self.DS_price.get())
-                receipt.write("\t     " + self.product_liter.get())
-                receipt.write("\t" + self.total_price.get())
-            receipt.write("\n\n")
-            receipt.write("\t\tมูลค่าสินค้า:")
-            receipt.write("\t\t"+self.total_price.get()+"\n")
-            receipt.write("\tภาษีมูลค่าเพิ่ม(VAT 7%)")
-            vat = float(self.total_price.get()) * 0.07
-            receipt.write("\t\t" + str(round(vat,2)) + "\n")
-            total = float(self.total_price.get()) + vat
-            receipt.write("\t\tรวมเป็นเงิน:")
-            receipt.write("\t\t" + str(round(total,0)))
-            receipt.write("\n\n\nได้รับสินค้าตามรายการบนนี้ไว้ถูกต้อง\nและในสภาพเรียบร้อยทุกประการ")
-            receipt.write("\n\n\nลงชื่อผู้รับเงิน _________________________________")
-            receipt.write("\n\n\t         *****ขอบคุณที่ใช้บริการ*****")
+                record_product_name = "Supreme Diesel"
+                cur2 = con.cursor()
+                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',
+                             (record_id, record_product_name))
+                con.commit()
 
         except:
             messagebox.showerror("เกิดข้อผิดพลาด","ข้อมูลไม่ถูกต้อง")
             self.confirmation.destroy()
         else:
+            record_id = "INV-{0:07}".format(self.lastest_record_number + 1)
+            tax_id = '0203556007965'
+            tempfiles = tempfile.mktemp(".txt")
+            receipt = open(tempfiles, "wt", encoding="utf-8")
+            receipt.write("\t       ใบเสร็จรับเงิน/ใบกำกับภาษี(ต้นฉบับ)\n")
+            receipt.write(
+                "หจก.เดอะวันปิโตเลียม\n9/7 หมู่ 3 ถ.สุขุมวิท ต.ห้วยกะปิ\nอ.เมืองชลบุรี จ.ชลบุรี 20000\nTel. 086-4069062 FAX: 02-9030080 ต่อ 7811\n")
+            receipt.write("Tax ID:" + tax_id + '\n')
+            receipt.write("สาขาที่ออกใบกำกับภาษี: สำนักงานใหญ่\n")
+            receipt.write("เลขที่: " + record_id + "\n")
+            receipt.write("วันที่: " + self.now.strftime("%d" + "/" + "%m" + "/" + "%Y") + " " + self.now.strftime(
+                "%H" + ":" + "%M") + "\n")
+            receipt.write("ชื่อ: " + self.comp_name.get() + "\n")
+            receipt.write("ที่อยู่: " + self.house_no.get() + " ")
+            if self.Moo_no.get() is not '-':
+                receipt.write("หมู่ " + self.Moo_no.get() + " ")
+            if self.Soi_no.get() is not '-':
+                receipt.write("ซ." + self.Soi_no.get() + " ")
+            if self.Stree_name.get() is not '-':
+                receipt.write("ถ." + self.Stree_name.get() + " ")
+            if self.Thumbon_name.get() is not '-':
+                receipt.write("ต." + self.Thumbon_name.get() + " ")
+            receipt.write("\n")
+            if self.Aumper_name.get() is not '-':
+                receipt.write("        อ." + self.Aumper_name.get() + " ")
+            if self.Province_name.get() is not '-':
+                receipt.write("จ." + self.Province_name.get() + " ")
+            if self.Postcode.get() is not '-':
+                receipt.write(" " + self.Postcode.get() + " ")
+            receipt.write("\n")
+            receipt.write("เลขประจำผู้เสียภาษีผู้ซื้อ: " + self.Cus_tax_num.get() + "\n")
+            receipt.write("ทะเบียนรถ: " + self.car_plate.get())
+            receipt.write("\n")
+            receipt.write("รายการ\t\tราคา/ต่อหน่วย    ปริมาณ\t  จำนวนเงิน\n")
+            receipt.write("========================================\n")
+            if self.chk1.get() == True:
+                receipt.write("Supreme\nGasohol 95")
+                receipt.write("\t " + self.G95_price.get())
+                receipt.write("\t     " + self.product_liter.get())
+                receipt.write("\t  " + self.total_price.get())
+            if self.chk2.get() == True:
+                receipt.write("Supreme Plus\nGasohol 95")
+                receipt.write("\t " + self.GP95_price.get())
+                receipt.write("\t     " + self.product_liter.get())
+                receipt.write("\t  " + self.total_price.get())
+            if self.chk3.get() == True:
+                receipt.write("Supreme E20")
+                receipt.write("\t " + self.E20_price.get())
+                receipt.write("\t     " + self.product_liter.get())
+                receipt.write("\t  " + self.total_price.get())
+            if self.chk4.get() == True:
+                receipt.write("Supreme\nGasohol 91")
+                receipt.write("\t " + self.G91_price.get())
+                receipt.write("\t     " + self.product_liter.get())
+                receipt.write("\t  " + self.total_price.get())
+            if self.chk5.get() == True:
+                receipt.write("Supreme Plus\nDiesel")
+                receipt.write("\t\t " + self.DSP_price.get())
+                receipt.write("\t     " + self.product_liter.get())
+                receipt.write("\t  " + self.total_price.get())
+            if self.chk6.get() == True:
+                receipt.write("Supreme Diesel")
+                receipt.write("\t " + self.DS_price.get())
+                receipt.write("\t     " + self.product_liter.get())
+                receipt.write("\t  " + self.total_price.get())
+            receipt.write("\n\n")
+            receipt.write("\t\tมูลค่าสินค้า:")
+            receipt.write("\t\t  " + self.total_price.get() + "\n")
+            receipt.write("\tภาษีมูลค่าเพิ่ม(VAT 7%)  ")
+            vat = float(self.total_price.get()) * 0.07
+            receipt.write("\t\t" + str(round(vat, 2)) + "\n")
+            total = float(self.total_price.get()) + vat
+            receipt.write("\t\tรวมเป็นเงิน:")
+            receipt.write("\t\t  " + str(round(total, 0)))
+            receipt.write("\n\n\nได้รับสินค้าตามรายการบนนี้ไว้ถูกต้อง\nและในสภาพเรียบร้อยทุกประการ")
+            receipt.write("\n\n\nลงชื่อผู้รับเงิน _________________________________")
+            receipt.write("\n\n\t         *****ขอบคุณที่ใช้บริการ*****")
             self.update_lastest_record()
             self.comp_name.delete(0, 'end')
             self.branch_num.delete(0, 'end')
@@ -435,82 +467,8 @@ class StartPage(tk.Frame):  # Calculate Price
             self.Product5["fg"] = self.off_color
             self.Product6["fg"] = self.off_color
 
-
-            os.startfile(tempfiles)
+            os.startfile(tempfiles,'print')
             self.confirmation.destroy()
-
-    def record_tax_invoice(self):
-        try:
-            record_id = "INV-{0:07}".format(self.lastest_record_number+1)
-            record_total_price = self.total_price.get()
-            record_staff_name = self.staff_name.get()
-            record_date = self.now.strftime("%d"+"/"+"%m"+"/"+"%Y")
-            record_comp_name = self.comp_name.get()
-            Record_list = [record_date,
-                           record_id,
-                           record_comp_name,
-                           record_total_price,
-                           record_staff_name]
-
-
-            con = sqlite3.connect('MyDatabase.db')
-            cur = con.cursor()
-            cur.execute(' INSERT INTO Record(Record_Date, Record_ID, Company_Name, Total_Price,Staff_Name) VALUES(?,?,?,?,?)', Record_list)
-            con.commit()
-            self.startPageRef.viewing_record()
-
-
-        except:
-            messagebox.showerror("เกิดข้อผิดพลาด","กรุณาใส่ข้อมูลให้ครบถ้วน")
-        else:
-            messagebox.showinfo("เสร็จสิ้น","บันทึกข้อมูลเรียบร้อยแล้ว")
-            self.update_lastest_record()
-            self.comp_name.delete(0, 'end')
-            self.branch_num.delete(0, 'end')
-            self.branch_floor.delete(0, 'end')
-            self.building_name.delete(0, 'end')
-            self.village_name.delete(0, 'end')
-            self.house_no.delete(0, 'end')
-            self.Moo_no.delete(0, 'end')
-            self.Soi_no.delete(0, 'end')
-            self.Stree_name.delete(0, 'end')
-            self.Thumbon_name.delete(0, 'end')
-            self.Aumper_name.delete(0, 'end')
-            self.Province_name.delete(0, 'end')
-            self.Postcode.delete(0, 'end')
-            self.Cus_tax_num.delete(0, 'end')
-            self.total_price.delete(0, 'end')
-            self.product_liter.delete(0, 'end')
-            self.car_plate.delete(0, 'end')
-            self.chk1.set(False)
-            self.chk2.set(False)
-            self.chk3.set(False)
-            self.chk4.set(False)
-            self.chk5.set(False)
-            self.chk6.set(False)
-            self.Product1["fg"] = self.off_color
-            self.Product2["fg"] = self.off_color
-            self.Product3["fg"] = self.off_color
-            self.Product4["fg"] = self.off_color
-            self.Product5["fg"] = self.off_color
-            self.Product6["fg"] = self.off_color
-            self.r_confirmation.destroy()
-
-    def record_confirmation(self):
-
-        self.r_confirmation = Toplevel()
-        self.r_confirmation.title("ยืนยันหรือไม่")
-        self.r_confirmation.geometry("%dx%d+%d+%d" % (270, 90, 300, 250))
-        Label(self.r_confirmation, text="ยืนยันการบันทึกหรือไม่?", font=("Helvetica", 20)).grid(row=0, columnspan=2)
-        self.confirm_button = Button(self.r_confirmation, text="ยืนยัน", font=("Helvetica", 14), width=5,
-                                     command=self.record_tax_invoice)
-        self.confirm_button.grid(row=1)
-        self.cancel_button = Button(self.r_confirmation, text="ยกเลิก", font=("Helvetica", 14), width=5,
-                                    command=self.r_confirmation.destroy)
-        self.cancel_button.grid(row=1, column=1)
-        self.r_confirmation.focus_set()
-        self.r_confirmation.grab_set()
-        self.r_confirmation.mainloop()
 
 
     def print_confirmation(self):
@@ -1123,63 +1081,6 @@ class StartPage(tk.Frame):  # Calculate Price
             self.chk6.set(False)
             self.Product6["fg"] = self.off_color
 
-
-    # def CalPrice(self):
-    #
-    #     if self.chk1.get() == True:
-    #         if not self.total_price.get():
-    #             price = float(self.product_liter.get()) * float(self.G95_price.get())
-    #             self.total_price.insert(END, round(price, 3))
-    #
-    #         else:
-    #             liter = float(self.total_price.get()) / float(self.G95_price.get())
-    #             self.product_liter.insert(END, round(liter, 3))
-    #
-    #     if self.chk2.get() == True:
-    #         if not self.total_price.get():
-    #             price = float(self.product_liter.get()) * float(self.GP95_price.get())
-    #             self.total_price.insert(END, round(price, 3))
-    #
-    #         else:
-    #             liter = float(self.total_price.get()) / float(self.GP95_price.get())
-    #             self.product_liter.insert(END, round(liter, 3))
-    #     if self.chk3.get() == True:
-    #         if not self.total_price.get():
-    #             price = float(self.product_liter.get()) * float(self.E20_price.get())
-    #             self.total_price.insert(END, round(price, 3))
-    #
-    #         else:
-    #             liter = float(self.total_price.get()) / float(self.E20_price.get())
-    #             self.product_liter.insert(END, round(liter, 3))
-    #     if self.chk4.get() == True:
-    #         if not self.total_price.get():
-    #             price = float(self.product_liter.get()) * float(self.G91_price.get())
-    #             self.total_price.insert(END, round(price, 3))
-    #
-    #         else:
-    #             liter = float(self.total_price.get()) / float(self.G91_price.get())
-    #             self.product_liter.insert(END, round(liter, 3))
-    #     if self.chk5.get() == True:
-    #         if not self.total_price.get():
-    #             price = float(self.product_liter.get()) * float(self.DSP_price.get())
-    #             self.total_price.insert(END, round(price, 3))
-    #
-    #         else:
-    #             liter = float(self.total_price.get()) / float(self.DSP_price.get())
-    #             self.product_liter.insert(END, round(liter, 3))
-    #     if self.chk6.get() == True:
-    #         if not self.total_price.get():
-    #             price = float(self.product_liter.get()) * float(self.DS_price.get())
-    #             self.total_price.insert(END, round(price, 3))
-    #
-    #         else:
-    #             liter = float(self.total_price.get()) / float(self.DS_price.get())
-    #             self.product_liter.insert(END, round(liter, 3))
-    #
-    # def Clear(self):
-    #     self.product_liter.delete(0, END)
-    #     self.total_price.delete(0, END)
-
     def list_customer(self):
         db = sqlite3.connect('MyDatabase.db')
         cursor = db.execute('SELECT Tax_ID FROM Customer ORDER BY Tax_ID DESC')
@@ -1355,8 +1256,8 @@ class PageTwo(tk.Frame):  # Customer Page
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        AFont = font.Font(family='Helvetica', size=12, weight='bold')
-        BFont = font.Font(family='Helvetica', size=11, )
+        AFont = font.Font(family='Calibri', size=12, weight='bold')
+        BFont = font.Font(family='Calibri', size=11, )
         frame = LabelFrame(self, text="ค้นหา")
         frame.grid(row=1, sticky=NW)
 
@@ -1388,43 +1289,6 @@ class PageTwo(tk.Frame):  # Customer Page
 
         self.my_list = []
 
-        #
-        # Label( frame2,text = 'ชื่อลูกค้า' ).grid( row = 1,column = 2 )
-        # self.Customer_name = Entry( frame2,justify='right'  )
-        # self.Customer_name.grid( row = 1,column = 3 )
-        #
-        # Label( frame2,text = 'ทะเบียนรถ' ).grid( row = 1,column = 4 )
-        # self.Car_plate = Entry( frame2,justify='right'  )
-        # self.Car_plate.grid( row = 1,column = 5 )
-        #
-        # Label( frame2,text = 'ชื่อบริษัท' ).grid( row = 3,column = 2 )
-        # self.Company_name = Entry( frame2,justify='right'  )
-        # self.Company_name.grid( row = 3,column = 3 )
-        #
-        # Label( frame2,text = 'เบอร์โทรศัพท์' ).grid( row = 2,column = 2 )
-        # self.Phone_number = Entry( frame2,justify='right'  )
-        # self.Phone_number.grid( row = 2,column = 3 )
-        #
-        # Label( frame2,text = 'ที่อยู่' ).grid( row = 2,column = 4 )
-        # self.Customer_address = Entry( frame2 ,justify='right' )
-        # self.Customer_address.grid( row = 2,column = 5 )
-        #
-        # ttk.Button( frame2,text = 'เพิ่มข้อมูล',command = self.adding2 ).grid( row = 4,column = 2 )
-        # button1 = ttk.Button( frame2,text = 'ลบข้อมูล',command = self.deleting2 )
-        # button1.grid( row = 4,column = 3 )
-        # button2 = ttk.Button( frame2,text = 'แก้ไขข้อมูล' )
-        # button2.grid( row = 4,column = 4 )
-        #
-        # self.tree2 = ttk.Treeview( self,height = 15,column = ("1","2","3") )
-        # self.tree2.grid( row = 2,column = 0)
-        # self.tree2.heading( '#0',text = 'ชื่อลูกค้า',anchor = W )
-        # self.tree2.heading( 1,text = 'ทะเบียนรถ',anchor = W )
-        # self.tree2.heading( 2,text = 'ชื่อบริษัท',anchor = W )
-        # self.tree2.heading( 3,text = 'เบอร์โทรศัพท์',anchor = W )
-        #
-        # frame2 = LabelFrame(self, text = 'ชุดคำสั่ง')
-        # frame2.grid(row = 0, column = 0, sticky = E)
-
         button3 = ttk.Button(frame2, text="หน้าข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne), width = 15)
         button3.grid(row=0, column=0)
         button3 = ttk.Button(frame2, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne), width = 15)
@@ -1435,7 +1299,6 @@ class PageTwo(tk.Frame):  # Customer Page
         button6.grid(row=0, column=3)
 
 
-    # self.viewing_record2()
 
     def tax_search(self):
 
@@ -1486,61 +1349,6 @@ class PageTwo(tk.Frame):  # Customer Page
         except:
             messagebox.showwarning("คำเตือน!", "ข้อมูลนี้มีอยู่ในระบบแล้ว")
 
-
-# def run_query(self,query,parameters=()):
-# 	with sqlite3.connect( self.db_name ) as conn:
-# 		cursor = conn.cursor()
-# 		query_result = cursor.execute( query,parameters )
-# 		conn.commit()
-# 	return query_result
-#
-# def viewing_record2(self):
-# 	records = self.tree2.get_children()
-# 	for element in records:
-# 		self.tree2.delete( element )
-# 	query = 'SELECT * FROM Customer ORDER BY Customer_ID DESC'
-# 	db_rows = self.run_query( query )
-# 	for row in db_rows:
-# 		self.tree2.insert( '',0,text = row[1],values = (row[2],row[3],row[4]) )
-#
-# def validation2(self):
-# 	return len( self.Customer_name.get() ) != 0 \
-# 		   and len( self.Company_name.get() ) != 0 and len( self.Car_plate.get() ) != 0 \
-# 		   and len( self.Phone_number.get() ) != 0
-#
-# def adding2(self):
-# 	if self.validation2():
-# 		query = 'INSERT INTO Customer VALUES (NULL, ?, ?,?,?,?)'
-# 		parameters = (
-# 			self.Customer_name.get(),self.Phone_number.get(),self.Car_plate.get(),self.Company_name.get(),
-# 			self.Customer_address.get())
-# 		self.run_query( query,parameters )
-# 		self.message2['text'] = 'Record {} added to database'.format( self.Company_name.get() )
-# 		self.Customer_name.delete( 0,END )
-# 		self.Car_plate.delete( 0,END )
-# 		self.Company_name.delete( 0,END )
-# 		self.Phone_number.delete( 0,END )
-#
-# 	else:
-# 		self.message2['text'] = 'Some fields are empty'
-# 	self.viewing_record2()
-#
-# def deleting2(self):
-# 	self.message2['text'] = ''
-# 	try:
-# 		self.tree2.item( self.tree2.selection() )['values'][0]
-# 	except IndexError as e:
-# 		self.message2['text'] = 'Please select record'
-# 		return
-#
-# 	self.message2['text'] = ''
-# 	name = self.tree2.item( self.tree2.selection() )['text']
-# 	query = 'DELETE FROM Customer WHERE Customer_Name = ?'
-# 	self.run_query( query,(name,) )
-# 	self.message2['text'] = 'Record {} is deleted'.format( name )
-# 	self.viewing_record2()
-
-
 class PageThree(tk.Frame):  # CalPrice
 
 
@@ -1548,10 +1356,27 @@ class PageThree(tk.Frame):  # CalPrice
         tk.Frame.__init__(self, parent)
 
 
+        AFont = font.Font(family='Calibri', size=12, weight='bold')
+        BFont = font.Font(family='Calibri', size=11, )
+
         frame = ttk.LabelFrame(self, text='สินค้าทั้งหมด')
         frame.grid(row=1, column=0, sticky=NW)
-        Label(frame, text="ชื่อสินค้า", font=("Helvetica", 10)).grid(row=1, sticky=W)
+        frame2 = ttk.LabelFrame(self, text='คำนวณราคา')
+        frame2.grid(row=1, column=0, sticky=NE)
+        frame3 = ttk.LabelFrame(self, text="ปุ่มคำสั่งต่างๆ")
+        frame3.grid(row=0, column=0, sticky=NE)
+        frame10 = ttk.LabelFrame(self, text = "ผู้ซื้อ")
+        frame10.grid(row=3,sticky = W)
+        frame11 = ttk.LabelFrame(self, text = "เลขภาษี")
+        frame11.grid(row=3,column = 0,sticky = E)
+        frame12 = ttk.LabelFrame(self, text = "ค้นหา")
+        frame12.grid(row=2,column = 0,sticky = W)
+        frame14 = ttk.LabelFrame(self, text = "ค้นหา")
+        frame14.grid(row=2,column = 0,sticky = S)
 
+
+
+        Label(frame, text="ชื่อสินค้า", font=("Helvetica", 10)).grid(row=1, sticky=W)
         self.product_name = ttk.Combobox(frame,width=25, justify='right', font=("Helvetica", 15), state='readonly')
         self.product_name.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name.grid(row=2, column=0)
@@ -1576,25 +1401,16 @@ class PageThree(tk.Frame):  # CalPrice
         self.product_name6.bind("<<ComboboxSelected>>", self.show_price)
         self.product_name6.grid(row=7, column=0)
 
-        # Label( frame,text = "ประเภทสินค้า" ).grid( row = 1,column = 1,sticky = W )
-        # self.product_type = ttk.Combobox(frame, width = 20, state='readonly')
-        # self.product_type['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
-        # self.product_type.grid( row = 2,column = 1 )
-        # self.product_type2 = ttk.Combobox(frame, width = 20, state='readonly')
-        # self.product_type2['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
-        # self.product_type2.grid( row = 3,column = 1 )
-        # self.product_type3 = ttk.Combobox(frame, width = 20, state='readonly')
-        # self.product_type3['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
-        # self.product_type3.grid( row = 4,column = 1 )
-        # self.product_type4 = ttk.Combobox(frame, width = 20, state='readonly')
-        # self.product_type4['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
-        # self.product_type4.grid( row = 5,column = 1 )
-        # self.product_type5 = ttk.Combobox(frame, width = 20, state='readonly')
-        # self.product_type5['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
-        # self.product_type5.grid( row = 6,column = 1 )
-        # self.product_type6 = ttk.Combobox(frame, width = 20, state='readonly')
-        # self.product_type6['values'] = ("น้ำมัน","แก๊ซ","หล่อลื่นเครื่องยนต์","จารบี","น้ำมันเบรก","น้ำมันหล่อลื่น","เกียร์และเฝืองท้าย")
-        # self.product_type6.grid( row = 7,column = 1 )
+        self.combo_product()
+
+        Label(frame12, text="ชื่อบริษัท", font=BFont).grid(row=1, column=0, sticky=E)
+        self.search_comp_name = Entry(frame12, justify='right', width=27)
+        self.search_comp_name.bind('<Return>', self.searchCompName)
+        self.search_comp_name.grid(row=1, column=1, sticky=W)
+        Label(frame12, text="รหัสภาษี", font=BFont).grid(row=2, column=0, sticky=E)
+        self.search_tax_id = Entry(frame12, justify='right', width=27)
+        self.search_tax_id.bind('<Return>', self.searchTaxId)
+        self.search_tax_id.grid(row=2, column=1, sticky=W)
 
         Label(frame, text="ราคา(บาท)", font=("Helvetica", 10)).grid(row=1, column=1, sticky=W)
         self.product_price = Text(frame, height=1, width=5, font=("Helvetica", 15))
@@ -1644,16 +1460,63 @@ class PageThree(tk.Frame):  # CalPrice
         self.product_total6 = Text(frame, height=1, width=8, font=("Helvetica", 15))
         self.product_total6.grid(row=7, column=3)
 
-        frame2 = ttk.LabelFrame(self, text='คำนวณราคา')
-        frame2.grid(row=2, column=0, sticky=W)
-        # Label(frame2, text="ราคาสินค้าทั้งหมด(ไม่รวม Vat) :").grid(row=1, column=0)
-        # self.product_total_no = Entry(frame2, width=15, justify='right')
-        # self.product_total_no.grid(row=1, column=1)
-        #
-        # Label(frame2, text="ภาษีมูลค่าเพิ่ม :").grid(row=2, column=0)
-        # v = StringVar(self, value='7%')
-        # self.Invoice = Entry(frame2, textvariable=v, width=15, justify='right', state='readonly')
-        # self.Invoice.grid(row=2, column=1)
+        self.cus_list = Listbox(frame11, height=5, selectmode=SINGLE)
+        self.cus_list.bind("<Enter>", self.show_tax_list)
+        self.cus_list.bind('<Double-Button>', self.show_data)
+        vsb = ttk.Scrollbar(frame11, orient="vertical", command = self.cus_list.yview)
+        vsb.grid(row = 1 ,column = 1 , sticky = 'ns')
+        self.cus_list.grid(row=1)
+        self.cus_list.config(yscrollcommand = vsb.set)
+
+        Label(frame10, text="ชื่อบริษัท").grid(row=1, column=0, sticky=E)
+        self.comp_name = Entry(frame10, justify='right', width=17)
+        self.comp_name.grid(row=1, column=1, sticky=W)
+        Label(frame10, text="สาขา").grid(row=1, column=2, sticky=E)
+        self.branch_num = Entry(frame10, justify='right', width=17)
+        self.branch_num.grid(row=1, column=3, sticky=W)
+        Label(frame10, text="ชื่อตึก").grid(row=1, column=4, sticky=E)
+        self.building_name = Entry(frame10, justify='right', width=17)
+        self.building_name.grid(row=1, column=5, sticky=W)
+        Label(frame10, text="ชั้น").grid(row=1, column=6, sticky=E)
+        self.branch_floor = Entry(frame10, justify='right', width=8)
+        self.branch_floor.grid(row=1, column=7, sticky=W)
+        Label(frame10, text="หมู่บ้าน").grid(row=2, column=0, sticky=E)
+        self.village_name = Entry(frame10, justify='right', width=17)
+        self.village_name.grid(row=2, column=1, sticky=W)
+        Label(frame10, text="เลขห้อง").grid(row=2, column=2, sticky=E)
+        self.room_no = Entry(frame10, justify='right', width=17)
+        self.room_no.grid(row=2, column=3, sticky=W)
+        Label(frame10, text="เลขที่บ้าน").grid(row=2, column=4, sticky=E)
+        self.house_no = Entry(frame10, justify='right', width=17)
+        self.house_no.grid(row=2, column=5, sticky=W)
+        Label(frame10, text="หมู่").grid(row=2, column=6, sticky=E)
+        self.Moo_no = Entry(frame10, justify='right', width=8)
+        self.Moo_no.grid(row=2, column=7, sticky=W)
+        Label(frame10, text="ซอย").grid(row=3, column=0, sticky=E)
+        self.Soi_no = Entry(frame10, justify='right', width=17)
+        self.Soi_no.grid(row=3, column=1, sticky=W)
+        Label(frame10, text="ถนน").grid(row=3, column=2, sticky=E)
+        self.Stree_name = Entry(frame10, justify='right', width=17)
+        self.Stree_name.grid(row=3, column=3, sticky=W)
+        Label(frame10, text="ตำบล").grid(row=3, column=4, sticky=E)
+        self.Thumbon_name = Entry(frame10, justify='right', width=17)
+        self.Thumbon_name.grid(row=3, column=5, sticky=W)
+        Label(frame10, text="อำเภอ").grid(row=3, column=6, sticky=E)
+        self.Aumper_name = Entry(frame10, justify='right', width=8)
+        self.Aumper_name.grid(row=3, column=7, sticky=W)
+        Label(frame10, text="จังหวัด").grid(row=4, column=0, sticky=E)
+        self.Province_name = Entry(frame10, justify='right', width=17)
+        self.Province_name.grid(row=4, column=1, sticky=W)
+        Label(frame10, text="รหัสไปษณีย์").grid(row=4, column=2, sticky=E)
+        self.Postcode = Entry(frame10, justify='right', width=17)
+        self.Postcode.grid(row=4, column=3, sticky=W)
+        Label(frame10, text="เลขประจำผู้เสียภาษีผู้ซื้อ").place(x=300, y=63)
+        self.Cus_tax_num = Entry(frame10, justify='right', width=20)
+        self.Cus_tax_num.place(x=390, y=64)
+
+        Label(frame14, text = "ทะเบียนรถ", font = BFont).grid(row=0, sticky = E)
+        self.car_plate = Entry(frame14, justify = 'right', width = 20)
+        self.car_plate.grid(row = 0, column = 1)
 
         Label(frame2, text="ราคารวมทั้งหมด", font=("Helvetica", 15)).grid(row=0, column=0)
         self.product_grand_total = Text(frame2, height=1, width=10, font=("Helvetica", 25))
@@ -1663,24 +1526,321 @@ class PageThree(tk.Frame):  # CalPrice
         button2 = ttk.Button(frame2, text='ล้างข้อมูล', width=15, command=self.clear_data)
         button2.grid(row=3, columnspan=2)
 
-        frame3 = ttk.LabelFrame(self, text="ปุ่มคำสั่งต่างๆ")
-        frame3.grid(row=0, column=0, sticky=NE)
-
-        button3 = ttk.Button(frame3, text='หน้าข้อมูลสินค้า', command=lambda: controller.show_frame(PageOne),
-                             width=15)
+        button3 = ttk.Button(frame3, text='หน้าข้อมูลสินค้า', command=lambda: controller.show_frame(PageOne),width=15)
         button3.grid(row=0, column=1)
 
-        button4 = ttk.Button(frame3, text='หน้าข้อมูลลูกค้า', command=lambda: controller.show_frame(PageTwo),
-                             width=15)
+        button4 = ttk.Button(frame3, text='หน้าข้อมูลลูกค้า', command=lambda: controller.show_frame(PageTwo),width=15)
         button4.grid(row=0, column=2)
 
-        button5 = ttk.Button(frame3, text="กลับหน้าคำนวณราคาน้ำมัน",
-                             command=lambda: controller.show_frame(StartPage), width=15)
+        button5 = ttk.Button(frame3, text="กลับหน้าคำนวณราคาน้ำมัน",command=lambda: controller.show_frame(StartPage), width=15)
         button5.grid(row=0, column=0)
 
-        button6 = ttk.Button(frame3, text="ประวัติ",
-                             command=lambda: controller.show_frame(PageFour), width=15)
+        button6 = ttk.Button(frame3, text="ประวัติ",command=lambda: controller.show_frame(PageFour), width=15)
         button6.grid(row=0, column=3)
+
+    def show_tax_list(self,event):
+
+        self.cus_list.delete(0,END)
+        db = sqlite3.connect('MyDatabase.db')
+        cursor = db.execute('SELECT Tax_ID FROM Customer')
+        for row in cursor.fetchall():
+            self.cus_list.insert(END, row)
+
+    def searchCompName(self, event):
+        try:
+            con = sqlite3.connect('MyDatabase.db')
+            cur = con.cursor()
+            cur.execute('SELECT Name FROM Customer WHERE Name like ?', ('%' + self.search_comp_name.get() + '%',))
+            self.tax_list = Toplevel()
+            self.tax_list.title("Result")
+            self.tax_list.geometry("500x200")
+            Label(self.tax_list, text="รายชื่อบริษัท").grid(row=0)
+            self.tax = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
+            self.tax.bind("<Double-Button>", self.show_tax_id)
+            self.tax.grid(row=1)
+            for row in cur.fetchall():
+                self.tax.insert(END, row)
+            Label(self.tax_list, text="รหัสภาษี").grid(row=0, column=1)
+            self.tax_id = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
+            self.tax_id.bind('<Double-Button>', self.show_data2)
+            self.tax_id.grid(row=1, column=1)
+
+            self.tax_list.focus_set()
+            self.tax_list.grab_set()
+            self.tax_list.mainloop()
+        except:
+            messagebox.showwarning("เกิดข้อผิดพลาด", "ไม่พบข้อมูล")
+            self.tax_list.destroy()
+
+
+    def searchTaxId(self, event):
+        try:
+            con = sqlite3.connect('MyDatabase.db')
+            cur = con.cursor()
+            cur.execute("SELECT Name FROM Customer WHERE Tax_ID like ?", ('%' + self.search_tax_id.get() + '%',))
+            self.tax_list = Toplevel()
+            self.tax_list.title("Result")
+            self.tax_list.geometry("500x200")
+            Label(self.tax_list, text="รายชื่อบริษัท").grid(row=0)
+            self.tax = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
+            self.tax.bind("<Double-Button>", self.show_data3)
+            self.tax.grid(row=1)
+            for row in cur.fetchall():
+                self.tax.insert(END, row)
+
+            self.tax_list.focus_set()
+            self.tax_list.grab_set()
+            self.tax_list.mainloop()
+        except:
+            messagebox.showwarning("เกิดข้อผิดพลาด","ไม่พบข้อมูล")
+            self.tax_list.destroy()
+
+    def show_tax_id(self, event):
+
+        self.tax_id.delete(0, 'end')
+        self.get_tax_value = self.tax.get(self.tax.curselection())
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute('SELECT Tax_ID FROM Customer WHERE Name = ? ', (self.get_tax_value))
+        for row in cur.fetchall():
+            self.tax_id.insert(END, row)
+
+    def show_data(self, event):
+
+        self.comp_name.delete(0, 'end')
+        self.branch_num.delete(0, 'end')
+        self.branch_floor.delete(0, 'end')
+        self.building_name.delete(0, 'end')
+        self.village_name.delete(0, 'end')
+        self.house_no.delete(0, 'end')
+        self.Moo_no.delete(0, 'end')
+        self.Soi_no.delete(0, 'end')
+        self.Stree_name.delete(0, 'end')
+        self.Thumbon_name.delete(0, 'end')
+        self.Aumper_name.delete(0, 'end')
+        self.Province_name.delete(0, 'end')
+        self.Postcode.delete(0, 'end')
+        self.Cus_tax_num.delete(0, 'end')
+
+        self.get_selecte_value = self.cus_list.get(self.cus_list.curselection())
+
+
+        self.Cus_tax_num.insert(END, self.get_selecte_value)
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute('SELECT Name FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+        self.comp_name.insert(END,
+                              str(cur.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
+
+        cur2 = con.cursor()
+        cur2.execute('SELECT BranchNumber FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+        self.branch_num.insert(END, cur2.fetchone())
+
+        cur3 = con.cursor()
+        cur3.execute('SELECT BuildingName FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+        self.building_name.insert(END,
+                                  str(cur3.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",",
+                                                                                                                  ''))
+
+        cur4 = con.cursor()
+        cur4.execute('SELECT FloorNumber FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+        self.branch_floor.insert(END, cur4.fetchall())
+
+        cur5 = con.cursor()
+        cur5.execute('SELECT VillageName FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+        self.village_name.insert(END, cur5.fetchall())
+
+        cur6 = con.cursor()
+        cur6.execute('SELECT HouseNumber FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+        self.house_no.insert(END, cur6.fetchall())
+
+        cur7 = con.cursor()
+        cur7.execute('SELECT MooNumber FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+        self.Moo_no.insert(END, cur7.fetchall())
+
+        cur8 = con.cursor()
+        cur8.execute('SELECT SoiName FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+        self.Soi_no.insert(END,
+                           str(cur8.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
+
+        cur9 = con.cursor()
+        cur9.execute('SELECT StreetName FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+        self.Stree_name.insert(END, cur9.fetchall())
+
+        cur10 = con.cursor()
+        cur10.execute('SELECT Thambol FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+        self.Thumbon_name.insert(END, cur10.fetchall())
+
+        cur11 = con.cursor()
+        cur11.execute('SELECT Amphur FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+        self.Aumper_name.insert(END, cur11.fetchall())
+
+        cur12 = con.cursor()
+        cur12.execute('SELECT Province FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+        self.Province_name.insert(END, cur12.fetchall())
+
+        cur13 = con.cursor()
+        cur13.execute('SELECT PostCode FROM Customer WHERE Tax_ID = ?', self.get_selecte_value)
+        self.Postcode.insert(END, cur13.fetchall())
+
+    def show_data2(self, event):
+
+        self.comp_name.delete(0, 'end')
+        self.branch_num.delete(0, 'end')
+        self.branch_floor.delete(0, 'end')
+        self.building_name.delete(0, 'end')
+        self.village_name.delete(0, 'end')
+        self.house_no.delete(0, 'end')
+        self.Moo_no.delete(0, 'end')
+        self.Soi_no.delete(0, 'end')
+        self.Stree_name.delete(0, 'end')
+        self.Thumbon_name.delete(0, 'end')
+        self.Aumper_name.delete(0, 'end')
+        self.Province_name.delete(0, 'end')
+        self.Postcode.delete(0, 'end')
+        self.Cus_tax_num.delete(0, 'end')
+        self.get_value = self.tax_id.get(self.tax_id.curselection())
+
+        self.Cus_tax_num.insert(END, self.get_value)
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute('SELECT Name FROM Customer WHERE Tax_ID = ?', (self.get_value))
+        self.comp_name.insert(END,
+                              str(cur.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
+
+        cur2 = con.cursor()
+        cur2.execute('SELECT BranchNumber FROM Customer WHERE Tax_ID = ?', (self.get_value))
+        self.branch_num.insert(END, cur2.fetchone())
+
+        cur3 = con.cursor()
+        cur3.execute('SELECT BuildingName FROM Customer WHERE Tax_ID = ?', (self.get_value))
+        self.building_name.insert(END,
+                                  str(cur3.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",",
+                                                                                                                  ''))
+
+        cur4 = con.cursor()
+        cur4.execute('SELECT FloorNumber FROM Customer WHERE Tax_ID = ?', (self.get_value))
+        self.branch_floor.insert(END, cur4.fetchall())
+
+        cur5 = con.cursor()
+        cur5.execute('SELECT VillageName FROM Customer WHERE Tax_ID = ?', (self.get_value))
+        self.village_name.insert(END, cur5.fetchall())
+
+        cur6 = con.cursor()
+        cur6.execute('SELECT HouseNumber FROM Customer WHERE Tax_ID = ?', (self.get_value))
+        self.house_no.insert(END, cur6.fetchall())
+
+        cur7 = con.cursor()
+        cur7.execute('SELECT MooNumber FROM Customer WHERE Tax_ID = ?', (self.get_value))
+        self.Moo_no.insert(END, cur7.fetchall())
+
+        cur8 = con.cursor()
+        cur8.execute('SELECT SoiName FROM Customer WHERE Tax_ID = ?', (self.get_value))
+        self.Soi_no.insert(END,
+                           str(cur8.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
+
+        cur9 = con.cursor()
+        cur9.execute('SELECT StreetName FROM Customer WHERE Tax_ID = ?', (self.get_value))
+        self.Stree_name.insert(END, cur9.fetchall())
+
+        cur10 = con.cursor()
+        cur10.execute('SELECT Thambol FROM Customer WHERE Tax_ID = ?', (self.get_value))
+        self.Thumbon_name.insert(END, cur10.fetchall())
+
+        cur11 = con.cursor()
+        cur11.execute('SELECT Amphur FROM Customer WHERE Tax_ID = ?', (self.get_value))
+        self.Aumper_name.insert(END, cur11.fetchall())
+
+        cur12 = con.cursor()
+        cur12.execute('SELECT Province FROM Customer WHERE Tax_ID = ?', (self.get_value))
+        self.Province_name.insert(END, cur12.fetchall())
+
+        cur13 = con.cursor()
+        cur13.execute('SELECT PostCode FROM Customer WHERE Tax_ID = ?', (self.get_value))
+        self.Postcode.insert(END, cur13.fetchall())
+
+        self.tax_list.destroy()
+
+    def show_data3(self, event):
+
+        self.comp_name.delete(0, 'end')
+        self.branch_num.delete(0, 'end')
+        self.branch_floor.delete(0, 'end')
+        self.building_name.delete(0, 'end')
+        self.village_name.delete(0, 'end')
+        self.house_no.delete(0, 'end')
+        self.Moo_no.delete(0, 'end')
+        self.Soi_no.delete(0, 'end')
+        self.Stree_name.delete(0, 'end')
+        self.Thumbon_name.delete(0, 'end')
+        self.Aumper_name.delete(0, 'end')
+        self.Province_name.delete(0, 'end')
+        self.Postcode.delete(0, 'end')
+        self.Cus_tax_num.delete(0, 'end')
+        self.get_selecte_value = self.tax.get(self.tax.curselection())
+
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute('SELECT Name FROM Customer WHERE Name = ?', (self.get_selecte_value))
+        self.comp_name.insert(END,
+                              str(cur.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
+
+        cur2 = con.cursor()
+        cur2.execute('SELECT BranchNumber FROM Customer WHERE Name = ?', (self.get_selecte_value))
+        self.branch_num.insert(END, cur2.fetchone())
+
+        cur3 = con.cursor()
+        cur3.execute('SELECT BuildingName FROM Customer WHERE Name = ?', (self.get_selecte_value))
+        self.building_name.insert(END,
+                                  str(cur3.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",",
+                                                                                                                  ''))
+
+        cur4 = con.cursor()
+        cur4.execute('SELECT FloorNumber FROM Customer WHERE Name = ?', (self.get_selecte_value))
+        self.branch_floor.insert(END, cur4.fetchall())
+
+        cur5 = con.cursor()
+        cur5.execute('SELECT VillageName FROM Customer WHERE Name = ?', (self.get_selecte_value))
+        self.village_name.insert(END, cur5.fetchall())
+
+        cur6 = con.cursor()
+        cur6.execute('SELECT HouseNumber FROM Customer WHERE Name = ?', (self.get_selecte_value))
+        self.house_no.insert(END, cur6.fetchall())
+
+        cur7 = con.cursor()
+        cur7.execute('SELECT MooNumber FROM Customer WHERE Name = ?', (self.get_selecte_value))
+        self.Moo_no.insert(END, cur7.fetchall())
+
+        cur8 = con.cursor()
+        cur8.execute('SELECT SoiName FROM Customer WHERE Name = ?', (self.get_selecte_value))
+        self.Soi_no.insert(END,
+                           str(cur8.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
+
+        cur9 = con.cursor()
+        cur9.execute('SELECT StreetName FROM Customer WHERE Name = ?', (self.get_selecte_value))
+        self.Stree_name.insert(END, cur9.fetchall())
+
+        cur10 = con.cursor()
+        cur10.execute('SELECT Thambol FROM Customer WHERE Name = ?', (self.get_selecte_value))
+        self.Thumbon_name.insert(END, cur10.fetchall())
+
+        cur11 = con.cursor()
+        cur11.execute('SELECT Amphur FROM Customer WHERE Name = ?', (self.get_selecte_value))
+        self.Aumper_name.insert(END, cur11.fetchall())
+
+        cur12 = con.cursor()
+        cur12.execute('SELECT Province FROM Customer WHERE Name = ?', (self.get_selecte_value))
+        self.Province_name.insert(END, cur12.fetchall())
+
+        cur13 = con.cursor()
+        cur13.execute('SELECT PostCode FROM Customer WHERE Name = ?', (self.get_selecte_value))
+        self.Postcode.insert(END, cur13.fetchall())
+
+        cur14 = con.cursor()
+        cur14.execute('SELECT Tax_ID FROM Customer WHERE Name = ?', (self.get_selecte_value))
+        self.Cus_tax_num.insert(END, cur14.fetchall())
+
+        self.tax_list.destroy()
 
     def CalProduct(self):
 
@@ -1833,18 +1993,22 @@ class PageFour(tk.Frame):
         frame = LabelFrame(self, text = "" )
         frame.grid(row = 2)
 
-        Label(self, text="ประวัติการออกใบกำกับภาษี", font=("Helvetica", 20)).grid(row=0, column=0, sticky=NW)
-        self.history_list = ttk.Treeview(frame, height = 18, column =('A','B','C','D'))
+
+        self.history_list = ttk.Treeview(frame, height = 18, column =('A','B','C','D','E','F'))
         self.history_list.heading('#0', text = "วันที่เอกสาร")
         self.history_list.heading('A', text = "เลขที่เอกสาร")
         self.history_list.heading('B', text="ชื่อลูกค้า")
-        self.history_list.heading('C', text="จำนวนเงิน")
-        self.history_list.heading('D', text="ผู้รับผิดชอบ")
+        self.history_list.heading('C', text="เลขทะเบียนรถ")
+        self.history_list.heading('D', text="จำนวนเงิน")
+        self.history_list.heading('E', text="ผู้รับผิดชอบ")
+        self.history_list.heading('F', text="สถานะ")
         self.history_list.column('#0', width=110)
         self.history_list.column('A', width=110)
-        self.history_list.column('B', width=300)
-        self.history_list.column('C', width=110)
+        self.history_list.column('B', width=200)
+        self.history_list.column('C', width=100)
         self.history_list.column('D', width=110)
+        self.history_list.column('E', width=110)
+        self.history_list.column('F', width=50)
         vsb = ttk.Scrollbar(frame, orient='vertical', command=self.history_list.yview)
         hsb = ttk.Scrollbar(frame, orient = 'horizontal' , command = self.history_list.xview)
         self.history_list.grid(row=0, sticky = 'nsew')
@@ -1855,19 +2019,47 @@ class PageFour(tk.Frame):
         Label(self, text = "ค้นหาตามวันที่",font=("Helvetica", 15)).grid(row = 1 ,sticky = W)
         self.date_search = Entry(self, justify = 'right')
         self.date_search.bind('<KeyRelease>', self.search_record_date)
-        self.date_search.place(x = 120, y = 45)
-        Label(self, text = "ค้นหาตามชื่อ", font=("Helvetica", 15)).place(x = 250 , y = 38)
+        self.date_search.place(x = 120, y = 58)
+        Label(self, text = "ค้นหาตามชื่อ", font=("Helvetica", 15)).place(x = 250 , y = 50)
         self.comp_name_search = Entry(self, justify = 'right')
         self.comp_name_search.bind('<KeyRelease>', self.search_record_name)
-        self.comp_name_search.place(x = 360, y =45)
+        self.comp_name_search.place(x = 360, y =58)
+        self.cancel_but = tk.Button(self,text="ยกเลิกใบกำกับภาษี", command = self.cancel_record)
+        self.cancel_but.place(x = 720, y = 52)
 
+        frame3 = ttk.LabelFrame(self, text="ปุ่มคำสั่งต่างๆ")
+        frame3.grid(row=0, column=0, sticky=NW)
 
+        button3 = ttk.Button(frame3, text='หน้าข้อมูลสินค้า', command=lambda: controller.show_frame(PageOne), width=15)
+        button3.grid(row=0, column=1)
 
+        button4 = ttk.Button(frame3, text='หน้าข้อมูลลูกค้า', command=lambda: controller.show_frame(PageTwo), width=15)
+        button4.grid(row=0, column=2)
 
-        button1 = ttk.Button(self, text='หน้าหลัก', command=lambda: controller.show_frame(StartPage))
-        button1.place(x = 300 , y = 5)
+        button5 = ttk.Button(frame3, text="กลับหน้าคำนวณราคาน้ำมัน", command=lambda: controller.show_frame(StartPage),
+                             width=15)
+        button5.grid(row=0, column=0)
 
+        button6 = ttk.Button(frame3, text="ประวัติ", command=lambda: controller.show_frame(PageFour), width=15)
+        button6.grid(row=0, column=3)
         self.viewing_record()
+
+    def cancel_record(self):
+        try:
+            self.history_list.item(self.history_list.selection())['values'][1]
+        except IndexError as e:
+            messagebox.showwarning("เกิดข้อผิดพลาด", "กรุณาเลือกสินค้า")
+            return
+        record_id = self.history_list.item(self.history_list.selection())['values'][0]
+        cancel_text = 'ยกเลิก'
+
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute('UPDATE Record SET Status = ? WHERE Record_ID = ?' , (cancel_text,record_id))
+        con.commit()
+        self.viewing_record()
+
+
 
     def viewing_record(self):
         records = self.history_list.get_children()
@@ -1877,7 +2069,7 @@ class PageFour(tk.Frame):
         cur = con.cursor()
         cur.execute('SELECT * FROM Record ORDER BY Record_ID DESC')
         for row in cur.fetchall():
-            self.history_list.insert('', 0, text=row[1], values=(row[0], row[2],row[3], row[4]))
+            self.history_list.insert('', 0, text=row[1], values=(row[0], row[3],row[2], row[4],row[5],row[6]))
 
     def search_record_date(self,event):
         records = self.history_list.get_children()
@@ -1887,7 +2079,7 @@ class PageFour(tk.Frame):
         cur = con.cursor()
         cur.execute('SELECT * FROM Record WHERE Record_Date like ?',('%' + self.date_search.get() + '%',))
         for row in cur.fetchall():
-            self.history_list.insert('', 0, text=row[1], values=(row[0], row[2], row[3], row[4]))
+            self.history_list.insert('', 0, text=row[1], values=(row[0], row[3], row[2], row[4],row[5],row[6]))
 
     def search_record_name(self,event):
         records = self.history_list.get_children()
@@ -1897,7 +2089,7 @@ class PageFour(tk.Frame):
         cur = con.cursor()
         cur.execute('SELECT * FROM Record WHERE Company_Name like ?',('%' + self.comp_name_search.get() + '%',))
         for row in cur.fetchall():
-            self.history_list.insert('', 0, text=row[1], values=(row[0], row[2], row[3], row[4]))
+            self.history_list.insert('', 0, text=row[1], values=(row[0], row[3], row[2], row[4],row[5],row[6]))
 
 
 app = Invoice()
