@@ -38,6 +38,7 @@ class Invoice(tk.Tk):
 
         self.frames[PageOne].setStartPageRef(self.frames[StartPage])
         self.frames[PageTwo].setStartPageRef2(self.frames[StartPage])
+        self.frames[PageThree].setStartPageRef3(self.frames[StartPage])
         self.frames[StartPage].setStartPageRef4(self.frames[PageFour])
         self.frames[PageOne].setStartPageRef5(self.frames[PageThree])
 
@@ -1206,7 +1207,7 @@ class PageOne(tk.Frame):  # Product Page
             messagebox.showwarning("เกิดข้อผิดพลาด", "กรุณาเลือกสินค้า")
             return
 
-        name = self.tree.item( self.tree.selection() )['text']
+        name = self.tree.item( self.tree.selection())['text']
         old_price = self.tree.item(self.tree.selection())['values'][1]
 
         self.edit_main = Toplevel()
@@ -1219,7 +1220,8 @@ class PageOne(tk.Frame):  # Product Page
         Label( self.edit_main,text = 'ชื่อสินค้าใหม่',font=("Helvetica", 16)).grid( row = 1,column = 1 )
         new_name = Text( self.edit_main, height =1,width = 30,font=("Helvetica", 15))
         new_name.grid( row = 1,column = 2 )
-        new_name.insert('1.0', name)
+        new_name['wrap'] = 'none'
+        new_name.insert(END,name)
 
         Label(self.edit_main, text='ราคาเก่า',font=("Helvetica", 16)).grid(row=2, column=1)
         Pre_Price = Label(self.edit_main, textvariable=StringVar(self.edit_main, value=old_price), font=("Helvetica", 16))
@@ -1229,7 +1231,7 @@ class PageOne(tk.Frame):  # Product Page
         new_price.grid(row=3, column=2)
 
         Button(self.edit_main, text='ตกลง',font=("Helvetica", 14),width = 8,height=1,
-               command=lambda: self.edit_record(new_price.get(1.0,END), new_name.get(1.0,END) ,old_price, name)).grid(row=4, column=2,)
+               command=lambda: self.edit_record(new_price.get(1.0,'end-1c'), new_name.get(1.0,'end-1c') ,old_price, name)).grid(row=4, column=2,)
         Button(self.edit_main, text ="ยกเลิก",font=("Helvetica", 14),width = 8,height=1,command = self.edit_main.destroy).grid(row=5,column =2)
 
         self.edit_main.focus_set()
@@ -1352,10 +1354,13 @@ class PageTwo(tk.Frame):  # Customer Page
 class PageThree(tk.Frame):  # CalPrice
 
 
+    def setStartPageRef3(self, startPageRef):
+        self.startPageRef = startPageRef
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-
+        self.now = datetime.datetime.now()
         AFont = font.Font(family='Calibri', size=12, weight='bold')
         BFont = font.Font(family='Calibri', size=11, )
 
@@ -1518,6 +1523,11 @@ class PageThree(tk.Frame):  # CalPrice
         self.car_plate = Entry(frame14, justify = 'right', width = 20)
         self.car_plate.grid(row = 0, column = 1)
 
+        self.print = tk.Button(self , text = "พิมพ์",font=('Calibri', '20'),width = 5, command =self.print_confirmation)
+        self.print.place(x = 630 , y = 230)
+        self.print = tk.Button(self , text = "test",font=('Calibri', '20'),width = 5, command = self.get_value)
+        self.print.place(x = 400 , y = 230)
+
         Label(frame2, text="ราคารวมทั้งหมด", font=("Helvetica", 15)).grid(row=0, column=0)
         self.product_grand_total = Text(frame2, height=1, width=10, font=("Helvetica", 25))
         self.product_grand_total.grid(row=1, column=0)
@@ -1537,6 +1547,203 @@ class PageThree(tk.Frame):  # CalPrice
 
         button6 = ttk.Button(frame3, text="ประวัติ",command=lambda: controller.show_frame(PageFour), width=15)
         button6.grid(row=0, column=3)
+
+        self.update_lastest_record()
+
+    def get_value(self):
+
+        self.product_list = [self.product_name.get(),
+                        self.product_name2.get(),
+                        self.product_name3.get(),
+                        self.product_name4.get(),
+                        self.product_name5.get(),
+                        self.product_name6.get()]
+        self.product_price_list = [self.product_price.get("1.0", 'end-1c'),
+                                   self.product_price2.get("1.0", 'end-1c'),
+                                   self.product_price3.get("1.0", 'end-1c'),
+                                   self.product_price4.get("1.0", 'end-1c'),
+                                   self.product_price5.get("1.0", 'end-1c'),
+                                   self.product_price6.get("1.0", 'end-1c')]
+        self.product_num_list = [self.product_number.get("1.0", 'end-1c'),
+                                 self.product_number2.get("1.0", 'end-1c'),
+                                 self.product_number3.get("1.0", 'end-1c'),
+                                 self.product_number4.get("1.0", 'end-1c'),
+                                 self.product_number5.get("1.0", 'end-1c'),
+                                 self.product_number6.get("1.0", 'end-1c')]
+        self.product_total_list = [self.product_total.get("1.0", 'end-1c'),
+                                  self.product_total2.get("1.0", 'end-1c'),
+                                  self.product_total3.get("1.0", 'end-1c'),
+                                  self.product_total4.get("1.0", 'end-1c'),
+                                  self.product_total5.get("1.0", 'end-1c'),
+                                  self.product_total6.get("1.0", 'end-1c')]
+        self.product_list = list(filter(None, self.product_list))
+        self.product_price_list = list(filter(None, self.product_price_list))
+        self.product_num_list = list(filter(None, self.product_num_list))
+        self.product_total_list = list(filter(None, self.product_total_list))
+
+
+
+    def update_lastest_record(self):
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute(' SELECT Record_ID FROM Record ORDER BY Record_ID DESC LIMIT 1')
+        self.lastest_record = str(cur.fetchone()).replace('INV-','').replace('(', '').replace(')', '').replace("'", '').replace(",", '')
+        self.lastest_record_number = int(self.lastest_record)
+
+    def print_receipt(self):
+
+        try:
+            # record_id = "INV-{0:07}".format(self.lastest_record_number + 1)
+            # record_total_price = self.product_grand_total.get()
+            # recrod_car_plate = self.car_plate.get()
+            # record_staff_name = self.startPageRef.staff_name.get()
+            # record_date = self.now.strftime("%d" + "/" + "%m" + "/" + "%Y")
+            # record_comp_name = self.comp_name.get()
+            # Record_list = [record_date,
+            #                record_id,
+            #                record_comp_name,
+            #                record_total_price,
+            #                record_staff_name,
+            #                recrod_car_plate]
+            #
+            # con = sqlite3.connect('MyDatabase.db')
+            # cur = con.cursor()
+            # cur.execute(
+            #     ' INSERT INTO Record(Record_Date, Record_ID, Company_Name, Total_Price,Staff_Name, Car_Plate) VALUES(?,?,?,?,?,?)',
+            #     Record_list)
+            # con.commit()
+            # self.startPageRef.viewing_record()
+            # record_product_name = "Supreme Diesel"
+            # cur2 = con.cursor()
+            # cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',(record_id, record_product_name))
+            # con.commit()
+            self.product_list = [self.product_name.get(),
+                                 self.product_name2.get(),
+                                 self.product_name3.get(),
+                                 self.product_name4.get(),
+                                 self.product_name5.get(),
+                                 self.product_name6.get()]
+            self.product_price_list = [self.product_price.get("1.0", 'end-1c'),
+                                       self.product_price2.get("1.0", 'end-1c'),
+                                       self.product_price3.get("1.0", 'end-1c'),
+                                       self.product_price4.get("1.0", 'end-1c'),
+                                       self.product_price5.get("1.0", 'end-1c'),
+                                       self.product_price6.get("1.0", 'end-1c')]
+            self.product_num_list = [self.product_number.get("1.0", 'end-1c'),
+                                     self.product_number2.get("1.0", 'end-1c'),
+                                     self.product_number3.get("1.0", 'end-1c'),
+                                     self.product_number4.get("1.0", 'end-1c'),
+                                     self.product_number5.get("1.0", 'end-1c'),
+                                     self.product_number6.get("1.0", 'end-1c')]
+            self.product_total_list = [self.product_total.get("1.0", 'end-1c'),
+                                       self.product_total2.get("1.0", 'end-1c'),
+                                       self.product_total3.get("1.0", 'end-1c'),
+                                       self.product_total4.get("1.0", 'end-1c'),
+                                       self.product_total5.get("1.0", 'end-1c'),
+                                       self.product_total6.get("1.0", 'end-1c')]
+            self.product_list = list(filter(None, self.product_list))
+            self.product_price_list = list(filter(None, self.product_price_list))
+            self.product_num_list = list(filter(None, self.product_num_list))
+            self.product_total_list = list(filter(None, self.product_total_list))
+
+            record_id = "INV-{0:07}".format(self.lastest_record_number + 1)
+            tax_id = '0203556007965'
+            tempfiles = tempfile.mktemp(".txt")
+            receipt = open(tempfiles, "wt", encoding="utf-8")
+            receipt.write("\t       ใบเสร็จรับเงิน/ใบกำกับภาษี(ต้นฉบับ)\n")
+            receipt.write(
+                "หจก.เดอะวันปิโตเลียม\n9/7 หมู่ 3 ถ.สุขุมวิท ต.ห้วยกะปิ\nอ.เมืองชลบุรี จ.ชลบุรี 20000\nTel. 086-4069062 FAX: 02-9030080 ต่อ 7811\n")
+            receipt.write("Tax ID:" + tax_id + '\n')
+            receipt.write("สาขาที่ออกใบกำกับภาษี: สำนักงานใหญ่\n")
+            receipt.write("เลขที่: " + record_id + "\n")
+            receipt.write("วันที่: " + self.now.strftime("%d" + "/" + "%m" + "/" + "%Y") + " " + self.now.strftime(
+                "%H" + ":" + "%M") + "\n")
+            receipt.write("ชื่อ: " + self.comp_name.get() + "\n")
+            receipt.write("ที่อยู่: " + self.house_no.get() + " ")
+            if self.Moo_no.get() is not '-':
+                receipt.write("หมู่ " + self.Moo_no.get() + " ")
+            if self.Soi_no.get() is not '-':
+                receipt.write("ซ." + self.Soi_no.get() + " ")
+            if self.Stree_name.get() is not '-':
+                receipt.write("ถ." + self.Stree_name.get() + " ")
+            if self.Thumbon_name.get() is not '-':
+                receipt.write("ต." + self.Thumbon_name.get() + " ")
+            receipt.write("\n")
+            if self.Aumper_name.get() is not '-':
+                receipt.write("        อ." + self.Aumper_name.get() + " ")
+            if self.Province_name.get() is not '-':
+                receipt.write("จ." + self.Province_name.get() + " ")
+            if self.Postcode.get() is not '-':
+                receipt.write(" " + self.Postcode.get() + " ")
+            receipt.write("\n")
+            receipt.write("เลขประจำผู้เสียภาษีผู้ซื้อ: " + self.Cus_tax_num.get() + "\n")
+            receipt.write("ทะเบียนรถ: " + self.car_plate.get())
+            receipt.write("\n")
+            receipt.write("รายการ\t\t   ราคา/หน่วย    ปริมาณ\tจำนวนเงิน\n")
+            receipt.write("========================================\n")
+
+            for i in range (0, len(self.product_list)):
+                receipt.write(self.product_list[i]+"\t   ")
+                receipt.write(self.product_price_list[i]+"\t        ")
+                receipt.write(self.product_num_list[i]+"\t")
+                receipt.write(self.product_total_list[i]+"\n")
+
+            receipt.write("\n\n")
+            receipt.write("\t\tมูลค่าสินค้า:")
+            receipt.write("\t\t" + self.product_grand_total.get("1.0", 'end-1c') + "\n")
+            receipt.write("\tภาษีมูลค่าเพิ่ม(VAT 7%)  ")
+            vat = float(self.product_grand_total.get("1.0", 'end-1c')) * 0.07
+            receipt.write("\t" + str(round(vat, 2)) + "\n")
+            total = float(self.product_grand_total.get("1.0", 'end-1c')) + vat
+            receipt.write("\t\tรวมเป็นเงิน:")
+            receipt.write("'\t\t" + str(round(total, 0)))
+            receipt.write("\n\n\nได้รับสินค้าตามรายการบนนี้ไว้ถูกต้อง\nและในสภาพเรียบร้อยทุกประการ")
+            receipt.write("\n\n\nลงชื่อผู้รับเงิน _________________________________")
+            receipt.write("\n\n\t         *****ขอบคุณที่ใช้บริการ*****")
+
+            os.startfile(tempfiles,'print')
+
+        except:
+            messagebox.showerror("เกิดข้อผิดพลาด","ข้อมูลไม่ถูกต้อง")
+            self.confirmation.destroy()
+        else:
+            self.update_lastest_record()
+            self.comp_name.delete(0, 'end')
+            self.branch_num.delete(0, 'end')
+            self.branch_floor.delete(0, 'end')
+            self.building_name.delete(0, 'end')
+            self.village_name.delete(0, 'end')
+            self.house_no.delete(0, 'end')
+            self.Moo_no.delete(0, 'end')
+            self.Soi_no.delete(0, 'end')
+            self.Stree_name.delete(0, 'end')
+            self.Thumbon_name.delete(0, 'end')
+            self.Aumper_name.delete(0, 'end')
+            self.Province_name.delete(0, 'end')
+            self.Postcode.delete(0, 'end')
+            self.Cus_tax_num.delete(0, 'end')
+            self.product_grand_total.delete(0,'end')
+            self.car_plate.delete(0,'end')
+
+            self.confirmation.destroy()
+
+
+    def print_confirmation(self):
+
+
+
+        self.confirmation = Toplevel()
+        self.confirmation.title("ยืนยันหรือไม่")
+        self.confirmation.geometry("%dx%d+%d+%d" % (270, 90, 300, 250))
+        Label(self.confirmation, text = "ยืนยันการสั่งพิมพ์หรือไม่?", font=("Helvetica", 20)).grid(row=0,columnspan = 2)
+        self.confirm_button = Button(self.confirmation, text = "ยืนยัน", font=("Helvetica", 14), width = 5, command = self.print_receipt)
+        self.confirm_button.grid(row=1)
+        self.cancel_button = Button(self.confirmation, text = "ยกเลิก", font=("Helvetica", 14), width = 5 , command = self.confirmation.destroy)
+        self.cancel_button.grid(row=1, column = 1)
+        self.confirmation.focus_set()
+        self.confirmation.grab_set()
+        self.confirmation.mainloop()
+
 
     def show_tax_list(self,event):
 
@@ -1846,12 +2053,12 @@ class PageThree(tk.Frame):  # CalPrice
 
         self.product_grand_total.delete(1.0,'end')
         price_total = [
-            self.product_total.get(1.0, END),
-            self.product_total2.get(1.0, END),
-            self.product_total3.get(1.0, END),
-            self.product_total4.get(1.0, END),
-            self.product_total5.get(1.0, END),
-            self.product_total6.get(1.0, END)
+            self.product_total.get("1.0", 'end-1c'),
+            self.product_total2.get("1.0", 'end-1c'),
+            self.product_total3.get("1.0", 'end-1c'),
+            self.product_total4.get("1.0", 'end-1c'),
+            self.product_total5.get("1.0", 'end-1c'),
+            self.product_total6.get("1.0", 'end-1c')
         ]
         sum = 0
         for x in price_total:
@@ -1897,37 +2104,37 @@ class PageThree(tk.Frame):  # CalPrice
     def LiveCal(self, event):
 
         self.product_total.delete(1.0, END)
-        price = int(self.product_number.get(1.0, END)) * float(self.product_price.get(1.0, END))
+        price = int(self.product_number.get("1.0", 'end-1c')) * float(self.product_price.get("1.0", 'end-1c'))
         self.product_total.insert(END, round(price, 2))
 
     def LiveCal2(self, event):
 
         self.product_total2.delete(1.0, END)
-        price2 = int(self.product_number2.get(1.0, END)) * float(self.product_price2.get(1.0, END))
+        price2 = int(self.product_number2.get("1.0", 'end-1c')) * float(self.product_price2.get("1.0", 'end-1c'))
         self.product_total2.insert(END, round(price2, 2))
 
     def LiveCal3(self, event):
 
         self.product_total3.delete(1.0, END)
-        price3 = int(self.product_number3.get(1.0, END)) * float(self.product_price3.get(1.0, END))
+        price3 = int(self.product_number3.get("1.0", 'end-1c')) * float(self.product_price3.get("1.0", 'end-1c'))
         self.product_total3.insert(END, round(price3, 2))
 
     def LiveCal4(self, event):
 
         self.product_total4.delete(1.0, END)
-        price4 = int(self.product_number4.get(1.0, END)) * float(self.product_price4.get(1.0, END))
+        price4 = int(self.product_number4.get("1.0", 'end-1c')) * float(self.product_price4.get("1.0", 'end-1c'))
         self.product_total4.insert(END, round(price4, 2))
 
     def LiveCa15(self, event):
 
         self.product_total5.delete(1.0, END)
-        price5 = int(self.product_number5.get(1.0, END)) * float(self.product_price5.get(1.0, END))
+        price5 = int(self.product_number5.get("1.0", 'end-1c')) * float(self.product_price5.get("1.0", 'end-1c'))
         self.product_total5.insert(END, round(price5, 2))
 
     def LiveCa16(self, event):
 
         self.product_total6.delete(1.0, END)
-        price6 = int(self.product_number6.get(1.0, END)) * float(self.product_price6.get(1.0, END))
+        price6 = int(self.product_number6.get("1.0", 'end-1c')) * float(self.product_price6.get("1.0", 'end-1c'))
         self.product_total6.insert(END, round(price6, 2))
 
     def combo_product(self):
