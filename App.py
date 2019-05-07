@@ -41,6 +41,7 @@ class Invoice(tk.Tk):
         self.frames[PageThree].setStartPageRef3(self.frames[StartPage])
         self.frames[StartPage].setStartPageRef4(self.frames[PageFour])
         self.frames[PageOne].setStartPageRef5(self.frames[PageThree])
+        self.frames[PageThree].setStartPageRef6(self.frames[PageFour])
 
         self.show_frame(StartPage)
 
@@ -1357,6 +1358,9 @@ class PageThree(tk.Frame):  # CalPrice
     def setStartPageRef3(self, startPageRef):
         self.startPageRef = startPageRef
 
+    def setStartPageRef6(self, startPageRef):
+        self.startPageRef2 = startPageRef
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -1552,34 +1556,44 @@ class PageThree(tk.Frame):  # CalPrice
 
     def get_value(self):
 
+        record_id = "INV-{0:07}".format(self.lastest_record_number + 1)
+        record_total_price = self.product_grand_total.get("1.0", 'end-1c')
+        recrod_car_plate = self.car_plate.get()
+        record_staff_name = self.startPageRef.staff_name.get()
+        record_date = self.now.strftime("%d" + "/" + "%m" + "/" + "%Y")
+        record_comp_name = self.comp_name.get()
+        Record_list = [record_date,
+                       record_id,
+                       record_comp_name,
+                       record_total_price,
+                       record_staff_name,
+                       recrod_car_plate]
+
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute(
+            ' INSERT INTO Record(Record_Date, Record_ID, Company_Name, Total_Price,Staff_Name, Car_Plate) VALUES(?,?,?,?,?,?)',
+            Record_list)
+        con.commit()
+        self.startPageRef2.viewing_record()
         self.product_list = [self.product_name.get(),
-                        self.product_name2.get(),
-                        self.product_name3.get(),
-                        self.product_name4.get(),
-                        self.product_name5.get(),
-                        self.product_name6.get()]
-        self.product_price_list = [self.product_price.get("1.0", 'end-1c'),
-                                   self.product_price2.get("1.0", 'end-1c'),
-                                   self.product_price3.get("1.0", 'end-1c'),
-                                   self.product_price4.get("1.0", 'end-1c'),
-                                   self.product_price5.get("1.0", 'end-1c'),
-                                   self.product_price6.get("1.0", 'end-1c')]
+                             self.product_name2.get(),
+                             self.product_name3.get(),
+                             self.product_name4.get(),
+                             self.product_name5.get(),
+                             self.product_name6.get()]
         self.product_num_list = [self.product_number.get("1.0", 'end-1c'),
                                  self.product_number2.get("1.0", 'end-1c'),
                                  self.product_number3.get("1.0", 'end-1c'),
                                  self.product_number4.get("1.0", 'end-1c'),
                                  self.product_number5.get("1.0", 'end-1c'),
                                  self.product_number6.get("1.0", 'end-1c')]
-        self.product_total_list = [self.product_total.get("1.0", 'end-1c'),
-                                  self.product_total2.get("1.0", 'end-1c'),
-                                  self.product_total3.get("1.0", 'end-1c'),
-                                  self.product_total4.get("1.0", 'end-1c'),
-                                  self.product_total5.get("1.0", 'end-1c'),
-                                  self.product_total6.get("1.0", 'end-1c')]
         self.product_list = list(filter(None, self.product_list))
-        self.product_price_list = list(filter(None, self.product_price_list))
         self.product_num_list = list(filter(None, self.product_num_list))
-        self.product_total_list = list(filter(None, self.product_total_list))
+        cur2 = con.cursor()
+        for item_name,item_num in zip(self.product_list, self.product_num_list):
+            cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name, Product_Number) VALUES(?,?,?)', (record_id, item_name, item_num))
+        con.commit()
 
 
 
@@ -1593,30 +1607,50 @@ class PageThree(tk.Frame):  # CalPrice
     def print_receipt(self):
 
         try:
-            # record_id = "INV-{0:07}".format(self.lastest_record_number + 1)
-            # record_total_price = self.product_grand_total.get()
-            # recrod_car_plate = self.car_plate.get()
-            # record_staff_name = self.startPageRef.staff_name.get()
-            # record_date = self.now.strftime("%d" + "/" + "%m" + "/" + "%Y")
-            # record_comp_name = self.comp_name.get()
-            # Record_list = [record_date,
-            #                record_id,
-            #                record_comp_name,
-            #                record_total_price,
-            #                record_staff_name,
-            #                recrod_car_plate]
-            #
-            # con = sqlite3.connect('MyDatabase.db')
-            # cur = con.cursor()
-            # cur.execute(
-            #     ' INSERT INTO Record(Record_Date, Record_ID, Company_Name, Total_Price,Staff_Name, Car_Plate) VALUES(?,?,?,?,?,?)',
-            #     Record_list)
-            # con.commit()
-            # self.startPageRef.viewing_record()
-            # record_product_name = "Supreme Diesel"
-            # cur2 = con.cursor()
-            # cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',(record_id, record_product_name))
-            # con.commit()
+            record_id = "INV-{0:07}".format(self.lastest_record_number + 1)
+            record_total_price = self.product_grand_total.get("1.0", 'end-1c')
+            recrod_car_plate = self.car_plate.get()
+            record_staff_name = self.startPageRef.staff_name.get()
+            record_date = self.now.strftime("%d" + "/" + "%m" + "/" + "%Y")
+            record_comp_name = self.comp_name.get()
+            Record_list = [record_date,
+                           record_id,
+                           record_comp_name,
+                           record_total_price,
+                           record_staff_name,
+                           recrod_car_plate]
+
+            con = sqlite3.connect('MyDatabase.db')
+            cur = con.cursor()
+            cur.execute(
+                ' INSERT INTO Record(Record_Date, Record_ID, Company_Name, Total_Price,Staff_Name, Car_Plate) VALUES(?,?,?,?,?,?)',
+                Record_list)
+            con.commit()
+            self.startPageRef2.viewing_record()
+            self.product_list = [self.product_name.get(),
+                                 self.product_name2.get(),
+                                 self.product_name3.get(),
+                                 self.product_name4.get(),
+                                 self.product_name5.get(),
+                                 self.product_name6.get()]
+            self.product_num_list = [self.product_number.get("1.0", 'end-1c'),
+                                     self.product_number2.get("1.0", 'end-1c'),
+                                     self.product_number3.get("1.0", 'end-1c'),
+                                     self.product_number4.get("1.0", 'end-1c'),
+                                     self.product_number5.get("1.0", 'end-1c'),
+                                     self.product_number6.get("1.0", 'end-1c')]
+            self.product_list = list(filter(None, self.product_list))
+            self.product_num_list = list(filter(None, self.product_num_list))
+            cur2 = con.cursor()
+            for item_name, item_num in zip(self.product_list, self.product_num_list):
+                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name, Product_Number) VALUES(?,?,?)',
+                             (record_id, item_name, item_num))
+            con.commit()
+
+        except:
+            messagebox.showerror("เกิดข้อผิดพลาด","ข้อมูลไม่ถูกต้อง")
+            self.confirmation.destroy()
+        else:
             self.product_list = [self.product_name.get(),
                                  self.product_name2.get(),
                                  self.product_name3.get(),
@@ -1682,11 +1716,11 @@ class PageThree(tk.Frame):  # CalPrice
             receipt.write("รายการ\t\t   ราคา/หน่วย    ปริมาณ\tจำนวนเงิน\n")
             receipt.write("========================================\n")
 
-            for i in range (0, len(self.product_list)):
-                receipt.write(self.product_list[i]+"\t   ")
-                receipt.write(self.product_price_list[i]+"\t        ")
-                receipt.write(self.product_num_list[i]+"\t")
-                receipt.write(self.product_total_list[i]+"\n")
+            for i in range(0, len(self.product_list)):
+                receipt.write(self.product_list[i] + "\t   ")
+                receipt.write(self.product_price_list[i] + "\t        ")
+                receipt.write(self.product_num_list[i] + "\t")
+                receipt.write(self.product_total_list[i] + "\n")
 
             receipt.write("\n\n")
             receipt.write("\t\tมูลค่าสินค้า:")
@@ -1701,12 +1735,8 @@ class PageThree(tk.Frame):  # CalPrice
             receipt.write("\n\n\nลงชื่อผู้รับเงิน _________________________________")
             receipt.write("\n\n\t         *****ขอบคุณที่ใช้บริการ*****")
 
-            os.startfile(tempfiles,'print')
+            os.startfile(tempfiles, 'print')
 
-        except:
-            messagebox.showerror("เกิดข้อผิดพลาด","ข้อมูลไม่ถูกต้อง")
-            self.confirmation.destroy()
-        else:
             self.update_lastest_record()
             self.comp_name.delete(0, 'end')
             self.branch_num.delete(0, 'end')
