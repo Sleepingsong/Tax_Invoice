@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="01fef1f8-0460-44d2-9a11-1f49b52f8b0b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.py" beforeDir="false" afterPath="$PROJECT_DIR$/App.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyDatabase.db" beforeDir="false" afterPath="$PROJECT_DIR$/MyDatabase.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,20 +18,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="773">
-              <caret line="2335" selection-start-line="2335" selection-end-line="2335" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="214">
+              <caret line="2308" column="44" lean-forward="true" selection-end-line="2335" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="128">
+              <caret line="2406" column="57" lean-forward="true" selection-start-line="2406" selection-start-column="57" selection-end-line="2406" selection-end-column="57" />
             </state>
           </provider>
         </entry>
@@ -39,35 +36,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test02.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21641">
-              <caret line="1289" column="29" selection-start-line="1289" selection-start-column="29" selection-end-line="1289" selection-end-column="29" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Test03.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="1567" column="42" lean-forward="true" selection-start-line="1567" selection-start-column="42" selection-end-line="1567" selection-end-column="42" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Test_Print.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="10" selection-start-line="10" selection-end-line="10" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="281">
+              <caret line="352" column="58" lean-forward="true" selection-start-line="352" selection-start-column="58" selection-end-line="352" selection-end-column="58" />
             </state>
           </provider>
         </entry>
@@ -85,21 +55,18 @@
     <findStrings>
       <find>cus_list</find>
       <find>page</find>
-      <find>pageone</find>
-      <find>lam</find>
-      <find>Calprice</find>
-      <find>print</find>
-      <find>product</find>
       <find>PageOne</find>
-      <find>edit_reco</find>
-      <find>edit_record</find>
-      <find>show_tax</find>
-      <find>BFont</find>
-      <find>print_confirmation</find>
-      <find>lastest_record</find>
+      <find>pageone</find>
+      <find>controller.show_frame</find>
+      <find>confirmation</find>
+      <find>INSER</find>
+      <find>Staff</find>
       <find>now</find>
-      <find>edit_rec</find>
+      <find>history_list</find>
     </findStrings>
+    <replaceStrings>
+      <replace>staff_record_list</replace>
+    </replaceStrings>
     <dirStrings>
       <dir>C:\Users\Woranat.S\Desktop\Tax_Invoice</dir>
     </dirStrings>
@@ -111,18 +78,17 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/MainWindow.py" />
-        <option value="$PROJECT_DIR$/Test02.py" />
-        <option value="$PROJECT_DIR$/Test_Print.py" />
-        <option value="$PROJECT_DIR$/Test.py" />
-        <option value="$PROJECT_DIR$/App.py" />
         <option value="$PROJECT_DIR$/Test03.py" />
+        <option value="$PROJECT_DIR$/Test02.py" />
+        <option value="$PROJECT_DIR$/App.py" />
+        <option value="$PROJECT_DIR$/Test.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1038" />
-    <option name="y" value="23" />
-    <option name="width" value="1156" />
+    <option name="x" value="40" />
+    <option name="y" value="74" />
+    <option name="width" value="974" />
     <option name="height" value="1050" />
   </component>
   <component name="ProjectView">
@@ -151,7 +117,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Test03">
+  <component name="RunManager" selected="Python.Test">
     <configuration name="App" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -236,34 +202,12 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Test_Print" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Tax_Invoice" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test_Print.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Test03" />
-        <item itemvalue="Python.App" />
-        <item itemvalue="Python.Test_Print" />
-        <item itemvalue="Python.Test02" />
         <item itemvalue="Python.Test" />
+        <item itemvalue="Python.App" />
+        <item itemvalue="Python.Test02" />
+        <item itemvalue="Python.Test03" />
       </list>
     </recent_temporary>
   </component>
@@ -425,70 +369,21 @@
       <option name="project" value="LOCAL" />
       <updated>1555066159568</updated>
     </task>
-    <task id="LOCAL-00022" summary="- Add record">
-      <created>1555267307382</created>
+    <task id="LOCAL-00022" summary="- History Date and Company name search">
+      <created>1555326438098</created>
       <option name="number" value="00022" />
       <option name="presentableId" value="LOCAL-00022" />
       <option name="project" value="LOCAL" />
-      <updated>1555267307382</updated>
+      <updated>1555326438098</updated>
     </task>
-    <task id="LOCAL-00023" summary="- Add print confirmation screen">
-      <created>1555347153389</created>
+    <task id="LOCAL-00023" summary="- Move button to the top&#10;- Adjust home page">
+      <created>1556514358553</created>
       <option name="number" value="00023" />
       <option name="presentableId" value="LOCAL-00023" />
       <option name="project" value="LOCAL" />
-      <updated>1555347153390</updated>
+      <updated>1556514358569</updated>
     </task>
-    <task id="LOCAL-00024" summary="- Add print confirmation screen">
-      <created>1556478779811</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1556478779811</updated>
-    </task>
-    <task id="LOCAL-00025" summary="- Add print confirmation screen">
-      <created>1556884584726</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1556884584726</updated>
-    </task>
-    <task id="LOCAL-00026" summary="- Add some print function">
-      <created>1556896236825</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1556896236825</updated>
-    </task>
-    <task id="LOCAL-00027" summary="- Automatically update Product data">
-      <created>1556995677779</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1556995677779</updated>
-    </task>
-    <task id="LOCAL-00028" summary="- Add widgets to Calculation Page">
-      <created>1557075223416</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1557075223416</updated>
-    </task>
-    <task id="LOCAL-00029" summary="- Print reciept">
-      <created>1557144551505</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1557144551506</updated>
-    </task>
-    <task id="LOCAL-00030" summary="- Print reciept">
-      <created>1557144645767</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1557144645767</updated>
-    </task>
-    <option name="localTasksCounter" value="31" />
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TodoView">
@@ -501,7 +396,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.21695095" />
@@ -512,14 +407,14 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49520257" visible="true" weight="0.31527627" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32980132" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4989339" visible="true" weight="0.3165563" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3986755" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32980132" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50479746" side_tool="true" weight="0.31527627" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5010661" side_tool="true" weight="0.31744313" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32936078" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32936078" />
@@ -531,9 +426,34 @@
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="R Graphics" order="8" />
-      <window_info anchor="right" id="R Packages" order="9" weight="0.32995737" />
     </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2177243" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33479214" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Maven" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Capture Analysis" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+    </layout-to-restore>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Change font size and rearrange button." />
@@ -553,74 +473,38 @@
     <MESSAGE value="- Calculate grand total price" />
     <MESSAGE value="- Edit Product price and update dynamically&#10;- All frames know each other now in order to use method across frame(class)" />
     <MESSAGE value="- Add Scrollbar&#10;- Staff_login and logout function&#10;- Error handling for Staff_ID, Search for Company name, and Tax_ID" />
-    <MESSAGE value="- Add record" />
-    <MESSAGE value="- Add print confirmation screen" />
-    <MESSAGE value="- Add some print function" />
-    <MESSAGE value="- Automatically update Product data" />
-    <MESSAGE value="- Add widgets to Calculation Page" />
-    <MESSAGE value="- Print reciept" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Print reciept" />
+    <MESSAGE value="- History Date and Company name search" />
+    <MESSAGE value="- Move button to the top&#10;- Adjust home page" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Move button to the top&#10;- Adjust home page" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/MainWindow.py" />
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/encodings/cp1252.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
+        <state relative-caret-position="163">
           <caret line="1704" selection-start-line="1704" selection-end-line="1704" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Test.py">
+    <entry file="file://$PROJECT_DIR$/Test03.py" />
+    <entry file="file://$PROJECT_DIR$/App.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        <state relative-caret-position="214">
+          <caret line="2308" column="44" lean-forward="true" selection-end-line="2335" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test02.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21641">
-          <caret line="1289" column="29" selection-start-line="1289" selection-start-column="29" selection-end-line="1289" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="281">
+          <caret line="352" column="58" lean-forward="true" selection-start-line="352" selection-start-column="58" selection-end-line="352" selection-end-column="58" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Test_Print.py">
+    <entry file="file://$PROJECT_DIR$/Test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="773">
-          <caret line="2335" selection-start-line="2335" selection-end-line="2335" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test03.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="1567" column="42" lean-forward="true" selection-start-line="1567" selection-start-column="42" selection-end-line="1567" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="128">
+          <caret line="2406" column="57" lean-forward="true" selection-start-line="2406" selection-start-column="57" selection-end-line="2406" selection-end-column="57" />
         </state>
       </provider>
     </entry>

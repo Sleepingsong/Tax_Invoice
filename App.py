@@ -31,7 +31,7 @@ class Invoice(tk.Tk):
 
         self.frames = {}
 
-        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour):
+        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour, PageFive):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="NSEW")
@@ -42,6 +42,7 @@ class Invoice(tk.Tk):
         self.frames[StartPage].setStartPageRef4(self.frames[PageFour])
         self.frames[PageOne].setStartPageRef5(self.frames[PageThree])
         self.frames[PageThree].setStartPageRef6(self.frames[PageFour])
+        self.frames[StartPage].setStartPageRef7(self.frames[PageFive])
 
         self.show_frame(StartPage)
 
@@ -53,10 +54,12 @@ class Invoice(tk.Tk):
 class StartPage(tk.Frame):  # Calculate Price
 
     db_name = 'MyDatabase.db'
-    now = datetime.datetime.now()
 
     def setStartPageRef4(self, startPageRef):
         self.startPageRef = startPageRef
+
+    def setStartPageRef7(self, startPageRef):
+        self.startPageRef2 = startPageRef
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -262,19 +265,24 @@ class StartPage(tk.Frame):  # Calculate Price
         self.cus_list.grid(row=1)
         self.cus_list.config(yscrollcommand = vsb.set)
 
+        test = ttk.Button(self,text = 'test', command=self.staff_shift_record)
+        test.place(x=300,y=300)
 
-        button3 = ttk.Button(frame8, text="คำนวณสินค้าเพิ่มเติม", command=lambda: controller.show_frame(PageThree),
+        button3 = ttk.Button(frame8, text="คำนวณสินค้าอื่นๆ", command=lambda: controller.show_frame(PageThree),
                              width=15)
         button3.grid(row=0, column=0, )
         button3 = ttk.Button(frame8, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne),
-                             width=15)
+                             width=13)
         button3.grid(row=0, column=1, )
         button3 = ttk.Button(frame8, text="ข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo),
-                             width=15)
+                             width=13)
         button3.grid(row=0, column=2, )
         button6 = ttk.Button(frame8, text="ประวัติ", command=lambda: controller.show_frame(PageFour),
-                             width=15)
+                             width=13)
         button6.grid(row=0, column=3)
+        button6 = ttk.Button(frame8, text="พนักงาน", command=lambda: controller.show_frame(PageFive),
+                             width=13)
+        button6.grid(row=0, column=4)
 
         self.update_lastest_record()
         self.record_number = 1
@@ -298,13 +306,13 @@ class StartPage(tk.Frame):  # Calculate Price
         self.lastest_record_number = int(self.lastest_record)
 
     def print_receipt(self):
-
+        now = datetime.datetime.now()
         try:
             record_id = "INV-{0:07}".format(self.lastest_record_number + 1)
             record_total_price = self.total_price.get()
             recrod_car_plate = self.car_plate.get()
             record_staff_name = self.staff_name.get()
-            record_date = self.now.strftime("%d" + "/" + "%m" + "/" + "%Y")
+            record_date = now.strftime("%d" + "/" + "%m" + "/" + "%Y")
             record_comp_name = self.comp_name.get()
             Record_list = [record_date,
                            record_id,
@@ -371,7 +379,7 @@ class StartPage(tk.Frame):  # Calculate Price
             receipt.write("Tax ID:" + tax_id + '\n')
             receipt.write("สาขาที่ออกใบกำกับภาษี: สำนักงานใหญ่\n")
             receipt.write("เลขที่: " + record_id + "\n")
-            receipt.write("วันที่: " + self.now.strftime("%d" + "/" + "%m" + "/" + "%Y") + " " + self.now.strftime(
+            receipt.write("วันที่: " + now.strftime("%d" + "/" + "%m" + "/" + "%Y") + " " + now.strftime(
                 "%H" + ":" + "%M") + "\n")
             receipt.write("ชื่อ: " + self.comp_name.get() + "\n")
             receipt.write("ที่อยู่: " + self.house_no.get() + " ")
@@ -473,6 +481,7 @@ class StartPage(tk.Frame):  # Calculate Price
             self.confirmation.destroy()
 
 
+
     def print_confirmation(self):
 
 
@@ -490,6 +499,7 @@ class StartPage(tk.Frame):  # Calculate Price
         self.confirmation.mainloop()
 
     def staff_login(self,event):
+        now = datetime.datetime.now()
         try:
             self.staff_name.config(state = 'normal')
             self.shift_time.config(state=  'normal')
@@ -500,8 +510,7 @@ class StartPage(tk.Frame):  # Calculate Price
             cur = con.cursor()
             cur.execute('SELECT Staff_Name FROM Staff WHERE Staff_ID = ?', self.staff_id.get())
             self.staff_name.insert(END, str(cur.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
-            self.shift_time.insert(END, self.now.strftime("%H" + ":" + "%M"))
-            self.record_button.config(state='normal')
+            self.shift_time.insert(END, now.strftime("%H" + ":" + "%M"))
             self.staff_id.config(state = 'readonly')
             self.staff_name.config(state='readonly')
             self.shift_time.config(state='readonly')
@@ -519,6 +528,21 @@ class StartPage(tk.Frame):  # Calculate Price
         self.staff_id.delete(0,END)
         self.staff_name.config(state='readonly')
         self.shift_time.config(state='readonly')
+
+    def staff_shift_record(self):
+        try:
+            now = datetime.datetime.now()
+            staff_id = self.staff_id.get()
+            staff_name = self.staff_name.get()
+            start_time = self.shift_time.get()
+            end_time = now.strftime("%H" + ":" + "%M")
+            record_date = now.strftime("%d" + "/" + "%m" + "/" + "%Y")
+            con = sqlite3.connect('MyDatabase.db')
+            cur = con.cursor()
+            cur.execute('INSERT INTO Staff_Record(Staff_ID, Staff_Name,Date,Start_Time,End_Time) VALUES(?,?,?,?,?)' , (staff_id,staff_name,record_date,start_time,end_time))
+            con.commit()
+        except:
+            messagebox.showerror("เกิดข้อผิดพลาด","ข้อมูลไม่ถูกต้อง")
 
     def show_tax_list(self,event):
 
@@ -1145,15 +1169,17 @@ class PageOne(tk.Frame):  # Product Page
         frame2 = LabelFrame(self, text='ชุดคำสั่ง')
         frame2.grid(row=0, column=0, sticky=W)
 
-        button3 = ttk.Button(frame2, text="หน้าคำนวณสินค้า", command=lambda: controller.show_frame(StartPage), width = 15)
+        button3 = ttk.Button(frame2, text="คำนวณสินค้า", command=lambda: controller.show_frame(StartPage), width = 15)
         button3.grid(row=0, column=0, )
-        button3 = ttk.Button(frame2, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne), width = 15)
+        button3 = ttk.Button(frame2, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne), width = 13)
         button3.grid(row=0, column=1, )
-        button3 = ttk.Button(frame2, text="ข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo), width = 15)
+        button3 = ttk.Button(frame2, text="ข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo), width = 13)
         button3.grid(row=0, column=2, )
-        button6 = ttk.Button(frame2, text="ประวัติ", command=lambda: controller.show_frame(PageFour), width = 15)
+        button6 = ttk.Button(frame2, text="ประวัติ", command=lambda: controller.show_frame(PageFour), width = 13)
         button6.grid(row=0, column=3)
-
+        button6 = ttk.Button(frame2, text="พนักงาน", command=lambda: controller.show_frame(PageFive),
+                             width=13)
+        button6.grid(row=0, column=4)
 
         self.viewing_record()
 
@@ -1292,14 +1318,17 @@ class PageTwo(tk.Frame):  # Customer Page
 
         self.my_list = []
 
-        button3 = ttk.Button(frame2, text="หน้าข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne), width = 15)
+        button3 = ttk.Button(frame2, text="คำนวณสินค้า", command=lambda: controller.show_frame(StartPage), width = 15)
         button3.grid(row=0, column=0)
-        button3 = ttk.Button(frame2, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne), width = 15)
+        button3 = ttk.Button(frame2, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne), width = 13)
         button3.grid(row=0, column=1, )
-        button3 = ttk.Button(frame2, text="ข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo), width = 15)
+        button3 = ttk.Button(frame2, text="ข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo), width = 13)
         button3.grid(row=0, column=2, )
-        button6 = ttk.Button(frame2, text="ประวัติ", command=lambda: controller.show_frame(PageFour), width = 15)
+        button6 = ttk.Button(frame2, text="ประวัติ", command=lambda: controller.show_frame(PageFour), width = 13)
         button6.grid(row=0, column=3)
+        button6 = ttk.Button(frame2, text="พนักงาน", command=lambda: controller.show_frame(PageFive),
+                             width=13)
+        button6.grid(row=0, column=4)
 
 
 
@@ -1540,17 +1569,20 @@ class PageThree(tk.Frame):  # CalPrice
         button2 = ttk.Button(frame2, text='ล้างข้อมูล', width=15, command=self.clear_data)
         button2.grid(row=3, columnspan=2)
 
-        button3 = ttk.Button(frame3, text='หน้าข้อมูลสินค้า', command=lambda: controller.show_frame(PageOne),width=15)
+        button3 = ttk.Button(frame3, text='ข้อมูลสินค้า', command=lambda: controller.show_frame(PageOne),width=15)
         button3.grid(row=0, column=1)
 
-        button4 = ttk.Button(frame3, text='หน้าข้อมูลลูกค้า', command=lambda: controller.show_frame(PageTwo),width=15)
+        button4 = ttk.Button(frame3, text='ข้อมูลลูกค้า', command=lambda: controller.show_frame(PageTwo),width=13)
         button4.grid(row=0, column=2)
 
-        button5 = ttk.Button(frame3, text="กลับหน้าคำนวณราคาน้ำมัน",command=lambda: controller.show_frame(StartPage), width=15)
+        button5 = ttk.Button(frame3, text="คำนวณราคาน้ำมัน",command=lambda: controller.show_frame(StartPage), width=13)
         button5.grid(row=0, column=0)
 
-        button6 = ttk.Button(frame3, text="ประวัติ",command=lambda: controller.show_frame(PageFour), width=15)
+        button6 = ttk.Button(frame3, text="ประวัติ",command=lambda: controller.show_frame(PageFour), width=13)
         button6.grid(row=0, column=3)
+        button6 = ttk.Button(frame3, text="พนักงาน", command=lambda: controller.show_frame(PageFive),
+                             width=13)
+        button6.grid(row=0, column=4)
 
         self.update_lastest_record()
 
@@ -2262,23 +2294,26 @@ class PageFour(tk.Frame):
         self.comp_name_search.bind('<KeyRelease>', self.search_record_name)
         self.comp_name_search.place(x = 360, y =58)
         self.cancel_but = tk.Button(self,text="ยกเลิกใบกำกับภาษี", command = self.cancel_record)
-        self.cancel_but.place(x = 720, y = 52)
+        self.cancel_but.place(x = 680, y = 52)
 
         frame3 = ttk.LabelFrame(self, text="ปุ่มคำสั่งต่างๆ")
         frame3.grid(row=0, column=0, sticky=NW)
 
-        button3 = ttk.Button(frame3, text='หน้าข้อมูลสินค้า', command=lambda: controller.show_frame(PageOne), width=15)
+        button3 = ttk.Button(frame3, text='ข้อมูลสินค้า', command=lambda: controller.show_frame(PageOne), width=15)
         button3.grid(row=0, column=1)
 
-        button4 = ttk.Button(frame3, text='หน้าข้อมูลลูกค้า', command=lambda: controller.show_frame(PageTwo), width=15)
+        button4 = ttk.Button(frame3, text='ข้อมูลลูกค้า', command=lambda: controller.show_frame(PageTwo), width=13)
         button4.grid(row=0, column=2)
 
-        button5 = ttk.Button(frame3, text="กลับหน้าคำนวณราคาน้ำมัน", command=lambda: controller.show_frame(StartPage),
-                             width=15)
+        button5 = ttk.Button(frame3, text="คำนวณราคาน้ำมัน", command=lambda: controller.show_frame(StartPage),
+                             width=13)
         button5.grid(row=0, column=0)
 
-        button6 = ttk.Button(frame3, text="ประวัติ", command=lambda: controller.show_frame(PageFour), width=15)
+        button6 = ttk.Button(frame3, text="ประวัติ", command=lambda: controller.show_frame(PageFour), width=13)
         button6.grid(row=0, column=3)
+        button6 = ttk.Button(frame3, text="พนักงาน", command=lambda: controller.show_frame(PageFive),
+                             width=13)
+        button6.grid(row=0, column=4)
         self.viewing_record()
 
     def cancel_record(self):
@@ -2327,6 +2362,123 @@ class PageFour(tk.Frame):
         cur.execute('SELECT * FROM Record WHERE Company_Name like ?',('%' + self.comp_name_search.get() + '%',))
         for row in cur.fetchall():
             self.history_list.insert('', 0, text=row[1], values=(row[0], row[3], row[2], row[4],row[5],row[6]))
+
+
+class PageFive(tk.Frame):
+
+    db_name = 'MyDatabase.db'
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+
+        frame1 = LabelFrame(self, text = "ลงทะเบียนพนักงาน:")
+        frame1.grid(row =1,sticky = W)
+        frame3 = LabelFrame(self, text = "รายชื่อพนักงานทั้งหมด")
+        frame3.grid(row = 2, sticky = W)
+        frame4 = LabelFrame(self, text = "ประวัติพนักงานเข้า-ออก")
+        frame4.grid(row = 2, column =0,sticky = E)
+
+        Label(frame1, text = "ใส่่ชื่อพนักงาน").grid(row = 0)
+        self.staff_name = Entry(frame1, justify = 'right')
+        self.staff_name.grid(row = 0, column = 1)
+        self.staff_name.bind('<Return>', self.add_confirmation)
+
+        Label(frame3, text = "ค้นหา:").grid(row = 0, sticky = W)
+        # self.staff_search = Entry(frame3, justify = 'right')
+        # self.staff_search.grid(row = 0 , column = 0)
+
+        self.staff_list = ttk.Treeview(frame3, height = 15, column =('A'))
+        self.staff_list.heading('#0', text = "ชื่อพนักงาน")
+        self.staff_list.heading('A', text = "รหัสพนักงาน")
+        self.staff_list.column('#0', width=150)
+        self.staff_list.column('A', width=80)
+        vsb = ttk.Scrollbar(frame3, orient='vertical', command=self.staff_list.yview)
+        self.staff_list.grid(row=1, sticky = 'nsew')
+        vsb.grid(row=1, column=1, sticky='ns')
+        self.staff_list.configure(yscrollcommand=vsb.set)
+
+        Label(frame4, text="ค้นหา:").grid(row=0, sticky=W)
+        self.staff_record_list = ttk.Treeview(frame4, height=15, column=('A', 'B', 'C','D'))
+        self.staff_record_list.heading('#0', text="ชื่อพนักงาน")
+        self.staff_record_list.heading('A', text="รหัสพนักงาน")
+        self.staff_record_list.heading('B', text="วันที่")
+        self.staff_record_list.heading('C', text="เข้ากะ")
+        self.staff_record_list.heading('D', text="ออกกะ")
+        self.staff_record_list.column('#0', width=150)
+        self.staff_record_list.column('A', width=80)
+        self.staff_record_list.column('B', width=100)
+        self.staff_record_list.column('C', width=80)
+        self.staff_record_list.column('D', width=80)
+        vsb2 = ttk.Scrollbar(frame4, orient='vertical', command=self.staff_record_list.yview)
+        self.staff_record_list.grid(row=1, sticky='nsew')
+        vsb2.grid(row=1, column=1, sticky='ns')
+        self.staff_record_list.configure(yscrollcommand=vsb2.set)
+
+
+
+        frame2 = LabelFrame(self, text='ชุดคำสั่ง')
+        frame2.grid(row=0, column=0, sticky=W)
+
+        button3 = ttk.Button(frame2, text="คำนวณสินค้า", command=lambda: controller.show_frame(StartPage), width=15)
+        button3.grid(row=0, column=0, )
+        button3 = ttk.Button(frame2, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne), width=13)
+        button3.grid(row=0, column=1, )
+        button3 = ttk.Button(frame2, text="ข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo), width=13)
+        button3.grid(row=0, column=2, )
+        button6 = ttk.Button(frame2, text="ประวัติ", command=lambda: controller.show_frame(PageFour), width=13)
+        button6.grid(row=0, column=3)
+        button6 = ttk.Button(frame2, text="พนักงาน", command=lambda: controller.show_frame(PageFive),
+                             width=13)
+        button6.grid(row=0, column=4)
+
+        self.show_staff_record()
+        self.show_staff()
+    def show_staff(self):
+        records = self.staff_list.get_children()
+        for element in records:
+            self.staff_list.delete(element)
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute('SELECT * FROM Staff ORDER BY Staff_ID ASC')
+        for row in cur.fetchall():
+            self.staff_list.insert('', END, text=row[1], values=(row[0]))
+
+    def show_staff_record(self):
+        records = self.staff_record_list.get_children()
+        for element in records:
+            self.staff_record_list.delete(element)
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute('SELECT * FROM Staff_Record ORDER BY Staff_Record_ID ASC')
+        for row in cur.fetchall():
+            self.staff_record_list.insert('', END, text=row[2], values=(row[1],row[3],row[4],row[5]))
+
+    def add_staff(self):
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute('INSERT INTO Staff(Staff_Name) VALUES(?)' , (self.staff_name.get(),))
+        con.commit()
+        self.confirmation.destroy()
+        self.show_staff_record()
+
+    def add_confirmation(self,event):
+
+        self.confirmation = Toplevel()
+        self.confirmation.title("ยืนยันหรือไม่")
+        self.confirmation.geometry("%dx%d+%d+%d" % (270, 90, 300, 250))
+        Label(self.confirmation, text="ยืนยันการการลงทะเบียนหรือไม่?", font=("Helvetica", 15)).grid(row=0,columnspan=2)
+        self.confirm_button = Button(self.confirmation, text="ยืนยัน", font=("Helvetica", 14), width=5,
+                                         command=self.add_staff)
+        self.confirm_button.grid(row=1)
+        self.cancel_button = Button(self.confirmation, text="ยกเลิก", font=("Helvetica", 14), width=5,command=self.confirmation.destroy)
+        self.cancel_button.grid(row=1, column=1)
+        self.confirmation.focus_set()
+        self.confirmation.grab_set()
+        self.confirmation.mainloop()
+
+
+
 
 
 app = Invoice()
