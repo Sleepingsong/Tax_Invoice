@@ -265,8 +265,6 @@ class StartPage(tk.Frame):  # Calculate Price
         self.cus_list.grid(row=1)
         self.cus_list.config(yscrollcommand = vsb.set)
 
-        test = ttk.Button(self,text = 'test', command=self.staff_shift_record)
-        test.place(x=300,y=300)
 
         button3 = ttk.Button(frame8, text="คำนวณสินค้าอื่นๆ", command=lambda: controller.show_frame(PageThree),
                              width=15)
@@ -1124,7 +1122,7 @@ class StartPage(tk.Frame):  # Calculate Price
 
     def list_customer(self):
         db = sqlite3.connect('MyDatabase.db')
-        cursor = db.execute('SELECT Tax_ID FROM Customer ORDER BY Tax_ID DESC')
+        cursor = db.execute('SELECT Tax_ID FROM Customer ORDER BY Tax_ID ASC')
 
         for row in cursor.fetchall():
             self.cus_list.insert(END, row)
@@ -1209,7 +1207,7 @@ class PageOne(tk.Frame):  # Product Page
         records = self.tree.get_children()
         for element in records:
             self.tree.delete(element)
-        query = 'SELECT * FROM Product ORDER BY Product_ID DESC'
+        query = 'SELECT * FROM Product ORDER BY Product_ID ASC'
         db_rows = self.run_query(query)
         for row in db_rows:
             self.tree.insert('', 0, text=row[1], values=(row[2], row[3]))
@@ -2410,7 +2408,7 @@ class PageFour(tk.Frame):
             self.history_list.delete(element)
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
-        cur.execute('SELECT * FROM Record WHERE Record_Date like ?',('%' + self.date_search.get() + '%',))
+        cur.execute('SELECT * FROM Record WHERE Record_Date like ? ORDER BY Record_ID DESC',('%' + self.date_search.get() + '%',))
         for row in cur.fetchall():
             self.history_list.insert('', 0, text=row[1], values=(row[0], row[3], row[2], row[4],row[5],row[6]))
 
@@ -2420,7 +2418,7 @@ class PageFour(tk.Frame):
             self.history_list.delete(element)
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
-        cur.execute('SELECT * FROM Record WHERE Company_Name like ?',('%' + self.comp_name_search.get() + '%',))
+        cur.execute('SELECT * FROM Record WHERE Company_Name like ? ORDER BY Record_ID DESC',('%' + self.comp_name_search.get() + '%',))
         for row in cur.fetchall():
             self.history_list.insert('', 0, text=row[1], values=(row[0], row[3], row[2], row[4],row[5],row[6]))
 
