@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="01fef1f8-0460-44d2-9a11-1f49b52f8b0b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.py" beforeDir="false" afterPath="$PROJECT_DIR$/App.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyDatabase.db" beforeDir="false" afterPath="$PROJECT_DIR$/MyDatabase.db" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,8 +16,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="2500" selection-start-line="2500" selection-end-line="2500" />
+            <state relative-caret-position="-7">
+              <caret line="2517" column="20" selection-start-line="2517" selection-start-column="20" selection-end-line="2517" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -27,7 +25,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="41548">
+            <state>
               <caret line="2460" column="20" selection-start-line="2460" selection-start-column="20" selection-end-line="2460" selection-end-column="20" />
             </state>
           </provider>
@@ -36,7 +34,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test02.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21641">
+            <state>
               <caret line="1289" column="29" selection-start-line="1289" selection-start-column="29" selection-end-line="1289" selection-end-column="29" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
@@ -48,8 +46,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test03.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="2298" column="67" selection-start-line="2298" selection-start-column="67" selection-end-line="2298" selection-end-column="67" />
+            <state>
+              <folding>
+                <element signature="e#4#25#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -57,7 +57,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test_Print.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
+            <state>
               <caret line="10" selection-start-line="10" selection-end-line="10" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -93,12 +93,13 @@
       <find>lastest_record</find>
       <find>now</find>
       <find>edit_rec</find>
-      <find>test</find>
       <find>confirm</find>
       <find>log_out</find>
       <find>log</find>
-      <find>searc</find>
       <find>history_list</find>
+      <find>test</find>
+      <find>DESC</find>
+      <find>searc</find>
     </findStrings>
     <replaceStrings>
       <replace>product_list</replace>
@@ -123,8 +124,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1038" />
-    <option name="y" value="23" />
+    <option name="x" value="866" />
+    <option name="y" value="156" />
     <option name="width" value="1156" />
     <option name="height" value="1050" />
   </component>
@@ -140,7 +141,7 @@
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Python" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -263,8 +264,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.Test03" />
-        <item itemvalue="Python.Test" />
         <item itemvalue="Python.App" />
+        <item itemvalue="Python.Test" />
         <item itemvalue="Python.Test_Print" />
         <item itemvalue="Python.Test02" />
       </list>
@@ -498,7 +499,21 @@
       <option name="project" value="LOCAL" />
       <updated>1557254865632</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="- Show more detail on history">
+      <created>1557334213428</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1557334213428</updated>
+    </task>
+    <task id="LOCAL-00033" summary="- Show more detail on history">
+      <created>1557334696785</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1557334696785</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TodoView">
@@ -511,7 +526,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="866" y="156" width="1156" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.21695095" />
@@ -523,13 +538,13 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49520257" visible="true" weight="0.31527627" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4946695" visible="true" weight="0.31733915" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32980132" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50479746" side_tool="true" weight="0.31527627" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5053305" side_tool="true" weight="0.31527627" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32936078" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32936078" />
@@ -570,7 +585,8 @@
     <MESSAGE value="- Add widgets to Calculation Page" />
     <MESSAGE value="- Print reciept" />
     <MESSAGE value="- Add product_record database" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Add product_record database" />
+    <MESSAGE value="- Show more detail on history" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Show more detail on history" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/MainWindow.py" />
@@ -588,16 +604,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/App.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-7">
+          <caret line="2517" column="20" selection-start-line="2517" selection-start-column="20" selection-end-line="2517" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="41548">
+        <state>
           <caret line="2460" column="20" selection-start-line="2460" selection-start-column="20" selection-end-line="2460" selection-end-column="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test02.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21641">
+        <state>
           <caret line="1289" column="29" selection-start-line="1289" selection-start-column="29" selection-end-line="1289" selection-end-column="29" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
@@ -607,7 +630,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Test_Print.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
+        <state>
           <caret line="10" selection-start-line="10" selection-end-line="10" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -615,17 +638,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="2500" selection-start-line="2500" selection-end-line="2500" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Test03.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="2298" column="67" selection-start-line="2298" selection-start-column="67" selection-end-line="2298" selection-end-column="67" />
+        <state>
+          <folding>
+            <element signature="e#4#25#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

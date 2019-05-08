@@ -16,7 +16,7 @@ import threading
 import os
 import tempfile
 
-LARGE_FONT = ("Verdana", 12)
+
 
 
 class Invoice(tk.Tk):
@@ -64,12 +64,12 @@ class StartPage(tk.Frame):  # Calculate Price
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        AFont = font.Font(family='Helvetica', size=12, weight='bold')
-        BFont = font.Font(family='Helvetica', size=11, )
+        AFont = font.Font(family='Calibri', size=12, weight='bold')
+        BFont = font.Font(family='Calibri', size=11, )
         self.on_color = 'red'
         self.off_color = 'black'
 
-        frame = ttk.LabelFrame(self, text='สินค้า')
+        frame = ttk.LabelFrame(self, text='สินค้า',)
         frame.grid(row=1, column=0, sticky=W)
         frame7 = ttk.LabelFrame(self, text='พนักงาน')
         frame7.place(x = 620 , y = 51)
@@ -209,7 +209,7 @@ class StartPage(tk.Frame):  # Calculate Price
         self.car_plate = Entry(frame14, justify = 'right', width = 20)
         self.car_plate.grid(row = 0, column = 1)
 
-        Label(frame10, text="ชื่อบริษัท").grid(row=1, column=0, sticky=E)
+        Label(frame10, text="ชื่อบริษัท",font=('Times New Roman', 10)).grid(row=1, column=0, sticky=E)
         self.comp_name = Entry(frame10, justify='right', width=17)
         self.comp_name.grid(row=1, column=1, sticky=W)
         Label(frame10, text="สาขา").grid(row=1, column=2, sticky=E)
@@ -1571,8 +1571,7 @@ class PageThree(tk.Frame):  # CalPrice
 
         self.print = tk.Button(self , text = "พิมพ์",font=('Calibri', '20'),width = 5, command =self.print_confirmation)
         self.print.place(x = 630 , y = 230)
-        self.print = tk.Button(self , text = "test",font=('Calibri', '20'),width = 5, command = self.get_value)
-        self.print.place(x = 400 , y = 230)
+
 
         Label(frame2, text="ราคารวมทั้งหมด", font=("Helvetica", 15)).grid(row=0, column=0)
         self.product_grand_total = Text(frame2, height=1, width=10, font=("Helvetica", 25))
