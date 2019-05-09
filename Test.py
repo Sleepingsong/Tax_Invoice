@@ -16,7 +16,7 @@ import threading
 import os
 import tempfile
 
-LARGE_FONT = ("Verdana", 12)
+
 
 
 class Invoice(tk.Tk):
@@ -64,12 +64,12 @@ class StartPage(tk.Frame):  # Calculate Price
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        AFont = font.Font(family='Helvetica', size=12, weight='bold')
-        BFont = font.Font(family='Helvetica', size=11, )
+        AFont = font.Font(family='Calibri', size=12, weight='bold')
+        BFont = font.Font(family='Calibri', size=11, )
         self.on_color = 'red'
         self.off_color = 'black'
 
-        frame = ttk.LabelFrame(self, text='สินค้า')
+        frame = ttk.LabelFrame(self, text='สินค้า',)
         frame.grid(row=1, column=0, sticky=W)
         frame7 = ttk.LabelFrame(self, text='พนักงาน')
         frame7.place(x = 620 , y = 51)
@@ -192,7 +192,7 @@ class StartPage(tk.Frame):  # Calculate Price
         Label(frame7, text = "เวลาเข้ากะ").grid(row = 4, columnspan = 2)
         self.shift_time = Entry(frame7, justify = 'center')
         self.shift_time.grid(row = 5, columnspan = 2)
-        logout_button = Button(frame7, text = "ออกกะ", width = 10, command = self.staff_logout)
+        logout_button = Button(frame7, text = "ออกกะ", width = 10, command = self.log_out_confirmation)
         logout_button.grid(row = 6, columnspan = 2)
 
 
@@ -209,7 +209,7 @@ class StartPage(tk.Frame):  # Calculate Price
         self.car_plate = Entry(frame14, justify = 'right', width = 20)
         self.car_plate.grid(row = 0, column = 1)
 
-        Label(frame10, text="ชื่อบริษัท").grid(row=1, column=0, sticky=E)
+        Label(frame10, text="ชื่อบริษัท",font=('Times New Roman', 10)).grid(row=1, column=0, sticky=E)
         self.comp_name = Entry(frame10, justify='right', width=17)
         self.comp_name.grid(row=1, column=1, sticky=W)
         Label(frame10, text="สาขา").grid(row=1, column=2, sticky=E)
@@ -265,8 +265,6 @@ class StartPage(tk.Frame):  # Calculate Price
         self.cus_list.grid(row=1)
         self.cus_list.config(yscrollcommand = vsb.set)
 
-        test = ttk.Button(self,text = 'test', command=self.staff_shift_record)
-        test.place(x=300,y=300)
 
         button3 = ttk.Button(frame8, text="คำนวณสินค้าอื่นๆ", command=lambda: controller.show_frame(PageThree),
                              width=15)
@@ -330,39 +328,45 @@ class StartPage(tk.Frame):  # Calculate Price
             self.startPageRef.viewing_record()
             if self.chk1.get() == True:
                 record_product_name = "Supreme Gasohol 95"
+                record_litter = self.product_liter.get()
                 cur2 = con.cursor()
-                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',
-                             (record_id, record_product_name))
+                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name, Product_Number) VALUES(?,?,?)',
+                             (record_id, record_product_name, record_litter))
                 con.commit()
             if self.chk2.get() == True:
                 record_product_name = "Supreme Plus Gasohol 95"
+                record_litter = self.product_liter.get()
                 cur2 = con.cursor()
-                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',
-                             (record_id, record_product_name))
+                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name, Product_Number) VALUES(?,?,?)',
+                             (record_id, record_product_name, record_litter))
                 con.commit()
             if self.chk3.get() == True:
                 record_product_name = "Supreme E20"
+                record_litter = self.product_liter.get()
                 cur2 = con.cursor()
-                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',
-                             (record_id, record_product_name))
+                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name, Product_Number) VALUES(?,?,?)',
+                             (record_id, record_product_name, record_litter))
                 con.commit()
             if self.chk4.get() == True:
                 record_product_name = "Supreme Gasohol 91"
+                record_litter = self.product_liter.get()
                 cur2 = con.cursor()
-                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',
-                             (record_id, record_product_name))
+                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name, Product_Number) VALUES(?,?,?)',
+                             (record_id, record_product_name, record_litter))
                 con.commit()
             if self.chk5.get() == True:
                 record_product_name = "Supreme Plus Diesel"
+                record_litter = self.product_liter.get()
                 cur2 = con.cursor()
-                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',
-                             (record_id, record_product_name))
+                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name, Product_Number) VALUES(?,?,?)',
+                             (record_id, record_product_name, record_litter))
                 con.commit()
             if self.chk6.get() == True:
                 record_product_name = "Supreme Diesel"
+                record_litter = self.product_liter.get()
                 cur2 = con.cursor()
-                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',
-                             (record_id, record_product_name))
+                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name, Product_Number) VALUES(?,?,?)',
+                             (record_id, record_product_name, record_litter))
                 con.commit()
 
         except:
@@ -439,7 +443,7 @@ class StartPage(tk.Frame):  # Calculate Price
             receipt.write("\t\t  " + self.total_price.get() + "\n")
             receipt.write("\tภาษีมูลค่าเพิ่ม(VAT 7%)  ")
             vat = float(self.total_price.get()) * 0.07
-            receipt.write("\t\t" + str(round(vat, 2)) + "\n")
+            receipt.write("\t  " + str(round(vat, 2)) + "\n")
             total = float(self.total_price.get()) + vat
             receipt.write("\t\tรวมเป็นเงิน:")
             receipt.write("\t\t  " + str(round(total, 0)))
@@ -477,7 +481,7 @@ class StartPage(tk.Frame):  # Calculate Price
             self.Product5["fg"] = self.off_color
             self.Product6["fg"] = self.off_color
 
-            os.startfile(tempfiles,'print')
+            os.startfile(tempfiles)
             self.confirmation.destroy()
 
 
@@ -519,15 +523,19 @@ class StartPage(tk.Frame):  # Calculate Price
             self.staff_name.config(state='readonly')
             self.shift_time.config(state='readonly')
 
-    def staff_logout(self):
-        self.staff_name.config(state='normal')
-        self.shift_time.config(state='normal')
-        self.staff_id.config(state = 'normal')
-        self.staff_name.delete(0, END)
-        self.shift_time.delete(0, END)
-        self.staff_id.delete(0,END)
-        self.staff_name.config(state='readonly')
-        self.shift_time.config(state='readonly')
+
+    def log_out_confirmation(self):
+        self.confirmation = Toplevel()
+        self.confirmation.title("ยืนยันหรือไม่")
+        self.confirmation.geometry("%dx%d+%d+%d" % (270, 90, 300, 250))
+        Label(self.confirmation, text = "ยืนยันการออกกะหรือไม่??", font=("Helvetica", 20)).grid(row=0,columnspan = 2)
+        self.confirm_button = Button(self.confirmation, text = "ยืนยัน", font=("Helvetica", 14), width = 5, command = self.staff_shift_record)
+        self.confirm_button.grid(row=1)
+        self.cancel_button = Button(self.confirmation, text = "ยกเลิก", font=("Helvetica", 14), width = 5 , command = self.confirmation.destroy)
+        self.cancel_button.grid(row=1, column = 1)
+        self.confirmation.focus_set()
+        self.confirmation.grab_set()
+        self.confirmation.mainloop()
 
     def staff_shift_record(self):
         try:
@@ -543,6 +551,17 @@ class StartPage(tk.Frame):  # Calculate Price
             con.commit()
         except:
             messagebox.showerror("เกิดข้อผิดพลาด","ข้อมูลไม่ถูกต้อง")
+        else:
+            self.staff_name.config(state='normal')
+            self.shift_time.config(state='normal')
+            self.staff_id.config(state='normal')
+            self.staff_name.delete(0, END)
+            self.shift_time.delete(0, END)
+            self.staff_id.delete(0, END)
+            self.staff_name.config(state='readonly')
+            self.shift_time.config(state='readonly')
+            self.startPageRef2.show_staff_record()
+            self.confirmation.destroy()
 
     def show_tax_list(self,event):
 
@@ -1109,7 +1128,7 @@ class StartPage(tk.Frame):  # Calculate Price
 
     def list_customer(self):
         db = sqlite3.connect('MyDatabase.db')
-        cursor = db.execute('SELECT Tax_ID FROM Customer ORDER BY Tax_ID DESC')
+        cursor = db.execute('SELECT Tax_ID FROM Customer ORDER BY Tax_ID ASC')
 
         for row in cursor.fetchall():
             self.cus_list.insert(END, row)
@@ -1194,7 +1213,7 @@ class PageOne(tk.Frame):  # Product Page
         records = self.tree.get_children()
         for element in records:
             self.tree.delete(element)
-        query = 'SELECT * FROM Product ORDER BY Product_ID DESC'
+        query = 'SELECT * FROM Product ORDER BY Product_ID ASC'
         db_rows = self.run_query(query)
         for row in db_rows:
             self.tree.insert('', 0, text=row[1], values=(row[2], row[3]))
@@ -1558,8 +1577,7 @@ class PageThree(tk.Frame):  # CalPrice
 
         self.print = tk.Button(self , text = "พิมพ์",font=('Calibri', '20'),width = 5, command =self.print_confirmation)
         self.print.place(x = 630 , y = 230)
-        self.print = tk.Button(self , text = "test",font=('Calibri', '20'),width = 5, command = self.get_value)
-        self.print.place(x = 400 , y = 230)
+
 
         Label(frame2, text="ราคารวมทั้งหมด", font=("Helvetica", 15)).grid(row=0, column=0)
         self.product_grand_total = Text(frame2, height=1, width=10, font=("Helvetica", 25))
@@ -2281,9 +2299,11 @@ class PageFour(tk.Frame):
         vsb = ttk.Scrollbar(frame, orient='vertical', command=self.history_list.yview)
         hsb = ttk.Scrollbar(frame, orient = 'horizontal' , command = self.history_list.xview)
         self.history_list.grid(row=0, sticky = 'nsew')
+        self.history_list.bind('<Double-Button>', self.show_details)
         vsb.grid(row=0, column=1, sticky='ns')
         hsb.grid(row=1, column=0, sticky='ew')
         self.history_list.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+
 
         Label(self, text = "ค้นหาตามวันที่",font=("Helvetica", 15)).grid(row = 1 ,sticky = W)
         self.date_search = Entry(self, justify = 'right')
@@ -2315,6 +2335,50 @@ class PageFour(tk.Frame):
                              width=13)
         button6.grid(row=0, column=4)
         self.viewing_record()
+
+    def show_details(self, event):
+
+        record_date = self.history_list.item(self.history_list.selection())['text']
+        record_tax_id = self.history_list.item(self.history_list.selection())['values'][0]
+        record_comp_name = self.history_list.item(self.history_list.selection())['values'][1]
+        record_car_plate = self.history_list.item(self.history_list.selection())['values'][2]
+        record_total_price = self.history_list.item(self.history_list.selection())['values'][3]
+        record_staff_name = self.history_list.item(self.history_list.selection())['values'][4]
+        self.more_detail = Toplevel()
+        self.more_detail.title("Result")
+        self.more_detail.geometry("350x400")
+        Label(self.more_detail, text="วันที่:").grid(row=0)
+        Label(self.more_detail, text=record_date).grid(row=0, column=1)
+        Label(self.more_detail, text="เลขที่:").grid(row=1)
+        Label(self.more_detail, text=record_tax_id).grid(row=1, column=1)
+        Label(self.more_detail, text="ชื่อพนักงาน:").grid(row=2)
+        Label(self.more_detail, text=record_staff_name).grid(row=2, column=1)
+        Label(self.more_detail, text="ชื่อลูกค้า:").grid(row=3)
+        Label(self.more_detail, text=record_comp_name).grid(row=3, column=1)
+        Label(self.more_detail, text="ทะเบียนรถ:").grid(row=4)
+        Label(self.more_detail, text=record_car_plate).grid(row=4, column=1)
+        Label(self.more_detail, text="ราคาทั้งหมด:").grid(row=5)
+        Label(self.more_detail, text=record_total_price).grid(row=5, column=1)
+        frame = LabelFrame(self.more_detail, text="รายการสินค้าทั้งหมด")
+        frame.grid(row=0, column=2)
+        self.product_list = ttk.Treeview(self.more_detail, height=5, column=('A'))
+        self.product_list.heading('#0', text="ชื่อสินค้า")
+        self.product_list.heading('A', text="จำนวน")
+        self.product_list.column('#0', width=200)
+        self.product_list.column('A', width=80)
+        self.product_list.place(x=20, y=150)
+        Label(self.more_detail, text="สินค้าทั้งหมด").place(x=20, y=125)
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute(
+            "SELECT Product_Name, Product_Number FROM Record_Product INNER JOIN Record ON Record.Record_ID = Record_Product.Record_ID WHERE Record_Product.Record_ID = ?",
+            (record_tax_id,))
+        for row in cur.fetchall():
+            self.product_list.insert('', 0, text=row[0], values=(row[1]))
+
+        self.more_detail.focus_set()
+        self.more_detail.grab_set()
+        self.more_detail.mainloop()
 
     def cancel_record(self):
         try:
@@ -2349,7 +2413,7 @@ class PageFour(tk.Frame):
             self.history_list.delete(element)
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
-        cur.execute('SELECT * FROM Record WHERE Record_Date like ?',('%' + self.date_search.get() + '%',))
+        cur.execute('SELECT * FROM Record WHERE Record_Date like ? ORDER BY Record_ID DESC',('%' + self.date_search.get() + '%',))
         for row in cur.fetchall():
             self.history_list.insert('', 0, text=row[1], values=(row[0], row[3], row[2], row[4],row[5],row[6]))
 
@@ -2359,7 +2423,7 @@ class PageFour(tk.Frame):
             self.history_list.delete(element)
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
-        cur.execute('SELECT * FROM Record WHERE Company_Name like ?',('%' + self.comp_name_search.get() + '%',))
+        cur.execute('SELECT * FROM Record WHERE Company_Name like ? ORDER BY Record_ID DESC',('%' + self.comp_name_search.get() + '%',))
         for row in cur.fetchall():
             self.history_list.insert('', 0, text=row[1], values=(row[0], row[3], row[2], row[4],row[5],row[6]))
 
@@ -2372,21 +2436,19 @@ class PageFive(tk.Frame):
         tk.Frame.__init__(self, parent)
 
 
-        frame1 = LabelFrame(self, text = "ลงทะเบียนพนักงาน:")
+        frame1 = LabelFrame(self, text = "ลงทะเบียนพนักงาน")
         frame1.grid(row =1,sticky = W)
         frame3 = LabelFrame(self, text = "รายชื่อพนักงานทั้งหมด")
         frame3.grid(row = 2, sticky = W)
         frame4 = LabelFrame(self, text = "ประวัติพนักงานเข้า-ออก")
         frame4.grid(row = 2, column =0,sticky = E)
 
-        Label(frame1, text = "ใส่่ชื่อพนักงาน").grid(row = 0)
+        Label(frame1, text = "ใส่่ชื่อพนักงาน:").grid(row = 0)
         self.staff_name = Entry(frame1, justify = 'right')
         self.staff_name.grid(row = 0, column = 1)
         self.staff_name.bind('<Return>', self.add_confirmation)
 
         Label(frame3, text = "ค้นหา:").grid(row = 0, sticky = W)
-        # self.staff_search = Entry(frame3, justify = 'right')
-        # self.staff_search.grid(row = 0 , column = 0)
 
         self.staff_list = ttk.Treeview(frame3, height = 15, column =('A'))
         self.staff_list.heading('#0', text = "ชื่อพนักงาน")
@@ -2460,7 +2522,7 @@ class PageFive(tk.Frame):
         cur.execute('INSERT INTO Staff(Staff_Name) VALUES(?)' , (self.staff_name.get(),))
         con.commit()
         self.confirmation.destroy()
-        self.show_staff_record()
+        self.show_staff()
 
     def add_confirmation(self,event):
 

@@ -328,39 +328,45 @@ class StartPage(tk.Frame):  # Calculate Price
             self.startPageRef.viewing_record()
             if self.chk1.get() == True:
                 record_product_name = "Supreme Gasohol 95"
+                record_litter = self.product_liter.get()
                 cur2 = con.cursor()
-                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',
-                             (record_id, record_product_name))
+                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name, Product_Number) VALUES(?,?,?)',
+                             (record_id, record_product_name, record_litter))
                 con.commit()
             if self.chk2.get() == True:
                 record_product_name = "Supreme Plus Gasohol 95"
+                record_litter = self.product_liter.get()
                 cur2 = con.cursor()
-                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',
-                             (record_id, record_product_name))
+                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name, Product_Number) VALUES(?,?,?)',
+                             (record_id, record_product_name, record_litter))
                 con.commit()
             if self.chk3.get() == True:
                 record_product_name = "Supreme E20"
+                record_litter = self.product_liter.get()
                 cur2 = con.cursor()
-                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',
-                             (record_id, record_product_name))
+                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name, Product_Number) VALUES(?,?,?)',
+                             (record_id, record_product_name, record_litter))
                 con.commit()
             if self.chk4.get() == True:
                 record_product_name = "Supreme Gasohol 91"
+                record_litter = self.product_liter.get()
                 cur2 = con.cursor()
-                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',
-                             (record_id, record_product_name))
+                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name, Product_Number) VALUES(?,?,?)',
+                             (record_id, record_product_name, record_litter))
                 con.commit()
             if self.chk5.get() == True:
                 record_product_name = "Supreme Plus Diesel"
+                record_litter = self.product_liter.get()
                 cur2 = con.cursor()
-                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',
-                             (record_id, record_product_name))
+                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name, Product_Number) VALUES(?,?,?)',
+                             (record_id, record_product_name, record_litter))
                 con.commit()
             if self.chk6.get() == True:
                 record_product_name = "Supreme Diesel"
+                record_litter = self.product_liter.get()
                 cur2 = con.cursor()
-                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name) VALUES(?,?)',
-                             (record_id, record_product_name))
+                cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name, Product_Number) VALUES(?,?,?)',
+                             (record_id, record_product_name, record_litter))
                 con.commit()
 
         except:
@@ -437,7 +443,7 @@ class StartPage(tk.Frame):  # Calculate Price
             receipt.write("\t\t  " + self.total_price.get() + "\n")
             receipt.write("\tภาษีมูลค่าเพิ่ม(VAT 7%)  ")
             vat = float(self.total_price.get()) * 0.07
-            receipt.write("\t\t" + str(round(vat, 2)) + "\n")
+            receipt.write("\t  " + str(round(vat, 2)) + "\n")
             total = float(self.total_price.get()) + vat
             receipt.write("\t\tรวมเป็นเงิน:")
             receipt.write("\t\t  " + str(round(total, 0)))
@@ -475,7 +481,7 @@ class StartPage(tk.Frame):  # Calculate Price
             self.Product5["fg"] = self.off_color
             self.Product6["fg"] = self.off_color
 
-            os.startfile(tempfiles,'print')
+            os.startfile(tempfiles)
             self.confirmation.destroy()
 
 
@@ -2340,7 +2346,7 @@ class PageFour(tk.Frame):
         record_staff_name = self.history_list.item(self.history_list.selection())['values'][4]
         self.more_detail = Toplevel()
         self.more_detail.title("Result")
-        self.more_detail.geometry("350x200")
+        self.more_detail.geometry("350x400")
         Label(self.more_detail, text="วันที่:").grid(row=0)
         Label(self.more_detail, text=record_date).grid(row=0, column=1)
         Label(self.more_detail, text="เลขที่:").grid(row=1)
@@ -2358,10 +2364,10 @@ class PageFour(tk.Frame):
         self.product_list = ttk.Treeview(self.more_detail, height=5, column=('A'))
         self.product_list.heading('#0', text="ชื่อสินค้า")
         self.product_list.heading('A', text="จำนวน")
-        self.product_list.column('#0', width=100)
-        self.product_list.column('A', width=50)
-        self.product_list.place(x=130, y=30)
-        Label(self.more_detail, text="สินค้าทั้งหมด").place(x=175, y=5)
+        self.product_list.column('#0', width=200)
+        self.product_list.column('A', width=80)
+        self.product_list.place(x=20, y=150)
+        Label(self.more_detail, text="สินค้าทั้งหมด").place(x=20, y=125)
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
         cur.execute(
