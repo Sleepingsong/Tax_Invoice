@@ -81,7 +81,7 @@ class StartPage(tk.Frame):  # Calculate Price
         frame10 = ttk.LabelFrame(self, text="ผู้ซื้อ")
         frame10.grid(row=3, column=0, sticky=W)
         frame11 = ttk.LabelFrame(self, text="รหัสประจำตัวผู้เสียภาษี")
-        frame11.place(x= 600, y =350)
+        frame11.place(x= 600, y =340)
         frame12 = ttk.LabelFrame(self, text="ค้นหา")
         frame12.grid(row=2, sticky=SW)
         frame14 = ttk.LabelFrame(self, text = "ทะเบียนรถ")
@@ -179,7 +179,7 @@ class StartPage(tk.Frame):  # Calculate Price
         self.total_price.bind("<KeyRelease>", self.liveLiterCal)
         self.total_price.grid(row=1, column=1)
         self.print = tk.Button(self , text = "พิมพ์",font=('Calibri', '20'),width = 5, command =self.print_confirmation)
-        self.print.place(x = 630 , y = 230)
+        self.print.place(x = 590 , y = 230)
 
 
         Label(frame7, text = "รหัสพนักงาน").grid(row=0)
@@ -258,13 +258,14 @@ class StartPage(tk.Frame):  # Calculate Price
 
 
 
-        self.cus_list = Listbox(frame11, height=5, selectmode=SINGLE)
-        self.cus_list.bind("<Enter>", self.show_tax_list)
-        self.cus_list.bind('<Double-Button>', self.show_data)
+        self.cus_list = Listbox(frame11, height=5 , width = 16, selectmode=SINGLE)
+        self.cus_list.bind('<Double-Button-1>', self.show_data)
         vsb = ttk.Scrollbar(frame11, orient="vertical", command = self.cus_list.yview)
         vsb.grid(row = 1 ,column = 1 , sticky = 'ns')
         self.cus_list.grid(row=1)
         self.cus_list.config(yscrollcommand = vsb.set)
+        self.show_tax_data = tk.Button(self, text = "Reload data", command = self.show_tax_list)
+        self.show_tax_data.place(x = 610 , y= 440)
 
 
         button3 = ttk.Button(frame8, text="คำนวณสินค้าอื่นๆ", command=lambda: controller.show_frame(PageThree),
@@ -283,6 +284,7 @@ class StartPage(tk.Frame):  # Calculate Price
                              width=11)
         button6.grid(row=0, column=4)
 
+        self.show_tax_list()
         self.update_lastest_record()
         self.record_number = 1
         self.Show_gas_price()
@@ -565,12 +567,13 @@ class StartPage(tk.Frame):  # Calculate Price
             self.startPageRef2.show_staff_record()
             self.confirmation.destroy()
 
-    def show_tax_list(self,event):
+    def show_tax_list(self):
 
         self.cus_list.delete(0,END)
-        db = sqlite3.connect('MyDatabase.db')
-        cursor = db.execute('SELECT Tax_ID FROM Customer')
-        for row in cursor.fetchall():
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute('SELECT Tax_ID FROM Customer')
+        for row in cur.fetchall():
             self.cus_list.insert(END, row)
 
     def searchCompName(self, event):
@@ -1318,7 +1321,7 @@ class PageTwo(tk.Frame):  # Customer Page
         self.tax_enter.grid(row=0, column=1, sticky=W)
         self.branch_enter = Entry(frame, textvariable=default)
         self.branch_enter.grid(row=1, column=1, sticky=W)
-        self.button1 = Button(frame, text='ค้นหา', font=AFont, height=1, width=10, command=lambda: self.tax_search())
+        self.button1 = Button(frame, text='ค้นหา', font=AFont, height=1, width=10, command=self.tax_search)
         self.button1.grid(row=2, column=1)
         self.button2 = Button(frame, text='บันทึก', font=AFont, height=1, width=10, command=self.save_data)
         self.button2.grid(row=2, sticky=E)
@@ -1421,13 +1424,13 @@ class PageThree(tk.Frame):  # CalPrice
         frame = ttk.LabelFrame(self, text='สินค้าทั้งหมด')
         frame.grid(row=1, column=0, sticky=NW)
         frame2 = ttk.LabelFrame(self, text='คำนวณราคา')
-        frame2.grid(row=1, column=0, sticky=NE)
+        frame2.place(x = 530, y = 50)
         frame3 = ttk.LabelFrame(self, text="ชุดคำสั่ง")
         frame3.grid(row=0, column=0, sticky=NW)
         frame10 = ttk.LabelFrame(self, text = "ผู้ซื้อ")
         frame10.grid(row=3,sticky = W)
         frame11 = ttk.LabelFrame(self, text = "เลขภาษี")
-        frame11.grid(row=3,column = 0,sticky = E)
+        frame11.place(x = 600 , y = 310)
         frame12 = ttk.LabelFrame(self, text = "ค้นหา")
         frame12.grid(row=2,column = 0,sticky = W)
         frame14 = ttk.LabelFrame(self, text = "ค้นหา")
@@ -1463,11 +1466,11 @@ class PageThree(tk.Frame):  # CalPrice
         self.combo_product()
 
         Label(frame12, text="ชื่อบริษัท", font=BFont).grid(row=1, column=0, sticky=E)
-        self.search_comp_name = Entry(frame12, justify='right', width=27)
+        self.search_comp_name = Entry(frame12, justify='right', width=17)
         self.search_comp_name.bind('<Return>', self.searchCompName)
         self.search_comp_name.grid(row=1, column=1, sticky=W)
         Label(frame12, text="รหัสภาษี", font=BFont).grid(row=2, column=0, sticky=E)
-        self.search_tax_id = Entry(frame12, justify='right', width=27)
+        self.search_tax_id = Entry(frame12, justify='right', width=17)
         self.search_tax_id.bind('<Return>', self.searchTaxId)
         self.search_tax_id.grid(row=2, column=1, sticky=W)
 
@@ -1520,65 +1523,66 @@ class PageThree(tk.Frame):  # CalPrice
         self.product_total6.grid(row=7, column=3)
 
         self.cus_list = Listbox(frame11, height=5, selectmode=SINGLE)
-        self.cus_list.bind("<Enter>", self.show_tax_list)
-        self.cus_list.bind('<Double-Button>', self.show_data)
+        self.cus_list.bind('<Double-Button-1>', self.show_data)
         vsb = ttk.Scrollbar(frame11, orient="vertical", command = self.cus_list.yview)
         vsb.grid(row = 1 ,column = 1 , sticky = 'ns')
         self.cus_list.grid(row=1)
         self.cus_list.config(yscrollcommand = vsb.set)
+        self.show_tax_data = tk.Button(self, text = "Reload data", command = self.show_tax_list)
+        self.show_tax_data.place(x = 600 , y= 410)
 
-        Label(frame10, text="ชื่อบริษัท").grid(row=1, column=0, sticky=E)
-        self.comp_name = Entry(frame10, justify='right', width=17)
+        Label(frame10, text="ชื่อบริษัท", font=('Times New Roman', 10)).grid(row=1, column=0, sticky=E)
+        self.comp_name = Entry(frame10, justify='right', width=14)
         self.comp_name.grid(row=1, column=1, sticky=W)
         Label(frame10, text="สาขา").grid(row=1, column=2, sticky=E)
-        self.branch_num = Entry(frame10, justify='right', width=17)
+        self.branch_num = Entry(frame10, justify='right', width=8)
         self.branch_num.grid(row=1, column=3, sticky=W)
         Label(frame10, text="ชื่อตึก").grid(row=1, column=4, sticky=E)
-        self.building_name = Entry(frame10, justify='right', width=17)
+        self.building_name = Entry(frame10, justify='right', width=14)
         self.building_name.grid(row=1, column=5, sticky=W)
         Label(frame10, text="ชั้น").grid(row=1, column=6, sticky=E)
         self.branch_floor = Entry(frame10, justify='right', width=8)
         self.branch_floor.grid(row=1, column=7, sticky=W)
         Label(frame10, text="หมู่บ้าน").grid(row=2, column=0, sticky=E)
-        self.village_name = Entry(frame10, justify='right', width=17)
+        self.village_name = Entry(frame10, justify='right', width=14)
         self.village_name.grid(row=2, column=1, sticky=W)
         Label(frame10, text="เลขห้อง").grid(row=2, column=2, sticky=E)
-        self.room_no = Entry(frame10, justify='right', width=17)
+        self.room_no = Entry(frame10, justify='right', width=9)
         self.room_no.grid(row=2, column=3, sticky=W)
         Label(frame10, text="เลขที่บ้าน").grid(row=2, column=4, sticky=E)
-        self.house_no = Entry(frame10, justify='right', width=17)
+        self.house_no = Entry(frame10, justify='right', width=14)
         self.house_no.grid(row=2, column=5, sticky=W)
         Label(frame10, text="หมู่").grid(row=2, column=6, sticky=E)
         self.Moo_no = Entry(frame10, justify='right', width=8)
         self.Moo_no.grid(row=2, column=7, sticky=W)
         Label(frame10, text="ซอย").grid(row=3, column=0, sticky=E)
-        self.Soi_no = Entry(frame10, justify='right', width=17)
+        self.Soi_no = Entry(frame10, justify='right', width=14)
         self.Soi_no.grid(row=3, column=1, sticky=W)
         Label(frame10, text="ถนน").grid(row=3, column=2, sticky=E)
-        self.Stree_name = Entry(frame10, justify='right', width=17)
+        self.Stree_name = Entry(frame10, justify='right', width=9)
         self.Stree_name.grid(row=3, column=3, sticky=W)
         Label(frame10, text="ตำบล").grid(row=3, column=4, sticky=E)
-        self.Thumbon_name = Entry(frame10, justify='right', width=17)
+        self.Thumbon_name = Entry(frame10, justify='right', width=14)
         self.Thumbon_name.grid(row=3, column=5, sticky=W)
         Label(frame10, text="อำเภอ").grid(row=3, column=6, sticky=E)
         self.Aumper_name = Entry(frame10, justify='right', width=8)
         self.Aumper_name.grid(row=3, column=7, sticky=W)
         Label(frame10, text="จังหวัด").grid(row=4, column=0, sticky=E)
-        self.Province_name = Entry(frame10, justify='right', width=17)
+        self.Province_name = Entry(frame10, justify='right', width=14)
         self.Province_name.grid(row=4, column=1, sticky=W)
         Label(frame10, text="รหัสไปษณีย์").grid(row=4, column=2, sticky=E)
-        self.Postcode = Entry(frame10, justify='right', width=17)
+        self.Postcode = Entry(frame10, justify='right', width=9)
         self.Postcode.grid(row=4, column=3, sticky=W)
-        Label(frame10, text="เลขประจำผู้เสียภาษีผู้ซื้อ").place(x=300, y=63)
-        self.Cus_tax_num = Entry(frame10, justify='right', width=20)
-        self.Cus_tax_num.place(x=390, y=64)
+        Label(frame10, text="เลขประจำผู้เสียภาษีผู้ซื้อ").place(x=310, y=61)
+        self.Cus_tax_num = Entry(frame10, justify='right', width=15)
+        self.Cus_tax_num.place(x=440, y=60)
 
         Label(frame14, text = "ทะเบียนรถ", font = BFont).grid(row=0, sticky = E)
-        self.car_plate = Entry(frame14, justify = 'right', width = 20)
+        self.car_plate = Entry(frame14, justify = 'right', width = 15)
         self.car_plate.grid(row = 0, column = 1)
 
         self.print = tk.Button(self , text = "พิมพ์",font=('Calibri', '20'),width = 5, command =self.print_confirmation)
-        self.print.place(x = 630 , y = 230)
+        self.print.place(x = 570 , y = 230)
 
 
         Label(frame2, text="ราคารวมทั้งหมด", font=("Helvetica", 15)).grid(row=0, column=0)
@@ -1605,6 +1609,7 @@ class PageThree(tk.Frame):  # CalPrice
         button6.grid(row=0, column=4)
 
         self.update_lastest_record()
+        self.show_tax_list()
 
     def get_value(self):
 
@@ -1827,7 +1832,7 @@ class PageThree(tk.Frame):  # CalPrice
         self.confirmation.mainloop()
 
 
-    def show_tax_list(self,event):
+    def show_tax_list(self):
 
         self.cus_list.delete(0,END)
         db = sqlite3.connect('MyDatabase.db')
@@ -2301,18 +2306,18 @@ class PageFour(tk.Frame):
         vsb = ttk.Scrollbar(frame, orient='vertical', command=self.history_list.yview)
         hsb = ttk.Scrollbar(frame, orient = 'horizontal' , command = self.history_list.xview)
         self.history_list.grid(row=0, sticky = 'nsew')
-        self.history_list.bind('<Double-Button>', self.show_details)
+        self.history_list.bind('<Double-Button-1>', self.show_details)
         vsb.grid(row=0, column=1, sticky='ns')
         hsb.grid(row=1, column=0, sticky='ew')
         self.history_list.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
 
 
         Label(self, text = "ค้นหาตามวันที่",font=("Helvetica", 11)).grid(row = 1 ,sticky = W)
-        self.date_search = Entry(self, justify = 'right')
+        self.date_search = Entry(self, justify = 'right', width = 13)
         self.date_search.bind('<KeyRelease>', self.search_record_date)
         self.date_search.place(x = 120, y = 47)
-        Label(self, text = "ค้นหาตามชื่อ", font=("Helvetica", 11)).place(x = 250 , y = 50)
-        self.comp_name_search = Entry(self, justify = 'right')
+        Label(self, text = "ค้นหาตามชื่อ", font=("Helvetica", 11)).place(x = 250 , y = 48)
+        self.comp_name_search = Entry(self, justify = 'right', width = 13)
         self.comp_name_search.bind('<KeyRelease>', self.search_record_name)
         self.comp_name_search.place(x = 360, y =47)
         self.cancel_but = tk.Button(self,text="ยกเลิกใบกำกับภาษี", command = self.cancel_record)

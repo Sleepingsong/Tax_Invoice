@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="01fef1f8-0460-44d2-9a11-1f49b52f8b0b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Tax_Invoice.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Tax_Invoice.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyDatabase.db" beforeDir="false" afterPath="$PROJECT_DIR$/MyDatabase.db" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,8 +16,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="37845">
-              <caret line="2539" column="36" selection-end-line="2549" />
+            <state relative-caret-position="37695">
+              <caret line="2529" column="48" selection-start-line="2529" selection-start-column="48" selection-end-line="2529" selection-end-column="48" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/App_Rasp.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="38025">
+              <caret line="2551" selection-start-line="2551" selection-end-line="2551" />
+              <folding>
+                <element signature="e#0#21#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -28,8 +37,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Rasp_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="733" selection-start-line="733" selection-end-line="733" />
+            <state relative-caret-position="110">
+              <caret line="2309" column="46" lean-forward="true" selection-start-line="2309" selection-start-column="46" selection-end-line="2309" selection-end-column="46" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -66,7 +75,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>cus_list</find>
       <find>page</find>
       <find>PageOne</find>
       <find>pageone</find>
@@ -79,12 +87,13 @@
       <find>log</find>
       <find>tempfile</find>
       <find>import</find>
-      <find>print</find>
       <find>search</find>
       <find>button</find>
       <find>product pa</find>
       <find>PageThree</find>
       <find>PageFour</find>
+      <find>print</find>
+      <find>cus_list</find>
     </findStrings>
     <replaceStrings>
       <replace>staff_record_list</replace>
@@ -104,6 +113,7 @@
         <option value="$PROJECT_DIR$/Test02.py" />
         <option value="$PROJECT_DIR$/Test.py" />
         <option value="$PROJECT_DIR$/App.py" />
+        <option value="$PROJECT_DIR$/App_Rasp.py" />
         <option value="$PROJECT_DIR$/Rasp_test.py" />
       </list>
     </option>
@@ -435,7 +445,14 @@
       <option name="project" value="LOCAL" />
       <updated>1557304461743</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="- Add App version Raspberry Pi3&#10;- Fix screen resolution for Raspberry Pi3&#10;- Fix bug">
+      <created>1558028981826</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1558028981826</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TodoView">
@@ -528,7 +545,8 @@
     <MESSAGE value="- History Date and Company name search" />
     <MESSAGE value="- Move button to the top&#10;- Adjust home page" />
     <MESSAGE value="- Add staff Page&#10;- View Staff Record&#10;- View Staff Information" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Add staff Page&#10;- View Staff Record&#10;- View Staff Information" />
+    <MESSAGE value="- Add App version Raspberry Pi3&#10;- Fix screen resolution for Raspberry Pi3&#10;- Fix bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Add App version Raspberry Pi3&#10;- Fix screen resolution for Raspberry Pi3&#10;- Fix bug" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/MainWindow.py" />
@@ -536,8 +554,18 @@
     <entry file="file://$PROJECT_DIR$/Test03.py" />
     <entry file="file://$PROJECT_DIR$/App.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="37845">
-          <caret line="2539" column="36" selection-end-line="2549" />
+        <state relative-caret-position="37695">
+          <caret line="2529" column="48" selection-start-line="2529" selection-start-column="48" selection-end-line="2529" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App_Rasp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38025">
+          <caret line="2551" selection-start-line="2551" selection-end-line="2551" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -564,8 +592,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Rasp_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="733" selection-start-line="733" selection-end-line="733" />
+        <state relative-caret-position="110">
+          <caret line="2309" column="46" lean-forward="true" selection-start-line="2309" selection-start-column="46" selection-end-line="2309" selection-end-column="46" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
