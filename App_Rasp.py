@@ -378,7 +378,7 @@ class StartPage(tk.Frame):  # Calculate Price
         else:
             record_id = "INV-{0:07}".format(self.lastest_record_number + 1)
             tax_id = '0203556007965'
-            tempfiles = tempfile.mktemp(".txt")
+            tempfiles = tempfile.mktemp(".text")
             receipt = open(tempfiles, "wt", encoding="utf-8")
             receipt.write("\t       ใบเสร็จรับเงิน/ใบกำกับภาษี(ต้นฉบับ)\n")
             receipt.write(
@@ -409,47 +409,47 @@ class StartPage(tk.Frame):  # Calculate Price
             receipt.write("เลขประจำผู้เสียภาษีผู้ซื้อ: " + self.Cus_tax_num.get() + "\n")
             receipt.write("ทะเบียนรถ: " + self.car_plate.get())
             receipt.write("\n")
-            receipt.write("รายการ\t\tราคา/ต่อหน่วย    ปริมาณ\t  จำนวนเงิน\n")
+            receipt.write("รายการ\t\t\tราคา    ปริมาณ\t  จำนวนเงิน\n")
             receipt.write("========================================\n")
             if self.chk1.get() == True:
                 receipt.write("Supreme\nGasohol 95")
-                receipt.write("\t " + self.G95_price.get())
-                receipt.write("\t     " + self.product_liter.get())
-                receipt.write("\t  " + self.total_price.get())
+                receipt.write("\t\t" + self.G95_price.get())
+                receipt.write("\t\t" + self.product_liter.get())
+                receipt.write("\t\t" + self.total_price.get())
             if self.chk2.get() == True:
                 receipt.write("Supreme Plus\nGasohol 95")
-                receipt.write("\t " + self.GP95_price.get())
-                receipt.write("\t     " + self.product_liter.get())
-                receipt.write("\t  " + self.total_price.get())
+                receipt.write("\t\t" + self.GP95_price.get())
+                receipt.write("\t\t" + self.product_liter.get())
+                receipt.write("\t\t" + self.total_price.get())
             if self.chk3.get() == True:
                 receipt.write("Supreme E20")
-                receipt.write("\t " + self.E20_price.get())
-                receipt.write("\t     " + self.product_liter.get())
-                receipt.write("\t  " + self.total_price.get())
+                receipt.write("\t" + self.E20_price.get())
+                receipt.write("\t\t" + self.product_liter.get())
+                receipt.write("\t\t" + self.total_price.get())
             if self.chk4.get() == True:
                 receipt.write("Supreme\nGasohol 91")
-                receipt.write("\t " + self.G91_price.get())
-                receipt.write("\t     " + self.product_liter.get())
-                receipt.write("\t  " + self.total_price.get())
+                receipt.write("\t\t" + self.G91_price.get())
+                receipt.write("\t\t" + self.product_liter.get())
+                receipt.write("\t\t" + self.total_price.get())
             if self.chk5.get() == True:
                 receipt.write("Supreme Plus\nDiesel")
-                receipt.write("\t\t " + self.DSP_price.get())
-                receipt.write("\t     " + self.product_liter.get())
-                receipt.write("\t  " + self.total_price.get())
+                receipt.write("\t\t\t" + self.DSP_price.get())
+                receipt.write("\t\t" + self.product_liter.get())
+                receipt.write("\t\t" + self.total_price.get())
             if self.chk6.get() == True:
                 receipt.write("Supreme Diesel")
-                receipt.write("\t " + self.DS_price.get())
-                receipt.write("\t     " + self.product_liter.get())
-                receipt.write("\t  " + self.total_price.get())
+                receipt.write("\t" + self.DS_price.get())
+                receipt.write("\t\t" + self.product_liter.get())
+                receipt.write("\t\t" + self.total_price.get())
             receipt.write("\n\n")
-            receipt.write("\t\tมูลค่าสินค้า:")
-            receipt.write("\t\t  " + self.total_price.get() + "\n")
-            receipt.write("\tภาษีมูลค่าเพิ่ม(VAT 7%)  ")
+            receipt.write("มูลค่าสินค้า:")
+            receipt.write("\t\t\t\t\t\t" + self.total_price.get() + "\n")
+            receipt.write("ภาษีมูลค่าเพิ่ม(VAT 7%)")
             vat = float(self.total_price.get()) * 0.07
-            receipt.write("\t  " + str(round(vat, 2)) + "\n")
+            receipt.write("\t\t\t" + str(round(vat, 2)) + "\n")
             total = float(self.total_price.get()) + vat
-            receipt.write("\t\tรวมเป็นเงิน:")
-            receipt.write("\t\t  " + str(round(total, 0)))
+            receipt.write("รวมเป็นเงิน:")
+            receipt.write("\t\t\t\t\t\t" + str(round(total, 0)))
             receipt.write("\n\n\nได้รับสินค้าตามรายการบนนี้ไว้ถูกต้อง\nและในสภาพเรียบร้อยทุกประการ")
             receipt.write("\n\n\nลงชื่อผู้รับเงิน _________________________________")
             receipt.write("\n\n\t         *****ขอบคุณที่ใช้บริการ*****")
@@ -1770,7 +1770,7 @@ class PageThree(tk.Frame):  # CalPrice
             receipt.write("เลขประจำผู้เสียภาษีผู้ซื้อ: " + self.Cus_tax_num.get() + "\n")
             receipt.write("ทะเบียนรถ: " + self.car_plate.get())
             receipt.write("\n")
-            receipt.write("รายการ\t\t   ราคา/หน่วย    ปริมาณ\tจำนวนเงิน\n")
+            receipt.write("รายการ\t\t\tราคา\t\tปริมาณ\t\tจำนวนเงิน\n")
             receipt.write("========================================\n")
 
             for i in range(0, len(self.product_list)):
@@ -1780,19 +1780,20 @@ class PageThree(tk.Frame):  # CalPrice
                 receipt.write(self.product_total_list[i] + "\n")
 
             receipt.write("\n\n")
-            receipt.write("\t\tมูลค่าสินค้า:")
+            receipt.write("มูลค่าสินค้า:")
             receipt.write("\t\t" + self.product_grand_total.get("1.0", 'end-1c') + "\n")
-            receipt.write("\tภาษีมูลค่าเพิ่ม(VAT 7%)  ")
+            receipt.write("ภาษีมูลค่าเพิ่ม(VAT 7%)  ")
             vat = float(self.product_grand_total.get("1.0", 'end-1c')) * 0.07
             receipt.write("\t" + str(round(vat, 2)) + "\n")
             total = float(self.product_grand_total.get("1.0", 'end-1c')) + vat
-            receipt.write("\t\tรวมเป็นเงิน:")
+            receipt.write("รวมเป็นเงิน:")
             receipt.write("'\t\t" + str(round(total, 0)))
             receipt.write("\n\n\nได้รับสินค้าตามรายการบนนี้ไว้ถูกต้อง\nและในสภาพเรียบร้อยทุกประการ")
             receipt.write("\n\n\nลงชื่อผู้รับเงิน _________________________________")
             receipt.write("\n\n\t         *****ขอบคุณที่ใช้บริการ*****")
 
-            os.startfile(tempfiles, 'print')
+            opener = "open" if sys.platform == "darwin" else "xdg-open"
+            subprocess.call([opener, tempfiles])
 
             self.update_lastest_record()
             self.comp_name.delete(0, 'end')
@@ -1809,7 +1810,6 @@ class PageThree(tk.Frame):  # CalPrice
             self.Province_name.delete(0, 'end')
             self.Postcode.delete(0, 'end')
             self.Cus_tax_num.delete(0, 'end')
-            self.product_grand_total.delete(0,'end')
             self.car_plate.delete(0,'end')
 
             self.confirmation.destroy()
