@@ -2448,7 +2448,7 @@ class PageFive(tk.Frame):
         frame3 = LabelFrame(self, text = "รายชื่อพนักงานทั้งหมด")
         frame3.grid(row = 2, sticky = W)
         frame4 = LabelFrame(self, text = "ประวัติพนักงานเข้า-ออก")
-        frame4.grid(row = 2, column =0,sticky = E)
+        frame4.place( x = 250 , y = 86)
 
         Label(frame1, text = "ใส่่ชื่อพนักงาน:").grid(row = 0)
         self.staff_name = Entry(frame1, justify = 'right')
