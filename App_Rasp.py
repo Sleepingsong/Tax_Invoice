@@ -80,7 +80,7 @@ class StartPage(tk.Frame):  # Calculate Price
         frame9.grid(row = 2 ,sticky = E)
         frame10 = ttk.LabelFrame(self, text="ผู้ซื้อ")
         frame10.grid(row=3, column=0, sticky=W)
-        frame11 = ttk.LabelFrame(self, text="รหัสประจำตัวผู้เสียภาษี")
+        frame11 = ttk.LabelFrame(self, text="รหัสประจำตัวผู้เสียภาษีล่าสุด")
         frame11.place(x= 600, y =340)
         frame12 = ttk.LabelFrame(self, text="ค้นหา")
         frame12.grid(row=2, sticky=SW)
@@ -98,9 +98,9 @@ class StartPage(tk.Frame):  # Calculate Price
         self.chk6 = BooleanVar()
 
         self.image1 = Image.open("Gasohol95.jpg")
-        self.image1 = self.image1.resize((150, 60), Image.ANTIALIAS)
+        self.image1 = self.image1.resize((150, 40), Image.ANTIALIAS)
         self.photo1 = ImageTk.PhotoImage(self.image1)
-        self.G95_button = tk.Button(frame, image=self.photo1, height=60, width=150, command=self.checkG95)
+        self.G95_button = tk.Button(frame, image=self.photo1, height=40, width=150, command=self.checkG95)
         self.G95_button.grid(row=0)
         self.Product1 = Checkbutton(frame, text="Supreme Gasohol 95", font=AFont, variable=self.chk1, fg=self.off_color,)
         self.Product1.grid(row=1, column=0)
@@ -109,9 +109,9 @@ class StartPage(tk.Frame):  # Calculate Price
         self.G95_price.grid(row=2, column=0, sticky = E)
 
         self.image2 = Image.open("Gasohol95_Plus.jpg")
-        self.image2 = self.image2.resize((150, 60), Image.ANTIALIAS)
+        self.image2 = self.image2.resize((150, 40), Image.ANTIALIAS)
         self.photo2 = ImageTk.PhotoImage(self.image2)
-        self.GP95_button = tk.Button(frame, image=self.photo2, height=60, width=150, command=self.checkGP95)
+        self.GP95_button = tk.Button(frame, image=self.photo2, height=40, width=150, command=self.checkGP95)
         self.GP95_button.grid(row=0, column=1)
         self.Product2 = Checkbutton(frame, text="Supreme Plus Gasohol 95", font=AFont, variable=self.chk2,
                                     fg=self.off_color)
@@ -121,9 +121,9 @@ class StartPage(tk.Frame):  # Calculate Price
         self.GP95_price.grid(row=2, column=1, sticky=E)
 
         self.image3 = Image.open("Gasohol_E20.jpg")
-        self.image3 = self.image3.resize((150, 60), Image.ANTIALIAS)
+        self.image3 = self.image3.resize((150, 40), Image.ANTIALIAS)
         self.photo3 = ImageTk.PhotoImage(self.image3)
-        self.E20_button = tk.Button(frame, image=self.photo3, height=60, width=150, command=self.checkE20)
+        self.E20_button = tk.Button(frame, image=self.photo3, height=40, width=150, command=self.checkE20)
         self.E20_button.grid(row=0, column=2)
         self.Product3 = Checkbutton(frame, text="Supreme E20               ", font=AFont, variable=self.chk3, fg=self.off_color)
         self.Product3.grid(row=1, column=2)
@@ -133,9 +133,9 @@ class StartPage(tk.Frame):  # Calculate Price
 
 
         self.image4 = Image.open("Gasohol_91.jpg")
-        self.image4 = self.image4.resize((150, 60), Image.ANTIALIAS)
+        self.image4 = self.image4.resize((150, 40), Image.ANTIALIAS)
         self.photo4 = ImageTk.PhotoImage(self.image4)
-        self.G91_button = tk.Button(frame, image=self.photo4, height=60, width=150, command=self.checkG91)
+        self.G91_button = tk.Button(frame, image=self.photo4, height=40, width=150, command=self.checkG91)
         self.G91_button.grid(row=3, column=0)
         self.Product4 = Checkbutton(frame, text="Supreme Gasohol 91", font=AFont, variable=self.chk4, fg=self.off_color)
         self.Product4.grid(row=4, column=0)
@@ -145,9 +145,9 @@ class StartPage(tk.Frame):  # Calculate Price
 
 
         self.image5 = Image.open("Diesel_Plus.jpg")
-        self.image5 = self.image5.resize((150, 60), Image.ANTIALIAS)
+        self.image5 = self.image5.resize((150, 40), Image.ANTIALIAS)
         self.photo5 = ImageTk.PhotoImage(self.image5)
-        self.DSP_button = tk.Button(frame, image=self.photo5, height=60, width=150, command=self.checkDSP)
+        self.DSP_button = tk.Button(frame, image=self.photo5, height=40, width=150, command=self.checkDSP)
         self.DSP_button.grid(row=3, column=1)
         self.Product5 = Checkbutton(frame, text="Supreme Plus Diesel", font=AFont, variable=self.chk5,
                                     fg=self.off_color)
@@ -157,9 +157,9 @@ class StartPage(tk.Frame):  # Calculate Price
         self.DSP_price.grid(row=5, column=1, sticky=E)
 
         self.image6 = Image.open("Diesel.jpg")
-        self.image6 = self.image6.resize((150, 60), Image.ANTIALIAS)
+        self.image6 = self.image6.resize((150, 40), Image.ANTIALIAS)
         self.photo6 = ImageTk.PhotoImage(self.image6)
-        self.DS_button = tk.Button(frame, image=self.photo6, height=60, width=150, command=self.checkDS)
+        self.DS_button = tk.Button(frame, image=self.photo6, height=40, width=150, command=self.checkDS)
         self.DS_button.grid(row=3, column=2)
         self.Product6 = Checkbutton(frame, text="Supreme Diesel", font=AFont, variable=self.chk6, fg=self.off_color)
         self.Product6.grid(row=4, column=2)
@@ -184,8 +184,9 @@ class StartPage(tk.Frame):  # Calculate Price
 
         Label(frame7, text = "รหัสพนักงาน").grid(row=0)
         self.staff_id = Entry(frame7, justify = 'right', width = 14)
-        self.staff_id.bind('<Return>', self.staff_login)
+        self.staff_id.bind('<KP_Enter>', self.staff_login)
         self.staff_id.grid(row = 0 , column = 1)
+        self.staff_id.bind('<Return>', self.staff_login)
         Label(frame7, text = "-----------------------").grid(row = 1, columnspan = 2)
         Label(frame7, text = "ชื่อพนักงาน").grid(row = 2, columnspan = 2)
         self.staff_name = Entry(frame7 , width = 21, justify = 'center')
@@ -199,12 +200,14 @@ class StartPage(tk.Frame):  # Calculate Price
 
         Label(frame12, text="ชื่อบริษัท", font=BFont).grid(row=1, column=0, sticky=E)
         self.search_comp_name = Entry(frame12, justify='right', width=18)
-        self.search_comp_name.bind('<Return>', self.searchCompName)
+        self.search_comp_name.bind('<KP_Enter>', self.searchCompName)
         self.search_comp_name.grid(row=1, column=1, sticky=W)
+        self.search_comp_name.bind('<Return>', self.searchCompName)
         Label(frame12, text= "รหัสภาษี", font = BFont).grid(row = 2 , column = 0 , sticky = E)
         self.search_tax_id = Entry(frame12, justify = 'right', width = 18)
-        self.search_tax_id.bind('<Return>', self.searchTaxId)
+        self.search_tax_id.bind('<KP_Enter>', self.searchTaxId)
         self.search_tax_id.grid(row = 2, column = 1, sticky = W)
+        self.search_tax_id.bind('<Return>', self.searchTaxId)
 
         Label(frame14, text = "ทะเบียนรถ", font = BFont).grid(row=0, sticky = E)
         self.car_plate = Entry(frame14, justify = 'right', width = 10)
@@ -264,25 +267,27 @@ class StartPage(tk.Frame):  # Calculate Price
         vsb.grid(row = 1 ,column = 1 , sticky = 'ns')
         self.cus_list.grid(row=1)
         self.cus_list.config(yscrollcommand = vsb.set)
-        self.show_tax_data = tk.Button(self, text = "Reload data", command = self.show_tax_list)
+        self.show_tax_data = tk.Button(self, text = "ดูข้อมูลอีกครั้ง", command = self.show_tax_list)
         self.show_tax_data.place(x = 610 , y= 440)
 
-
-        button3 = ttk.Button(frame8, text="คำนวณสินค้าอื่นๆ", command=lambda: controller.show_frame(PageThree),
-                             width=15)
+        button3 = ttk.Button(frame8, text="ขายสินค้ารายการเดียว", command=lambda: controller.show_frame(StartPage),
+                             width=14)
         button3.grid(row=0, column=0, )
+        button3 = ttk.Button(frame8, text="ขายสินค้าหลายรายการ", command=lambda: controller.show_frame(PageThree),
+                             width=14)
+        button3.grid(row=0, column=1, )
         button3 = ttk.Button(frame8, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne),
                              width=11)
-        button3.grid(row=0, column=1, )
+        button3.grid(row=0, column=2, )
         button3 = ttk.Button(frame8, text="ข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo),
                              width=11)
-        button3.grid(row=0, column=2, )
+        button3.grid(row=0, column=3, )
         button6 = ttk.Button(frame8, text="ประวัติ", command=lambda: controller.show_frame(PageFour),
                              width=11)
-        button6.grid(row=0, column=3)
+        button6.grid(row=0, column=4)
         button6 = ttk.Button(frame8, text="พนักงาน", command=lambda: controller.show_frame(PageFive),
                              width=11)
-        button6.grid(row=0, column=4)
+        button6.grid(row=0, column=5)
 
         self.show_tax_list()
         self.update_lastest_record()
@@ -445,9 +450,9 @@ class StartPage(tk.Frame):  # Calculate Price
             receipt.write("มูลค่าสินค้า:")
             receipt.write("\t\t\t\t\t\t" + self.total_price.get() + "\n")
             receipt.write("ภาษีมูลค่าเพิ่ม(VAT 7%)")
-            vat = float(self.total_price.get()) * 0.07
+            vat = float(self.total_price.get()) / 107
             receipt.write("\t\t\t" + str(round(vat, 2)) + "\n")
-            total = float(self.total_price.get()) + vat
+            total = float(self.total_price.get()) - vat
             receipt.write("รวมเป็นเงิน:")
             receipt.write("\t\t\t\t\t\t" + str(round(total, 0)))
             receipt.write("\n\n\nได้รับสินค้าตามรายการบนนี้ไว้ถูกต้อง\nและในสภาพเรียบร้อยทุกประการ")
@@ -572,7 +577,7 @@ class StartPage(tk.Frame):  # Calculate Price
         self.cus_list.delete(0,END)
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
-        cur.execute('SELECT Tax_ID FROM Customer')
+        cur.execute('SELECT Tax_ID FROM Customer ORDER BY Tax_ID DESC LIMIT 5')
         for row in cur.fetchall():
             self.cus_list.insert(END, row)
 
@@ -1193,17 +1198,25 @@ class PageOne(tk.Frame):  # Product Page
         frame2 = LabelFrame(self, text='ชุดคำสั่ง')
         frame2.grid(row=0, column=0, sticky=W)
 
-        button3 = ttk.Button(frame2, text="คำนวณสินค้า", command=lambda: controller.show_frame(StartPage), width = 15)
+
+        button3 = ttk.Button(frame2, text="ขายสินค้ารายการเดียว", command=lambda: controller.show_frame(StartPage),
+                             width=14)
         button3.grid(row=0, column=0, )
-        button3 = ttk.Button(frame2, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne), width = 11)
+        button3 = ttk.Button(frame2, text="ขายสินค้าหลายรายการ", command=lambda: controller.show_frame(PageThree),
+                             width=14)
         button3.grid(row=0, column=1, )
-        button3 = ttk.Button(frame2, text="ข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo), width = 11)
+        button3 = ttk.Button(frame2, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne),
+                             width=11)
         button3.grid(row=0, column=2, )
-        button6 = ttk.Button(frame2, text="ประวัติ", command=lambda: controller.show_frame(PageFour), width = 11)
-        button6.grid(row=0, column=3)
-        button6 = ttk.Button(frame2, text="พนักงาน", command=lambda: controller.show_frame(PageFive),
+        button3 = ttk.Button(frame2, text="ข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo),
+                             width=11)
+        button3.grid(row=0, column=3, )
+        button6 = ttk.Button(frame2, text="ประวัติ", command=lambda: controller.show_frame(PageFour),
                              width=11)
         button6.grid(row=0, column=4)
+        button6 = ttk.Button(frame2, text="พนักงาน", command=lambda: controller.show_frame(PageFive),
+                             width=11)
+        button6.grid(row=0, column=5)
 
         self.viewing_record()
 
@@ -1318,13 +1331,13 @@ class PageTwo(tk.Frame):  # Customer Page
         Label(frame, text="เลขประจำตัวผู้เสียภาษีอากร (13 หลัก)", font=BFont).grid(row=0)
         Label(frame, text="สาขาที่", font=BFont).grid(row=1, sticky=E)
         self.tax_enter = Entry(frame)
+        self.tax_enter.bind('<KP_Enter>', self.tax_search)
         self.tax_enter.grid(row=0, column=1, sticky=W)
+        self.tax_enter.bind('<Return>', self.tax_search)
         self.branch_enter = Entry(frame, textvariable=default)
         self.branch_enter.grid(row=1, column=1, sticky=W)
-        self.button1 = Button(frame, text='ค้นหา', font=AFont, height=1, width=10, command=self.tax_search)
-        self.button1.grid(row=2, column=1)
         self.button2 = Button(frame, text='บันทึก', font=AFont, height=1, width=10, command=self.save_data)
-        self.button2.grid(row=2, sticky=E)
+        self.button2.grid(row=2, column = 1)
 
         frame3 = LabelFrame(self, text = "ผลลัพธ์")
         frame3.place(x= 350 , y = 51)
@@ -1342,21 +1355,29 @@ class PageTwo(tk.Frame):  # Customer Page
 
         self.my_list = []
 
-        button3 = ttk.Button(frame2, text="คำนวณสินค้า", command=lambda: controller.show_frame(StartPage), width = 15)
-        button3.grid(row=0, column=0)
-        button3 = ttk.Button(frame2, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne), width = 11)
+
+        button3 = ttk.Button(frame2, text="ขายสินค้ารายการเดียว", command=lambda: controller.show_frame(StartPage),
+                             width=14)
+        button3.grid(row=0, column=0, )
+        button3 = ttk.Button(frame2, text="ขายสินค้าหลายรายการ", command=lambda: controller.show_frame(PageThree),
+                             width=14)
         button3.grid(row=0, column=1, )
-        button3 = ttk.Button(frame2, text="ข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo), width = 11)
+        button3 = ttk.Button(frame2, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne),
+                             width=11)
         button3.grid(row=0, column=2, )
-        button6 = ttk.Button(frame2, text="ประวัติ", command=lambda: controller.show_frame(PageFour), width = 11)
-        button6.grid(row=0, column=3)
-        button6 = ttk.Button(frame2, text="พนักงาน", command=lambda: controller.show_frame(PageFive),
+        button3 = ttk.Button(frame2, text="ข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo),
+                             width=11)
+        button3.grid(row=0, column=3, )
+        button6 = ttk.Button(frame2, text="ประวัติ", command=lambda: controller.show_frame(PageFour),
                              width=11)
         button6.grid(row=0, column=4)
+        button6 = ttk.Button(frame2, text="พนักงาน", command=lambda: controller.show_frame(PageFive),
+                             width=11)
+        button6.grid(row=0, column=5)
 
 
 
-    def tax_search(self):
+    def tax_search(self,event):
 
         check = True
         count = 0
@@ -1593,20 +1614,25 @@ class PageThree(tk.Frame):  # CalPrice
         button2 = ttk.Button(frame2, text='ล้างข้อมูล', width=15, command=self.clear_data)
         button2.grid(row=3, columnspan=2)
 
-        button3 = ttk.Button(frame3, text='ข้อมูลสินค้า', command=lambda: controller.show_frame(PageOne),width=15)
-        button3.grid(row=0, column=1)
 
-        button4 = ttk.Button(frame3, text='ข้อมูลลูกค้า', command=lambda: controller.show_frame(PageTwo),width=11)
-        button4.grid(row=0, column=2)
-
-        button5 = ttk.Button(frame3, text="คำนวณสินค้า",command=lambda: controller.show_frame(StartPage), width=11)
-        button5.grid(row=0, column=0)
-
-        button6 = ttk.Button(frame3, text="ประวัติ",command=lambda: controller.show_frame(PageFour), width=11)
-        button6.grid(row=0, column=3)
-        button6 = ttk.Button(frame3, text="พนักงาน", command=lambda: controller.show_frame(PageFive),
+        button3 = ttk.Button(frame3, text="ขายสินค้ารายการเดียว", command=lambda: controller.show_frame(StartPage),
+                             width=14)
+        button3.grid(row=0, column=0, )
+        button3 = ttk.Button(frame3, text="ขายสินค้าหลายรายการ", command=lambda: controller.show_frame(PageThree),
+                             width=14)
+        button3.grid(row=0, column=1, )
+        button3 = ttk.Button(frame3, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne),
+                             width=11)
+        button3.grid(row=0, column=2, )
+        button3 = ttk.Button(frame3, text="ข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo),
+                             width=11)
+        button3.grid(row=0, column=3, )
+        button6 = ttk.Button(frame3, text="ประวัติ", command=lambda: controller.show_frame(PageFour),
                              width=11)
         button6.grid(row=0, column=4)
+        button6 = ttk.Button(frame3, text="พนักงาน", command=lambda: controller.show_frame(PageFive),
+                             width=11)
+        button6.grid(row=0, column=5)
 
         self.update_lastest_record()
         self.show_tax_list()
@@ -1783,9 +1809,9 @@ class PageThree(tk.Frame):  # CalPrice
             receipt.write("มูลค่าสินค้า:")
             receipt.write("\t\t" + self.product_grand_total.get("1.0", 'end-1c') + "\n")
             receipt.write("ภาษีมูลค่าเพิ่ม(VAT 7%)  ")
-            vat = float(self.product_grand_total.get("1.0", 'end-1c')) * 0.07
+            vat = float(self.product_grand_total.get("1.0", 'end-1c')) / 107
             receipt.write("\t" + str(round(vat, 2)) + "\n")
-            total = float(self.product_grand_total.get("1.0", 'end-1c')) + vat
+            total = float(self.product_grand_total.get("1.0", 'end-1c')) - vat
             receipt.write("รวมเป็นเงิน:")
             receipt.write("'\t\t" + str(round(total, 0)))
             receipt.write("\n\n\nได้รับสินค้าตามรายการบนนี้ไว้ถูกต้อง\nและในสภาพเรียบร้อยทุกประการ")
@@ -1835,9 +1861,10 @@ class PageThree(tk.Frame):  # CalPrice
     def show_tax_list(self):
 
         self.cus_list.delete(0,END)
-        db = sqlite3.connect('MyDatabase.db')
-        cursor = db.execute('SELECT Tax_ID FROM Customer')
-        for row in cursor.fetchall():
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute('SELECT Tax_ID FROM Customer ORDER BY Tax_ID DESC LIMIT 5')
+        for row in cur.fetchall():
             self.cus_list.insert(END, row)
 
     def searchCompName(self, event):
@@ -2326,21 +2353,24 @@ class PageFour(tk.Frame):
         frame3 = ttk.LabelFrame(self, text="ชุดคำสั่ง")
         frame3.grid(row=0, column=0, sticky=NW)
 
-        button3 = ttk.Button(frame3, text='ข้อมูลสินค้า', command=lambda: controller.show_frame(PageOne), width=11)
-        button3.grid(row=0, column=1)
-
-        button4 = ttk.Button(frame3, text='ข้อมูลลูกค้า', command=lambda: controller.show_frame(PageTwo), width=11)
-        button4.grid(row=0, column=2)
-
-        button5 = ttk.Button(frame3, text="คำนวณราคาน้ำมัน", command=lambda: controller.show_frame(StartPage),
-                             width=15)
-        button5.grid(row=0, column=0)
-
-        button6 = ttk.Button(frame3, text="ประวัติ", command=lambda: controller.show_frame(PageFour), width=11)
-        button6.grid(row=0, column=3)
-        button6 = ttk.Button(frame3, text="พนักงาน", command=lambda: controller.show_frame(PageFive),
+        button3 = ttk.Button(frame3, text="ขายสินค้ารายการเดียว", command=lambda: controller.show_frame(StartPage),
+                             width=14)
+        button3.grid(row=0, column=0, )
+        button3 = ttk.Button(frame3, text="ขายสินค้าหลายรายการ", command=lambda: controller.show_frame(PageThree),
+                             width=14)
+        button3.grid(row=0, column=1, )
+        button3 = ttk.Button(frame3, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne),
+                             width=11)
+        button3.grid(row=0, column=2, )
+        button3 = ttk.Button(frame3, text="ข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo),
+                             width=11)
+        button3.grid(row=0, column=3, )
+        button6 = ttk.Button(frame3, text="ประวัติ", command=lambda: controller.show_frame(PageFour),
                              width=11)
         button6.grid(row=0, column=4)
+        button6 = ttk.Button(frame3, text="พนักงาน", command=lambda: controller.show_frame(PageFive),
+                             width=11)
+        button6.grid(row=0, column=5)
         self.viewing_record()
 
     def show_details(self, event):
@@ -2394,13 +2424,23 @@ class PageFour(tk.Frame):
             messagebox.showwarning("เกิดข้อผิดพลาด", "กรุณาเลือกสินค้า")
             return
         record_id = self.history_list.item(self.history_list.selection())['values'][0]
-        cancel_text = 'ยกเลิก'
-
         con = sqlite3.connect('MyDatabase.db')
         cur = con.cursor()
-        cur.execute('UPDATE Record SET Status = ? WHERE Record_ID = ?' , (cancel_text,record_id))
-        con.commit()
-        self.viewing_record()
+        cur.execute('SELECT Status FROM Record WHERE Record_ID = ?' , (record_id,))
+        record_status = (str(cur.fetchone()).replace('(', '').replace(')', '').replace("'", '').replace(",", ''))
+        if record_status == 'ยกเลิก':
+            normal_status = '-'
+            cur2 = con.cursor()
+            cur2.execute('UPDATE Record SET Status = ? WHERE Record_ID = ?', (normal_status, record_id))
+            con.commit()
+            self.viewing_record()
+        else:
+            cancel_text = 'ยกเลิก'
+            cur3 = con.cursor()
+            cur3.execute('UPDATE Record SET Status = ? WHERE Record_ID = ?', (cancel_text, record_id))
+            con.commit()
+            self.viewing_record()
+
 
 
 
@@ -2452,6 +2492,7 @@ class PageFive(tk.Frame):
 
         Label(frame1, text = "ใส่่ชื่อพนักงาน:").grid(row = 0)
         self.staff_name = Entry(frame1, justify = 'right')
+        self.staff_name.bind('<KP_Enter>', self.add_confirmation)
         self.staff_name.grid(row = 0, column = 1)
         self.staff_name.bind('<Return>', self.add_confirmation)
 
@@ -2489,17 +2530,25 @@ class PageFive(tk.Frame):
         frame2 = LabelFrame(self, text='ชุดคำสั่ง')
         frame2.grid(row=0, column=0, sticky=W)
 
-        button3 = ttk.Button(frame2, text="คำนวณสินค้า", command=lambda: controller.show_frame(StartPage), width=15)
+
+        button3 = ttk.Button(frame2, text="ขายสินค้ารายการเดียว", command=lambda: controller.show_frame(StartPage),
+                             width=14)
         button3.grid(row=0, column=0, )
-        button3 = ttk.Button(frame2, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne), width=11)
+        button3 = ttk.Button(frame2, text="ขายสินค้าหลายรายการ", command=lambda: controller.show_frame(PageThree),
+                             width=14)
         button3.grid(row=0, column=1, )
-        button3 = ttk.Button(frame2, text="ข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo), width=11)
+        button3 = ttk.Button(frame2, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne),
+                             width=11)
         button3.grid(row=0, column=2, )
-        button6 = ttk.Button(frame2, text="ประวัติ", command=lambda: controller.show_frame(PageFour), width=11)
-        button6.grid(row=0, column=3)
-        button6 = ttk.Button(frame2, text="พนักงาน", command=lambda: controller.show_frame(PageFive),
+        button3 = ttk.Button(frame2, text="ข้อมูลลูกค้า", command=lambda: controller.show_frame(PageTwo),
+                             width=11)
+        button3.grid(row=0, column=3, )
+        button6 = ttk.Button(frame2, text="ประวัติ", command=lambda: controller.show_frame(PageFour),
                              width=11)
         button6.grid(row=0, column=4)
+        button6 = ttk.Button(frame2, text="พนักงาน", command=lambda: controller.show_frame(PageFive),
+                             width=11)
+        button6.grid(row=0, column=5)
 
         self.show_staff_record()
         self.show_staff()
