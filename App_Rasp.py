@@ -2347,6 +2347,10 @@ class PageFour(tk.Frame):
         self.comp_name_search = Entry(self, justify = 'right', width = 13)
         self.comp_name_search.bind('<KeyRelease>', self.search_record_name)
         self.comp_name_search.place(x = 360, y =47)
+        Label(self, text="ค้นหาตามทะเบียนรถ", font=("Helvetica", 11)).place(x=400, y=48)
+        self.car_plate_search = Entry(self, justify = 'right', width = 13)
+        self.car_plate_search.bind('<KeyRelease>', self.search_record_car_plate)
+        self.car_plate_search.place(x = 500 , y = 47)
         self.cancel_but = tk.Button(self,text="ยกเลิกใบกำกับภาษี", command = self.cancel_record)
         self.cancel_but.place(x = 670, y = 40)
 
@@ -2474,6 +2478,16 @@ class PageFour(tk.Frame):
         for row in cur.fetchall():
             self.history_list.insert('', 0, text=row[1], values=(row[0], row[3], row[2], row[4],row[5],row[6]))
 
+    def search_record_car_plate(self,event):
+        records = self.history_list.get_children()
+        for element in records:
+            self.history_list.delete(element)
+        con = sqlite3.connect('MyDatabase.db')
+        cur = con.cursor()
+        cur.execute('SELECT * FROM Record WHERE Car_Plate like ? ORDER BY Record_ID DESC',
+                    ('%' + self.car_plate_search.get() + '%',))
+        for row in cur.fetchall():
+            self.history_list.insert('', 0, text=row[1], values=(row[0], row[3], row[2], row[4], row[5], row[6]))
 
 class PageFive(tk.Frame):
 

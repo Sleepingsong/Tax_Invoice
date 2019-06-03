@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="01fef1f8-0460-44d2-9a11-1f49b52f8b0b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Tax_Invoice.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Tax_Invoice.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App_Rasp.py" beforeDir="false" afterPath="$PROJECT_DIR$/App_Rasp.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyDatabase.db" beforeDir="false" afterPath="$PROJECT_DIR$/MyDatabase.db" afterDir="false" />
@@ -20,8 +18,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="274">
-              <caret line="2320" lean-forward="true" selection-start-line="2320" selection-end-line="2320" selection-end-column="47" />
+            <state relative-caret-position="34800">
+              <caret line="2320" selection-start-line="2320" selection-end-line="2320" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -29,8 +27,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/App_Rasp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="329">
-              <caret line="2358" column="114" lean-forward="true" selection-start-line="2358" selection-start-column="114" selection-end-line="2358" selection-end-column="114" />
+            <state relative-caret-position="269">
+              <caret line="2351" column="80" lean-forward="true" selection-start-line="2351" selection-start-column="80" selection-end-line="2351" selection-end-column="80" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -549,7 +547,14 @@
       <option name="project" value="LOCAL" />
       <updated>1558985413330</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="- Fix tax id&#10;- Fix wrong vat calculation&#10;- Fix consistency UI&#10;- Add menu">
+      <created>1559494594517</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1559494594517</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TodoView">
@@ -597,7 +602,6 @@
     </layout>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Resize button of Calculation page" />
     <MESSAGE value="- Calculate price function&#10;- Retrieve oil price to Entry&#10;- Modify Database" />
     <MESSAGE value="Add product name combobox" />
     <MESSAGE value="- Adjust button" />
@@ -622,7 +626,8 @@
     <MESSAGE value="- Show more detail on history" />
     <MESSAGE value="- Change some layout and font" />
     <MESSAGE value="- Reset database" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Reset database" />
+    <MESSAGE value="- Fix tax id&#10;- Fix wrong vat calculation&#10;- Fix consistency UI&#10;- Add menu" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Fix tax id&#10;- Fix wrong vat calculation&#10;- Fix consistency UI&#10;- Add menu" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/MainWindow.py" />
@@ -630,6 +635,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="202">
           <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="2225" selection-start-line="2225" selection-end-line="2225" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34800">
+          <caret line="2320" selection-start-line="2320" selection-end-line="2320" selection-end-column="47" />
         </state>
       </provider>
     </entry>
@@ -650,6 +669,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Test03.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Test_Print.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -660,31 +686,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Test03.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="2225" selection-start-line="2225" selection-end-line="2225" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="2320" lean-forward="true" selection-start-line="2320" selection-end-line="2320" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/App_Rasp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
-          <caret line="2358" column="114" lean-forward="true" selection-start-line="2358" selection-start-column="114" selection-end-line="2358" selection-end-column="114" />
+        <state relative-caret-position="269">
+          <caret line="2351" column="80" lean-forward="true" selection-start-line="2351" selection-start-column="80" selection-end-line="2351" selection-end-column="80" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
