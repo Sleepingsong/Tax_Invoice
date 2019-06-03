@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="01fef1f8-0460-44d2-9a11-1f49b52f8b0b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/Tax_Invoice.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Tax_Invoice.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App_Rasp.py" beforeDir="false" afterPath="$PROJECT_DIR$/App_Rasp.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyDatabase.db" beforeDir="false" afterPath="$PROJECT_DIR$/MyDatabase.db" afterDir="false" />
@@ -18,8 +20,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34800">
-              <caret line="2320" selection-start-line="2320" selection-end-line="2320" selection-end-column="47" />
+            <state relative-caret-position="37950">
+              <caret line="2530" column="48" selection-start-line="2530" selection-start-column="48" selection-end-line="2530" selection-end-column="48" />
             </state>
           </provider>
         </entry>
@@ -27,8 +29,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/App_Rasp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="2351" column="80" lean-forward="true" selection-start-line="2351" selection-start-column="80" selection-end-line="2351" selection-end-column="80" />
+            <state relative-caret-position="122">
+              <caret line="1458" column="40" lean-forward="true" selection-start-line="1458" selection-start-column="40" selection-end-line="1458" selection-end-column="40" />
+              <folding>
+                <element signature="e#47#68#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Rasp_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="26385">
+              <caret line="1775" column="54" selection-end-line="2556" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -39,8 +53,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="37590">
-              <caret line="2522" column="20" selection-start-line="2522" selection-start-column="20" selection-end-line="2522" selection-end-column="20" />
+            <state relative-caret-position="6420">
+              <caret line="444" column="54" selection-end-line="2549" />
             </state>
           </provider>
         </entry>
@@ -48,32 +62,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test02.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18510">
-              <caret line="1250" column="46" selection-start-line="1250" selection-start-column="46" selection-end-line="1250" selection-end-column="46" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Test03.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Test_Print.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="10" selection-start-line="10" selection-end-line="10" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="5040">
+              <caret line="352" column="58" selection-start-line="352" selection-start-column="58" selection-end-line="352" selection-end-column="58" />
             </state>
           </provider>
         </entry>
@@ -89,36 +79,39 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>cus_list</find>
-      <find>page</find>
-      <find>pageone</find>
-      <find>lam</find>
-      <find>Calprice</find>
-      <find>print</find>
-      <find>product</find>
-      <find>PageOne</find>
-      <find>edit_reco</find>
-      <find>edit_record</find>
-      <find>show_tax</find>
-      <find>BFont</find>
-      <find>print_confirmation</find>
-      <find>lastest_record</find>
+      <find>confirmation</find>
+      <find>INSER</find>
+      <find>Staff</find>
       <find>now</find>
-      <find>edit_rec</find>
-      <find>confirm</find>
-      <find>log_out</find>
-      <find>log</find>
       <find>history_list</find>
-      <find>test</find>
-      <find>DESC</find>
-      <find>searc</find>
+      <find>log</find>
+      <find>tempfile</find>
+      <find>import</find>
+      <find>search</find>
+      <find>button</find>
+      <find>product pa</find>
+      <find>cus_list</find>
       <find>print_receipt</find>
-      <find>คำนวณสินค้าอื่นๆ</find>
-      <find>show_tax_list</find>
+      <find>ูข้อมูลอีกครั้ง</find>
+      <find>Reload</find>
+      <find>PageFive</find>
+      <find>search_com</find>
+      <find>comp_name</find>
+      <find>print</find>
+      <find>print_confi</find>
+      <find>print_con</find>
+      <find>search_comp_name</find>
+      <find>search_comp</find>
+      <find>PageTwo</find>
+      <find>PageThree</find>
       <find>PageFour</find>
+      <find>PageOne</find>
+      <find>tax_list</find>
+      <find>StartPage</find>
+      <find>frame11</find>
     </findStrings>
     <replaceStrings>
-      <replace>product_list</replace>
+      <replace>staff_record_list</replace>
     </replaceStrings>
     <dirStrings>
       <dir>C:\Users\Woranat.S\Desktop\Tax_Invoice</dir>
@@ -127,35 +120,36 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="7f1ac455-6eca-4823-a1d4-c934585f4dc5" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/MainWindow.py" />
-        <option value="$PROJECT_DIR$/Test02.py" />
-        <option value="$PROJECT_DIR$/Test_Print.py" />
-        <option value="$PROJECT_DIR$/Test.py" />
         <option value="$PROJECT_DIR$/Test03.py" />
+        <option value="$PROJECT_DIR$/Test02.py" />
+        <option value="$PROJECT_DIR$/Test.py" />
         <option value="$PROJECT_DIR$/App.py" />
+        <option value="$PROJECT_DIR$/Rasp_test.py" />
         <option value="$PROJECT_DIR$/App_Rasp.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="698" />
-    <option name="y" value="208" />
-    <option name="width" value="1156" />
-    <option name="height" value="1050" />
+    <option name="x" value="148" />
+    <option name="y" value="109" />
+    <option name="width" value="888" />
+    <option name="height" value="442" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="ProjectPane" />
-      <pane id="Scope" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550426844404" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="SDKs" />
@@ -204,12 +198,33 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
+      <option name="SDK_HOME" value="/usr/bin/python3.5" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/App_Rasp.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Rasp_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Tax_Invoice" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/App_Rasp.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Rasp_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -239,40 +254,19 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Test03" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="Test02" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Tax_Invoice" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\Users\prang\AppData\Local\Programs\Python\Python37-32\python.exe" />
+      <option name="SDK_HOME" value="C:\Users\Woranat.S\AppData\Local\Programs\Python\Python37-32\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test03.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Test_Print" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Tax_Invoice" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test_Print.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test02.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -284,10 +278,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.App_Rasp" />
-        <item itemvalue="Python.Test03" />
+        <item itemvalue="Python.Rasp_test" />
         <item itemvalue="Python.App" />
         <item itemvalue="Python.Test" />
-        <item itemvalue="Python.Test_Print" />
+        <item itemvalue="Python.Test02" />
       </list>
     </recent_temporary>
   </component>
@@ -449,112 +443,56 @@
       <option name="project" value="LOCAL" />
       <updated>1555066159568</updated>
     </task>
-    <task id="LOCAL-00022" summary="- Add record">
-      <created>1555267307382</created>
+    <task id="LOCAL-00022" summary="- History Date and Company name search">
+      <created>1555326438098</created>
       <option name="number" value="00022" />
       <option name="presentableId" value="LOCAL-00022" />
       <option name="project" value="LOCAL" />
-      <updated>1555267307382</updated>
+      <updated>1555326438098</updated>
     </task>
-    <task id="LOCAL-00023" summary="- Add print confirmation screen">
-      <created>1555347153389</created>
+    <task id="LOCAL-00023" summary="- Move button to the top&#10;- Adjust home page">
+      <created>1556514358553</created>
       <option name="number" value="00023" />
       <option name="presentableId" value="LOCAL-00023" />
       <option name="project" value="LOCAL" />
-      <updated>1555347153390</updated>
+      <updated>1556514358569</updated>
     </task>
-    <task id="LOCAL-00024" summary="- Add print confirmation screen">
-      <created>1556478779811</created>
+    <task id="LOCAL-00024" summary="- Add staff Page&#10;- View Staff Record&#10;- View Staff Information">
+      <created>1557304461739</created>
       <option name="number" value="00024" />
       <option name="presentableId" value="LOCAL-00024" />
       <option name="project" value="LOCAL" />
-      <updated>1556478779811</updated>
+      <updated>1557304461743</updated>
     </task>
-    <task id="LOCAL-00025" summary="- Add print confirmation screen">
-      <created>1556884584726</created>
+    <task id="LOCAL-00025" summary="- Add App version Raspberry Pi3&#10;- Fix screen resolution for Raspberry Pi3&#10;- Fix bug">
+      <created>1558028981826</created>
       <option name="number" value="00025" />
       <option name="presentableId" value="LOCAL-00025" />
       <option name="project" value="LOCAL" />
-      <updated>1556884584726</updated>
+      <updated>1558028981826</updated>
     </task>
-    <task id="LOCAL-00026" summary="- Add some print function">
-      <created>1556896236825</created>
+    <task id="LOCAL-00026" summary="- Fix bugs">
+      <created>1558110781130</created>
       <option name="number" value="00026" />
       <option name="presentableId" value="LOCAL-00026" />
       <option name="project" value="LOCAL" />
-      <updated>1556896236825</updated>
+      <updated>1558110781130</updated>
     </task>
-    <task id="LOCAL-00027" summary="- Automatically update Product data">
-      <created>1556995677779</created>
+    <task id="LOCAL-00027" summary="- Fix bugs">
+      <created>1558353972994</created>
       <option name="number" value="00027" />
       <option name="presentableId" value="LOCAL-00027" />
       <option name="project" value="LOCAL" />
-      <updated>1556995677779</updated>
+      <updated>1558353972996</updated>
     </task>
-    <task id="LOCAL-00028" summary="- Add widgets to Calculation Page">
-      <created>1557075223416</created>
+    <task id="LOCAL-00028" summary="- Fix bugs">
+      <created>1558987207878</created>
       <option name="number" value="00028" />
       <option name="presentableId" value="LOCAL-00028" />
       <option name="project" value="LOCAL" />
-      <updated>1557075223416</updated>
+      <updated>1558987207878</updated>
     </task>
-    <task id="LOCAL-00029" summary="- Print reciept">
-      <created>1557144551505</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1557144551506</updated>
-    </task>
-    <task id="LOCAL-00030" summary="- Print reciept">
-      <created>1557144645767</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1557144645767</updated>
-    </task>
-    <task id="LOCAL-00031" summary="- Add product_record database">
-      <created>1557254865632</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1557254865632</updated>
-    </task>
-    <task id="LOCAL-00032" summary="- Show more detail on history">
-      <created>1557334213428</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1557334213428</updated>
-    </task>
-    <task id="LOCAL-00033" summary="- Show more detail on history">
-      <created>1557334696785</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1557334696785</updated>
-    </task>
-    <task id="LOCAL-00034" summary="- Change some layout and font">
-      <created>1557344705200</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1557344705201</updated>
-    </task>
-    <task id="LOCAL-00035" summary="- Reset database">
-      <created>1558985413329</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1558985413330</updated>
-    </task>
-    <task id="LOCAL-00036" summary="- Fix tax id&#10;- Fix wrong vat calculation&#10;- Fix consistency UI&#10;- Add menu">
-      <created>1559494594517</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1559494594517</updated>
-    </task>
-    <option name="localTasksCounter" value="37" />
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TodoView">
@@ -567,7 +505,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-2" y="34" width="1186" height="590" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.21695095" />
@@ -578,14 +516,14 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4946695" visible="true" weight="0.31527627" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32928476" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49655765" visible="true" weight="0.3139785" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49936628" weight="0.39811066" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32980132" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5053305" side_tool="true" weight="0.31527627" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50344235" side_tool="true" weight="0.31182796" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32936078" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32936078" />
@@ -597,11 +535,39 @@
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="R Graphics" order="8" />
-      <window_info anchor="right" id="R Packages" order="9" weight="0.32995737" />
     </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2177243" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33479214" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Maven" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Capture Analysis" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+    </layout-to-restore>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="Change font size and rearrange button." />
+    <MESSAGE value="- Change font size and re-arrange button.&#10;- Add new page (Motor Oil Gas page)" />
+    <MESSAGE value="Resize button of Calculation page" />
     <MESSAGE value="- Calculate price function&#10;- Retrieve oil price to Entry&#10;- Modify Database" />
     <MESSAGE value="Add product name combobox" />
     <MESSAGE value="- Adjust button" />
@@ -616,82 +582,61 @@
     <MESSAGE value="- Calculate grand total price" />
     <MESSAGE value="- Edit Product price and update dynamically&#10;- All frames know each other now in order to use method across frame(class)" />
     <MESSAGE value="- Add Scrollbar&#10;- Staff_login and logout function&#10;- Error handling for Staff_ID, Search for Company name, and Tax_ID" />
-    <MESSAGE value="- Add record" />
-    <MESSAGE value="- Add print confirmation screen" />
-    <MESSAGE value="- Add some print function" />
-    <MESSAGE value="- Automatically update Product data" />
-    <MESSAGE value="- Add widgets to Calculation Page" />
-    <MESSAGE value="- Print reciept" />
-    <MESSAGE value="- Add product_record database" />
-    <MESSAGE value="- Show more detail on history" />
-    <MESSAGE value="- Change some layout and font" />
-    <MESSAGE value="- Reset database" />
-    <MESSAGE value="- Fix tax id&#10;- Fix wrong vat calculation&#10;- Fix consistency UI&#10;- Add menu" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Fix tax id&#10;- Fix wrong vat calculation&#10;- Fix consistency UI&#10;- Add menu" />
+    <MESSAGE value="- History Date and Company name search" />
+    <MESSAGE value="- Move button to the top&#10;- Adjust home page" />
+    <MESSAGE value="- Add staff Page&#10;- View Staff Record&#10;- View Staff Information" />
+    <MESSAGE value="- Add App version Raspberry Pi3&#10;- Fix screen resolution for Raspberry Pi3&#10;- Fix bug" />
+    <MESSAGE value="- Fix bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Fix bugs" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/MainWindow.py" />
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/encodings/cp1252.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/Test03.py" />
+    <entry file="file:///usr/lib/python3.5/tkinter/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="2225" selection-start-line="2225" selection-end-line="2225" />
+        <state relative-caret-position="15">
+          <caret line="2649" selection-start-line="2649" selection-end-line="2649" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/App.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34800">
-          <caret line="2320" selection-start-line="2320" selection-end-line="2320" selection-end-column="47" />
+        <state relative-caret-position="37950">
+          <caret line="2530" column="48" selection-start-line="2530" selection-start-column="48" selection-end-line="2530" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rasp_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26385">
+          <caret line="1775" column="54" selection-end-line="2556" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="37590">
-          <caret line="2522" column="20" selection-start-line="2522" selection-start-column="20" selection-end-line="2522" selection-end-column="20" />
+        <state relative-caret-position="6420">
+          <caret line="444" column="54" selection-end-line="2549" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test02.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18510">
-          <caret line="1250" column="46" selection-start-line="1250" selection-start-column="46" selection-end-line="1250" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test03.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test_Print.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="5040">
+          <caret line="352" column="58" selection-start-line="352" selection-start-column="58" selection-end-line="352" selection-end-column="58" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/App_Rasp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="2351" column="80" lean-forward="true" selection-start-line="2351" selection-start-column="80" selection-end-line="2351" selection-end-column="80" />
+        <state relative-caret-position="122">
+          <caret line="1458" column="40" lean-forward="true" selection-start-line="1458" selection-start-column="40" selection-end-line="1458" selection-end-column="40" />
           <folding>
-            <element signature="e#0#21#0" expanded="true" />
+            <element signature="e#47#68#0" expanded="true" />
           </folding>
         </state>
       </provider>

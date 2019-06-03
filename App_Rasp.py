@@ -1,3 +1,7 @@
+#!/usr/bin/python3.5
+
+# -*- coding: utf-8 -*-
+
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
@@ -77,15 +81,15 @@ class StartPage(tk.Frame):  # Calculate Price
         frame8 = ttk.LabelFrame(self, text='ชุดคำสั่ง')
         frame8.grid(row=0, column=0, sticky=NW)
         frame9 = ttk.LabelFrame(self, text="คำนวณเงิน")
-        frame9.grid(row = 2 ,sticky = E)
+        frame9.place(x= 400, y = 243)
         frame10 = ttk.LabelFrame(self, text="ผู้ซื้อ")
         frame10.grid(row=3, column=0, sticky=W)
         frame11 = ttk.LabelFrame(self, text="รหัสประจำตัวผู้เสียภาษีล่าสุด")
-        frame11.place(x= 600, y =340)
+        frame11.place(x= 600, y =300)
         frame12 = ttk.LabelFrame(self, text="ค้นหา")
         frame12.grid(row=2, sticky=SW)
         frame14 = ttk.LabelFrame(self, text = "ทะเบียนรถ")
-        frame14.grid(row = 2 , columnspan = 2,sticky = S)
+        frame14.place(x = 220, y = 260)
 
 
 
@@ -179,7 +183,7 @@ class StartPage(tk.Frame):  # Calculate Price
         self.total_price.bind("<KeyRelease>", self.liveLiterCal)
         self.total_price.grid(row=1, column=1)
         self.print = tk.Button(self , text = "พิมพ์",font=('Calibri', '20'),width = 5, command =self.print_confirmation)
-        self.print.place(x = 590 , y = 230)
+        self.print.place(x = 650 , y = 240)
 
 
         Label(frame7, text = "รหัสพนักงาน").grid(row=0)
@@ -268,12 +272,12 @@ class StartPage(tk.Frame):  # Calculate Price
         self.cus_list.grid(row=1)
         self.cus_list.config(yscrollcommand = vsb.set)
         self.show_tax_data = tk.Button(self, text = "ดูข้อมูลอีกครั้ง", command = self.show_tax_list)
-        self.show_tax_data.place(x = 610 , y= 440)
+        self.show_tax_data.place(x = 610 , y= 400)
 
-        button3 = ttk.Button(frame8, text="ขายสินค้ารายการเดียว", command=lambda: controller.show_frame(StartPage),
+        button3 = ttk.Button(frame8, text="ขายรายการเดียว", command=lambda: controller.show_frame(StartPage),
                              width=14)
         button3.grid(row=0, column=0, )
-        button3 = ttk.Button(frame8, text="ขายสินค้าหลายรายการ", command=lambda: controller.show_frame(PageThree),
+        button3 = ttk.Button(frame8, text="ขายหลายรายการ", command=lambda: controller.show_frame(PageThree),
                              width=14)
         button3.grid(row=0, column=1, )
         button3 = ttk.Button(frame8, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne),
@@ -310,10 +314,13 @@ class StartPage(tk.Frame):  # Calculate Price
         cur.execute(' SELECT Record_ID FROM Record ORDER BY Record_ID DESC LIMIT 1')
         self.lastest_record = str(cur.fetchone()).replace('INV-','').replace('(', '').replace(')', '').replace("'", '').replace(",", '')
         self.lastest_record_number = int(self.lastest_record)
+        print(self.lastest_record_number)
 
     def print_receipt(self):
         now = datetime.datetime.now()
+
         try:
+            self.update_lastest_record()
             record_id = "INV-{0:07}".format(self.lastest_record_number + 1)
             record_total_price = self.total_price.get()
             recrod_car_plate = self.car_plate.get()
@@ -376,7 +383,6 @@ class StartPage(tk.Frame):  # Calculate Price
                 cur2.execute('INSERT INTO Record_Product(Record_ID, Product_Name, Product_Number) VALUES(?,?,?)',
                              (record_id, record_product_name, record_litter))
                 con.commit()
-
         except:
             messagebox.showerror("เกิดข้อผิดพลาด","ข้อมูลไม่ถูกต้อง")
             self.confirmation.destroy()
@@ -458,7 +464,6 @@ class StartPage(tk.Frame):  # Calculate Price
             receipt.write("\n\n\nได้รับสินค้าตามรายการบนนี้ไว้ถูกต้อง\nและในสภาพเรียบร้อยทุกประการ")
             receipt.write("\n\n\nลงชื่อผู้รับเงิน _________________________________")
             receipt.write("\n\n\t         *****ขอบคุณที่ใช้บริการ*****")
-            self.update_lastest_record()
             self.comp_name.delete(0, 'end')
             self.branch_num.delete(0, 'end')
             self.branch_floor.delete(0, 'end')
@@ -588,7 +593,7 @@ class StartPage(tk.Frame):  # Calculate Price
             cur.execute('SELECT Name FROM Customer WHERE Name like ?', ('%' + self.search_comp_name.get() + '%',))
             self.tax_list = Toplevel()
             self.tax_list.title("Result")
-            self.tax_list.geometry("500x200")
+            self.tax_list.geometry("%dx%d+%d+%d" % (600, 250, 50, 100))
             Label(self.tax_list, text="รายชื่อบริษัท").grid(row=0)
             self.tax = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
             self.tax.bind("<Double-Button>", self.show_tax_id)
@@ -615,7 +620,7 @@ class StartPage(tk.Frame):  # Calculate Price
             cur.execute("SELECT Name FROM Customer WHERE Tax_ID like ?", ('%' + self.search_tax_id.get() + '%',))
             self.tax_list = Toplevel()
             self.tax_list.title("Result")
-            self.tax_list.geometry("500x200")
+            self.tax_list.geometry("%dx%d+%d+%d" % (600, 250, 50, 100))
             Label(self.tax_list, text="รายชื่อบริษัท").grid(row=0)
             self.tax = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
             self.tax.bind("<Double-Button>", self.show_data3)
@@ -1199,10 +1204,10 @@ class PageOne(tk.Frame):  # Product Page
         frame2.grid(row=0, column=0, sticky=W)
 
 
-        button3 = ttk.Button(frame2, text="ขายสินค้ารายการเดียว", command=lambda: controller.show_frame(StartPage),
+        button3 = ttk.Button(frame2, text="ขายรายการเดียว", command=lambda: controller.show_frame(StartPage),
                              width=14)
         button3.grid(row=0, column=0, )
-        button3 = ttk.Button(frame2, text="ขายสินค้าหลายรายการ", command=lambda: controller.show_frame(PageThree),
+        button3 = ttk.Button(frame2, text="ขายหลายรายการ", command=lambda: controller.show_frame(PageThree),
                              width=14)
         button3.grid(row=0, column=1, )
         button3 = ttk.Button(frame2, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne),
@@ -1356,10 +1361,10 @@ class PageTwo(tk.Frame):  # Customer Page
         self.my_list = []
 
 
-        button3 = ttk.Button(frame2, text="ขายสินค้ารายการเดียว", command=lambda: controller.show_frame(StartPage),
+        button3 = ttk.Button(frame2, text="ขายรายการเดียว", command=lambda: controller.show_frame(StartPage),
                              width=14)
         button3.grid(row=0, column=0, )
-        button3 = ttk.Button(frame2, text="ขายสินค้าหลายรายการ", command=lambda: controller.show_frame(PageThree),
+        button3 = ttk.Button(frame2, text="ขายหลายรายการ", command=lambda: controller.show_frame(PageThree),
                              width=14)
         button3.grid(row=0, column=1, )
         button3 = ttk.Button(frame2, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne),
@@ -1450,7 +1455,7 @@ class PageThree(tk.Frame):  # CalPrice
         frame3.grid(row=0, column=0, sticky=NW)
         frame10 = ttk.LabelFrame(self, text = "ผู้ซื้อ")
         frame10.grid(row=3,sticky = W)
-        frame11 = ttk.LabelFrame(self, text = "เลขภาษี")
+        frame11 = ttk.LabelFrame(self, text = "รหัสประจำตัวผู้เสียภาษีล่าสุด")
         frame11.place(x = 600 , y = 310)
         frame12 = ttk.LabelFrame(self, text = "ค้นหา")
         frame12.grid(row=2,column = 0,sticky = W)
@@ -1488,12 +1493,14 @@ class PageThree(tk.Frame):  # CalPrice
 
         Label(frame12, text="ชื่อบริษัท", font=BFont).grid(row=1, column=0, sticky=E)
         self.search_comp_name = Entry(frame12, justify='right', width=17)
-        self.search_comp_name.bind('<Return>', self.searchCompName)
+        self.search_comp_name.bind('<KP_Enter>', self.searchCompName)
         self.search_comp_name.grid(row=1, column=1, sticky=W)
+        self.search_comp_name.bind('<Return>', self.searchCompName)
         Label(frame12, text="รหัสภาษี", font=BFont).grid(row=2, column=0, sticky=E)
         self.search_tax_id = Entry(frame12, justify='right', width=17)
-        self.search_tax_id.bind('<Return>', self.searchTaxId)
+        self.search_tax_id.bind('<KP_Enter>', self.searchTaxId)
         self.search_tax_id.grid(row=2, column=1, sticky=W)
+        self.search_tax_id.bind('<Return>', self.searchTaxId)
 
         Label(frame, text="ราคา(บาท)", font=("Helvetica", 10)).grid(row=1, column=1, sticky=W)
         self.product_price = Text(frame, height=1, width=5, font=("Helvetica", 15))
@@ -1549,7 +1556,7 @@ class PageThree(tk.Frame):  # CalPrice
         vsb.grid(row = 1 ,column = 1 , sticky = 'ns')
         self.cus_list.grid(row=1)
         self.cus_list.config(yscrollcommand = vsb.set)
-        self.show_tax_data = tk.Button(self, text = "Reload data", command = self.show_tax_list)
+        self.show_tax_data = tk.Button(self, text = "ูข้อมูลอีกครั้ง", command = self.show_tax_list)
         self.show_tax_data.place(x = 600 , y= 410)
 
         Label(frame10, text="ชื่อบริษัท", font=('Times New Roman', 10)).grid(row=1, column=0, sticky=E)
@@ -1615,10 +1622,10 @@ class PageThree(tk.Frame):  # CalPrice
         button2.grid(row=3, columnspan=2)
 
 
-        button3 = ttk.Button(frame3, text="ขายสินค้ารายการเดียว", command=lambda: controller.show_frame(StartPage),
+        button3 = ttk.Button(frame3, text="ขายรายการเดียว", command=lambda: controller.show_frame(StartPage),
                              width=14)
         button3.grid(row=0, column=0, )
-        button3 = ttk.Button(frame3, text="ขายสินค้าหลายรายการ", command=lambda: controller.show_frame(PageThree),
+        button3 = ttk.Button(frame3, text="ขายหลายรายการ", command=lambda: controller.show_frame(PageThree),
                              width=14)
         button3.grid(row=0, column=1, )
         button3 = ttk.Button(frame3, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne),
@@ -1688,8 +1695,8 @@ class PageThree(tk.Frame):  # CalPrice
         self.lastest_record_number = int(self.lastest_record)
 
     def print_receipt(self):
-
         try:
+            self.update_lastest_record()
             record_id = "INV-{0:07}".format(self.lastest_record_number + 1)
             record_total_price = self.product_grand_total.get("1.0", 'end-1c')
             recrod_car_plate = self.car_plate.get()
@@ -1821,7 +1828,6 @@ class PageThree(tk.Frame):  # CalPrice
             opener = "open" if sys.platform == "darwin" else "xdg-open"
             subprocess.call([opener, tempfiles])
 
-            self.update_lastest_record()
             self.comp_name.delete(0, 'end')
             self.branch_num.delete(0, 'end')
             self.branch_floor.delete(0, 'end')
@@ -1837,7 +1843,6 @@ class PageThree(tk.Frame):  # CalPrice
             self.Postcode.delete(0, 'end')
             self.Cus_tax_num.delete(0, 'end')
             self.car_plate.delete(0,'end')
-
             self.confirmation.destroy()
 
 
@@ -1874,7 +1879,7 @@ class PageThree(tk.Frame):  # CalPrice
             cur.execute('SELECT Name FROM Customer WHERE Name like ?', ('%' + self.search_comp_name.get() + '%',))
             self.tax_list = Toplevel()
             self.tax_list.title("Result")
-            self.tax_list.geometry("500x200")
+            self.tax_list.geometry("%dx%d+%d+%d" % (600, 250, 50, 100))
             Label(self.tax_list, text="รายชื่อบริษัท").grid(row=0)
             self.tax = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
             self.tax.bind("<Double-Button>", self.show_tax_id)
@@ -1901,7 +1906,7 @@ class PageThree(tk.Frame):  # CalPrice
             cur.execute("SELECT Name FROM Customer WHERE Tax_ID like ?", ('%' + self.search_tax_id.get() + '%',))
             self.tax_list = Toplevel()
             self.tax_list.title("Result")
-            self.tax_list.geometry("500x200")
+            self.tax_list.geometry("%dx%d+%d+%d" % (600, 250, 50, 100))
             Label(self.tax_list, text="รายชื่อบริษัท").grid(row=0)
             self.tax = Listbox(self.tax_list, height=10, width=40, selectmode=SINGLE)
             self.tax.bind("<Double-Button>", self.show_data3)
@@ -2339,28 +2344,28 @@ class PageFour(tk.Frame):
         self.history_list.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
 
 
-        Label(self, text = "ค้นหาตามวันที่",font=("Helvetica", 11)).grid(row = 1 ,sticky = W)
+        Label(self, text = "ค้นหาวันที่",font=("Helvetica", 11)).grid(row = 1 ,sticky = W)
         self.date_search = Entry(self, justify = 'right', width = 13)
         self.date_search.bind('<KeyRelease>', self.search_record_date)
-        self.date_search.place(x = 120, y = 47)
-        Label(self, text = "ค้นหาตามชื่อ", font=("Helvetica", 11)).place(x = 250 , y = 48)
+        self.date_search.place(x = 90, y = 47)
+        Label(self, text = "ค้นหาชื่อ", font=("Helvetica", 11)).place(x = 210 , y = 48)
         self.comp_name_search = Entry(self, justify = 'right', width = 13)
         self.comp_name_search.bind('<KeyRelease>', self.search_record_name)
-        self.comp_name_search.place(x = 360, y =47)
-        Label(self, text="ค้นหาตามทะเบียนรถ", font=("Helvetica", 11)).place(x=400, y=48)
+        self.comp_name_search.place(x = 280, y =47)
+        Label(self, text="ค้นหาทะเบียนรถ", font=("Helvetica", 11)).place(x=400, y=48)
         self.car_plate_search = Entry(self, justify = 'right', width = 13)
         self.car_plate_search.bind('<KeyRelease>', self.search_record_car_plate)
-        self.car_plate_search.place(x = 500 , y = 47)
+        self.car_plate_search.place(x = 520 , y = 47)
         self.cancel_but = tk.Button(self,text="ยกเลิกใบกำกับภาษี", command = self.cancel_record)
-        self.cancel_but.place(x = 670, y = 40)
+        self.cancel_but.place(x = 670, y = 42)
 
         frame3 = ttk.LabelFrame(self, text="ชุดคำสั่ง")
         frame3.grid(row=0, column=0, sticky=NW)
 
-        button3 = ttk.Button(frame3, text="ขายสินค้ารายการเดียว", command=lambda: controller.show_frame(StartPage),
+        button3 = ttk.Button(frame3, text="ขายรายการเดียว", command=lambda: controller.show_frame(StartPage),
                              width=14)
         button3.grid(row=0, column=0, )
-        button3 = ttk.Button(frame3, text="ขายสินค้าหลายรายการ", command=lambda: controller.show_frame(PageThree),
+        button3 = ttk.Button(frame3, text="ขายหลายรายการ", command=lambda: controller.show_frame(PageThree),
                              width=14)
         button3.grid(row=0, column=1, )
         button3 = ttk.Button(frame3, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne),
@@ -2545,10 +2550,10 @@ class PageFive(tk.Frame):
         frame2.grid(row=0, column=0, sticky=W)
 
 
-        button3 = ttk.Button(frame2, text="ขายสินค้ารายการเดียว", command=lambda: controller.show_frame(StartPage),
+        button3 = ttk.Button(frame2, text="ขายรายการเดียว", command=lambda: controller.show_frame(StartPage),
                              width=14)
         button3.grid(row=0, column=0, )
-        button3 = ttk.Button(frame2, text="ขายสินค้าหลายรายการ", command=lambda: controller.show_frame(PageThree),
+        button3 = ttk.Button(frame2, text="ขายหลายรายการ", command=lambda: controller.show_frame(PageThree),
                              width=14)
         button3.grid(row=0, column=1, )
         button3 = ttk.Button(frame2, text="ข้อมูลสินค้า", command=lambda: controller.show_frame(PageOne),
